@@ -86,7 +86,7 @@ const BeforeAfterSection = () => {
             { value: "100+", label: "Zadovoljnih klijenata" },
             { value: "98%", label: "Završeno na vrijeme" },
             { value: "4.9", label: "Prosječna ocjena" },
-            { value: "7+", label: "Godina iskustva" },
+            { value: "20+", label: "Godina iskustva" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-4xl sm:text-5xl font-extrabold text-primary mb-2">
