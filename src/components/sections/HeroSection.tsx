@@ -41,7 +41,7 @@ const HeroSection = () => {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button variant="hero" size="lg">
-              Zatraži besplatnu procjenu
+              Zatražite besplatnu procjenu
               <ArrowRight className="w-5 h-5" />
             </Button>
             <Button variant="hero-outline" size="lg">
