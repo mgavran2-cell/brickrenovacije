@@ -45,7 +45,7 @@ const HeroSection = () => {
               <ArrowRight className="w-5 h-5" />
             </Button>
             <Button variant="hero-outline" size="lg">
-              Pogledaj naše usluge
+              Pogledajte naše usluge
             </Button>
           </div>
 
