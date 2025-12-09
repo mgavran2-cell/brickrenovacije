@@ -83,7 +83,7 @@ const BeforeAfterSection = () => {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
           {[
-            { value: "500+", label: "Zadovoljnih klijenata" },
+            { value: "100+", label: "Zadovoljnih klijenata" },
             { value: "98%", label: "Završeno na vrijeme" },
             { value: "4.9", label: "Prosječna ocjena" },
             { value: "7+", label: "Godina iskustva" },
