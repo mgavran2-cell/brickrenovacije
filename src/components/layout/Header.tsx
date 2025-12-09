@@ -55,6 +55,9 @@ const Header = () => {
             <Button variant="ghost" size="sm">
               Prijava za izvođače
             </Button>
+            <Button variant="outline" size="sm">
+              Prijava za korisnike
+            </Button>
             <Button size="sm">
               Zatraži ponudu
             </Button>
@@ -106,8 +109,11 @@ const Header = () => {
                 Kontakt
               </a>
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
-                <Button variant="outline" className="w-full">
+                <Button variant="ghost" className="w-full">
                   Prijava za izvođače
+                </Button>
+                <Button variant="outline" className="w-full">
+                  Prijava za korisnike
                 </Button>
                 <Button className="w-full">
                   Zatraži ponudu
