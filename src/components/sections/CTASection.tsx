@@ -31,7 +31,7 @@ const CTASection = () => {
                 size="xl"
                 className="bg-background text-foreground hover:bg-background/90 shadow-floating"
               >
-                Zatraži besplatnu procjenu
+                Zatražite besplatnu procjenu
                 <ArrowRight className="w-5 h-5" />
               </Button>
               <Button
