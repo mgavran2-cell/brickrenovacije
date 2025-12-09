@@ -53,10 +53,7 @@ const Header = () => {
           {/* CTA */}
           <div className="hidden md:flex items-center gap-4">
             <Button variant="ghost" size="sm">
-              Prijava za izvođače
-            </Button>
-            <Button variant="outline" size="sm">
-              Prijava za korisnike
+              Prijava
             </Button>
             <Button size="sm">
               Zatraži ponudu
@@ -109,11 +106,8 @@ const Header = () => {
                 Kontakt
               </a>
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
-                <Button variant="ghost" className="w-full">
-                  Prijava za izvođače
-                </Button>
                 <Button variant="outline" className="w-full">
-                  Prijava za korisnike
+                  Prijava
                 </Button>
                 <Button className="w-full">
                   Zatraži ponudu
