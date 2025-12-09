@@ -22,7 +22,7 @@ const HeroSection = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brick-light border border-brick/20">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="text-sm font-medium text-accent-foreground">
-              Pouzdana renovacija u Hrvatskoj
+              Pouzdane renovacije u Hrvatskoj
             </span>
           </div>
 

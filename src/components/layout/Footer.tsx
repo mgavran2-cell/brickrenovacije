@@ -14,7 +14,7 @@ const Footer = () => {
               <span className="text-xl font-bold">brick renovacije</span>
             </div>
             <p className="text-background/60 text-sm leading-relaxed">
-              Pouzdana renovacija u Hrvatskoj. Sve na jednom mjestu — 
+              Pouzdane renovacije u Hrvatskoj. Sve na jednom mjestu — 
               od ideje do ključa u ruke.
             </p>
           </div>
