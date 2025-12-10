@@ -128,24 +128,6 @@ const TestimonialsSection = () => {
           ))}
         </div>
 
-        {/* Trust Indicators */}
-        <div className="mt-16 text-center">
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-card rounded-full border border-border/50">
-            <div className="flex -space-x-2">
-              {testimonials.slice(0, 4).map((t) => (
-                <img
-                  key={t.id}
-                  src={t.image}
-                  alt={t.name}
-                  className="w-8 h-8 rounded-full border-2 border-background object-cover"
-                />
-              ))}
-            </div>
-            <span className="text-muted-foreground ml-2">
-              <span className="font-semibold text-foreground">100+</span> zadovoljnih klijenata
-            </span>
-          </div>
-        </div>
       </div>
     </section>
   );
