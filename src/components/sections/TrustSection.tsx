@@ -62,17 +62,39 @@ const TrustSection = () => {
             </div>
           </div>
 
-          {/* Right Visual */}
-          <div className="relative">
-            <div className="aspect-square rounded-3xl bg-gradient-to-br from-brick-light to-warm-grey p-8 lg:p-12 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
-                  <Shield className="w-12 h-12 text-primary" />
+          {/* Right - How it Works Steps */}
+          <div className="space-y-6">
+            {[
+              {
+                step: 1,
+                title: "Javite nam se",
+                description: "Ispunite kratki upitnik ili nas nazovite. Opisujete što želite renovirati i dobivate besplatnu procjenu."
+              },
+              {
+                step: 2,
+                title: "Planirajte s nama",
+                description: "Naš tim dolazi na lokaciju, uzima mjere i zajedno definiramo detaljan plan radova i materijala."
+              },
+              {
+                step: 3,
+                title: "Renovacija počinje",
+                description: "Naši provjereni majstori izvode radove dok mi koordiniramo sve - vi samo uživate u rezultatu."
+              }
+            ].map((item, index) => (
+              <div 
+                key={item.step}
+                className="flex gap-5 p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg opacity-0 animate-fade-up"
+                style={{ animationDelay: `${index * 0.15}s`, animationFillMode: "forwards" }}
+              >
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold">
+                  {item.step}
                 </div>
-                <h3 className="text-2xl font-bold text-foreground mb-2">20+ godina iskustva</h3>
-                <p className="text-muted-foreground">Kvaliteta na koju se možete osloniti</p>
+                <div>
+                  <h3 className="text-lg font-bold mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
