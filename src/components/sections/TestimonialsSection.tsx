@@ -4,9 +4,9 @@ import { Card, CardContent } from "@/components/ui/card";
 const testimonials = [
   {
     id: 1,
-    name: "Marko Horvat",
+    name: "Luka Novak",
     location: "Zagreb",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face",
     rating: 5,
     text: "Kompletna renovacija našeg stana prošla je besprijekorno. Profesionalni tim, odlična komunikacija i rezultat koji je premašio sva naša očekivanja. Toplo preporučujem!",
     project: "Renovacija stana"
@@ -14,7 +14,7 @@ const testimonials = [
   {
     id: 2,
     name: "Ana Kovačević",
-    location: "Split",
+    location: "Velika Gorica",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
     rating: 5,
     text: "Adaptacija kupaonice završena je u zadanom roku i unutar budžeta. Kvaliteta materijala i izvedbe je na najvišoj razini. Hvala na prekrasnom novom prostoru!",
@@ -23,7 +23,7 @@ const testimonials = [
   {
     id: 3,
     name: "Ivan Jurić",
-    location: "Rijeka",
+    location: "Samobor",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
     rating: 5,
     text: "Renovirali smo cijelu kuću i iznimno smo zadovoljni. Tim je bio pouzdan, precizan i uvijek dostupan za sva pitanja. Rezultat je točno onakav kakav smo zamislili.",
@@ -32,7 +32,7 @@ const testimonials = [
   {
     id: 4,
     name: "Petra Babić",
-    location: "Zadar",
+    location: "Zaprešić",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
     rating: 5,
     text: "Od prvog kontakta do završetka projekta sve je bilo organizirano i profesionalno. Posebno cijenim transparentnost u cijenama i redovite izvještaje o napretku radova.",
@@ -41,7 +41,7 @@ const testimonials = [
   {
     id: 5,
     name: "Tomislav Matić",
-    location: "Osijek",
+    location: "Sesvete",
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
     rating: 5,
     text: "Izvrsna suradnja! Renovacija poslovnog prostora obavljena je brzo i kvalitetno. Tim je bio fleksibilan i prilagodio se našim potrebama. Definitivno ćemo opet surađivati.",
@@ -50,7 +50,7 @@ const testimonials = [
   {
     id: 6,
     name: "Maja Perić",
-    location: "Dubrovnik",
+    location: "Dugo Selo",
     image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
     rating: 5,
     text: "Preuredba našeg apartmana za iznajmljivanje ispala je fantastično. Moderni dizajn, kvalitetni materijali i pažnja na svaki detalj. Gosti su oduševljeni!",
