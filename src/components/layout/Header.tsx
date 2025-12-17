@@ -45,6 +45,9 @@ const Header = () => {
             <a href="#o-nama" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
               O nama
             </a>
+            <a href="/projekti" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+              Projekti
+            </a>
             <a href="#kontakt" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
               Kontakt
             </a>
@@ -97,6 +100,13 @@ const Header = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 O nama
+              </a>
+              <a
+                href="/projekti"
+                className="text-base font-medium py-2 hover:text-primary transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Projekti
               </a>
               <a
                 href="#kontakt"
