@@ -36,7 +36,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#usluge" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+            <a href="/usluge" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
               Usluge
             </a>
             <a href="#kako-funkcionira" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
@@ -81,7 +81,7 @@ const Header = () => {
           <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border shadow-elevated animate-fade-in">
             <nav className="flex flex-col p-6 gap-4">
               <a
-                href="#usluge"
+                href="/usluge"
                 className="text-base font-medium py-2 hover:text-primary transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
