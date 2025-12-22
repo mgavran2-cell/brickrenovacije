@@ -32,22 +32,6 @@ const services = [
 
 const detailedServices = [
   {
-    title: "Pronađite provjerene majstore",
-    subtitle: "Kvaliteta na koju se možete osloniti",
-    description: "Započnite s povjerenjem. Brick Renovacije vas povezuje s provjerenim majstorima koji dolaze na vašu lokaciju, procjenjuju radove i daju jasne ponude.",
-    features: [
-      "Do tri posjeta provjerenih izvođača",
-      "Jasne, detaljne ponude za usporedbu",
-      "Standardni ugovor i sigurna plaćanja",
-      "Garancija na izvedene radove",
-    ],
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80",
-    testimonial: {
-      text: "Preporučujem Brick Renovacije za pronalazak izvođača. Rade brzo, kvalitetno i s puno znanja.",
-      author: "Ivan M., Zagreb",
-    },
-  },
-  {
     title: "Dizajnirajte svoj prostor",
     subtitle: "Vizualizirajte prije nego što počnete",
     description: "Započnite s besplatnim konzultacijama za istraživanje ideja i opcija rasporeda. Kada budete spremni, dodajte stručnu podršku — od brzih savjeta do 3D vizualizacija.",

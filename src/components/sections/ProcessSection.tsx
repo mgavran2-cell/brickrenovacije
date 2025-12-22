@@ -13,7 +13,7 @@ const steps = [
     icon: Users,
     number: "02",
     title: "Dobijte ponude",
-    description: "Povežemo vas s provjerenim izvođačima koji šalju transparentne i detaljne ponude za usporedbu.",
+    description: "Dobivate transparentne i detaljne ponude za usporedbu kako biste odabrali najbolju opciju.",
     image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80",
   },
   {
