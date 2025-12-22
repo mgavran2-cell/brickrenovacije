@@ -34,7 +34,7 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section className="section-padding bg-background overflow-hidden">
+    <section id="kako-funkcionira" className="section-padding bg-background overflow-hidden scroll-mt-24">
       <div className="container-narrow">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-16">
@@ -82,7 +82,7 @@ const ProcessSection = () => {
               </div>
 
               {/* Image Side */}
-              <div className={`relative aspect-[4/3] lg:aspect-auto ${index % 2 === 1 ? "lg:order-1" : ""}`}>
+              <div className={`relative aspect-[4/3] lg:aspect-auto min-h-[300px] ${index % 2 === 1 ? "lg:order-1" : ""}`}>
                 <img
                   src={step.image}
                   alt={step.title}
