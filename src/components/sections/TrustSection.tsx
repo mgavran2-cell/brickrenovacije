@@ -68,18 +68,18 @@ const TrustSection = () => {
             {[
               {
                 step: 1,
-                title: "Javite nam se",
-                description: "Ispunite kratki upitnik ili nas nazovite. Opisujete što želite renovirati i dobivate besplatnu procjenu."
+                title: "Opišite projekt",
+                description: "Ispunite jednostavan upitnik: vrsta nekretnine, lokacija, kvadratura i opseg radova koje želite."
               },
               {
                 step: 2,
-                title: "Planirajte s nama",
-                description: "Naš tim dolazi na lokaciju, uzima mjere i zajedno definiramo detaljan plan radova i materijala."
+                title: "Prilagodite ponudu",
+                description: "Odaberite standard materijala i priložite fotografije prostora za precizniju procjenu."
               },
               {
                 step: 3,
-                title: "Renovacija počinje",
-                description: "Naši provjereni majstori izvode radove dok mi koordiniramo sve - vi samo uživate u rezultatu."
+                title: "Dobijte ponudu",
+                description: "U roku od 48 sati kontaktiramo vas s detaljnom ponudom prilagođenom vašim potrebama."
               }
             ].map((item, index) => (
               <div 
