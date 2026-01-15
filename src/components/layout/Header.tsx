@@ -1,10 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleKakoFunkcionira = useCallback(() => {
+    // The section exists only on the home page, so if we're elsewhere, navigate first.
+    if (location.pathname !== "/") {
+      navigate({ pathname: "/", hash: "#kako-funkcionira" });
+      return;
+    }
+
+    document
+      .getElementById("kako-funkcionira")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [location.pathname, navigate]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,7 +56,8 @@ const Header = () => {
               Usluge
             </a>
             <button 
-              onClick={() => document.getElementById('kako-funkcionira')?.scrollIntoView({ behavior: 'smooth' })}
+              type="button"
+              onClick={handleKakoFunkcionira}
               className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
             >
               Kako funkcionira
@@ -91,10 +108,11 @@ const Header = () => {
                 Usluge
               </a>
               <button
+                type="button"
                 className="text-base font-medium py-2 hover:text-primary transition-colors text-left"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
-                  document.getElementById('kako-funkcionira')?.scrollIntoView({ behavior: 'smooth' });
+                  handleKakoFunkcionira();
                 }}
               >
                 Kako funkcionira
