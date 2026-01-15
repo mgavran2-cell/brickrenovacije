@@ -39,9 +39,12 @@ const Header = () => {
             <a href="/usluge" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
               Usluge
             </a>
-            <a href="#kako-funkcionira" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+            <button 
+              onClick={() => document.getElementById('kako-funkcionira')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+            >
               Kako funkcionira
-            </a>
+            </button>
             <a href="#o-nama" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
               O nama
             </a>
@@ -87,13 +90,15 @@ const Header = () => {
               >
                 Usluge
               </a>
-              <a
-                href="#kako-funkcionira"
-                className="text-base font-medium py-2 hover:text-primary transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button
+                className="text-base font-medium py-2 hover:text-primary transition-colors text-left"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  document.getElementById('kako-funkcionira')?.scrollIntoView({ behavior: 'smooth' });
+                }}
               >
                 Kako funkcionira
-              </a>
+              </button>
               <a
                 href="#o-nama"
                 className="text-base font-medium py-2 hover:text-primary transition-colors"
