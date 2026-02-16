@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/hero-renovation.jpg";
+import QuoteRequestDialog from "@/components/QuoteRequestDialog";
 
 const HeroSection = () => {
+  const [quoteOpen, setQuoteOpen] = useState(false);
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       {/* Background Image */}
@@ -40,7 +43,7 @@ const HeroSection = () => {
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Button variant="hero" size="lg">
+            <Button variant="hero" size="lg" onClick={() => setQuoteOpen(true)}>
               Zatražite besplatnu procjenu
               <ArrowRight className="w-5 h-5" />
             </Button>
@@ -72,6 +75,7 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+      <QuoteRequestDialog open={quoteOpen} onOpenChange={setQuoteOpen} />
     </section>
   );
 };
