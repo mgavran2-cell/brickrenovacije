@@ -1,7 +1,9 @@
+import { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import QuoteRequestDialog from "@/components/QuoteRequestDialog";
 
 const projects = [
   {
@@ -61,6 +63,7 @@ const projects = [
 ];
 
 const Projekti = () => {
+  const [quoteOpen, setQuoteOpen] = useState(false);
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -128,10 +131,11 @@ const Projekti = () => {
             <p className="text-lg text-muted-foreground mb-6">
               Želite sličnu renovaciju? Javite nam se za besplatnu procjenu.
             </p>
-            <Button size="lg" className="group">
+            <Button size="lg" className="group" onClick={() => setQuoteOpen(true)}>
               Zatraži ponudu
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
+            <QuoteRequestDialog open={quoteOpen} onOpenChange={setQuoteOpen} />
           </div>
         </div>
       </section>

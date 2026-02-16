@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import QuoteRequestDialog from "@/components/QuoteRequestDialog";
 
 const CTASection = () => {
+  const [quoteOpen, setQuoteOpen] = useState(false);
   return (
     <section className="section-padding">
       <div className="container-narrow">
@@ -30,6 +33,7 @@ const CTASection = () => {
               <Button
                 size="xl"
                 className="bg-background text-foreground hover:bg-background/90 shadow-floating"
+                onClick={() => setQuoteOpen(true)}
               >
                 Zatražite besplatnu procjenu
                 <ArrowRight className="w-5 h-5" />
@@ -50,6 +54,7 @@ const CTASection = () => {
           </div>
         </div>
       </div>
+      <QuoteRequestDialog open={quoteOpen} onOpenChange={setQuoteOpen} />
     </section>
   );
 };

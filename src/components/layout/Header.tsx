@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import QuoteRequestDialog from "@/components/QuoteRequestDialog";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ const Header = () => {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [quoteOpen, setQuoteOpen] = useState(false);
 
   const handleKakoFunkcionira = useCallback(() => {
     // The section exists only on the home page, so if we're elsewhere, navigate first.
@@ -78,7 +80,7 @@ const Header = () => {
             <Button variant="ghost" size="sm">
               Prijava
             </Button>
-            <Button size="sm">
+            <Button size="sm" onClick={() => setQuoteOpen(true)}>
               Zatraži ponudu
             </Button>
           </div>
@@ -142,7 +144,7 @@ const Header = () => {
                 <Button variant="outline" className="w-full">
                   Prijava
                 </Button>
-                <Button className="w-full">
+                <Button className="w-full" onClick={() => { setIsMobileMenuOpen(false); setQuoteOpen(true); }}>
                   Zatraži ponudu
                 </Button>
               </div>
@@ -150,6 +152,7 @@ const Header = () => {
           </div>
         )}
       </div>
+      <QuoteRequestDialog open={quoteOpen} onOpenChange={setQuoteOpen} />
     </header>
   );
 };
