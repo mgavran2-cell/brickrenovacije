@@ -14,7 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      renovation_requests: {
+        Row: {
+          condition: string
+          created_at: string
+          email: string
+          id: string
+          location: string
+          material: string
+          message: string | null
+          name: string
+          phone: string
+          property_type: string
+          scope: string
+          sqm: number | null
+        }
+        Insert: {
+          condition: string
+          created_at?: string
+          email: string
+          id?: string
+          location: string
+          material: string
+          message?: string | null
+          name: string
+          phone: string
+          property_type: string
+          scope: string
+          sqm?: number | null
+        }
+        Update: {
+          condition?: string
+          created_at?: string
+          email?: string
+          id?: string
+          location?: string
+          material?: string
+          message?: string | null
+          name?: string
+          phone?: string
+          property_type?: string
+          scope?: string
+          sqm?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
