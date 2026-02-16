@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, ArrowLeft, Check, Home, Wrench, Sparkles, PaintBucket, User } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Home, Wrench, Sparkles, PaintBucket, User, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const PROPERTY_TYPES = ["Stan", "Kuća", "Poslovni prostor", "Apartman"];
 const LOCATIONS = ["Zagreb", "Velika Gorica", "Samobor", "Zaprešić", "Sesvete", "Dugo Selo", "Ostalo"];
@@ -53,6 +55,7 @@ const QuoteRequestDialog = ({ open, onOpenChange }: QuoteRequestDialogProps) => 
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const toggleScope = (item: string) => {
     setData((d) => ({
@@ -70,8 +73,44 @@ const QuoteRequestDialog = ({ open, onOpenChange }: QuoteRequestDialogProps) => 
     return false;
   };
 
-  const handleSubmit = () => {
-    setSubmitted(true);
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const { data: insertedRow, error } = await supabase
+        .from("renovation_requests")
+        .insert({
+          property_type: data.propertyType,
+          location: data.location,
+          sqm: data.sqm ? parseInt(data.sqm) : null,
+          scope: data.scope.join(", "),
+          condition: data.condition,
+          material: data.material,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          message: data.message || "",
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Trigger email notification
+      try {
+        await supabase.functions.invoke("notify-new-request", {
+          body: { record: insertedRow },
+        });
+      } catch (notifyErr) {
+        console.error("Notification error:", notifyErr);
+      }
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error("Submit error:", err);
+      toast.error("Greška pri slanju zahtjeva. Pokušajte ponovo.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClose = () => {
@@ -285,8 +324,8 @@ const QuoteRequestDialog = ({ open, onOpenChange }: QuoteRequestDialogProps) => 
                     Dalje <ArrowRight className="w-4 h-4 ml-1" />
                   </Button>
                 ) : (
-                  <Button onClick={handleSubmit} disabled={!canNext()}>
-                    Pošalji zahtjev <Check className="w-4 h-4 ml-1" />
+                  <Button onClick={handleSubmit} disabled={!canNext() || loading}>
+                    {loading ? <><Loader2 className="w-4 h-4 mr-1 animate-spin" /> Šaljem...</> : <>Pošalji zahtjev <Check className="w-4 h-4 ml-1" /></>}
                   </Button>
                 )}
               </div>
