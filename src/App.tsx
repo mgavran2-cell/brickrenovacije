@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import Projekti from "./pages/Projekti";
 import Usluge from "./pages/Usluge";
 import Admin from "./pages/Admin";
+import Prijava from "./pages/Prijava";
+import ProtectedRoute from "./components/routing/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,7 +25,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/projekti" element={<Projekti />} />
           <Route path="/usluge" element={<Usluge />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/prijava" element={<Prijava />} />
+          <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
