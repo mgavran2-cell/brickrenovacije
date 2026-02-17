@@ -7,6 +7,7 @@ import ScrollToHash from "@/components/routing/ScrollToHash";
 import Index from "./pages/Index";
 import Projekti from "./pages/Projekti";
 import Usluge from "./pages/Usluge";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/projekti" element={<Projekti />} />
           <Route path="/usluge" element={<Usluge />} />
+          <Route path="/admin" element={<Admin />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
