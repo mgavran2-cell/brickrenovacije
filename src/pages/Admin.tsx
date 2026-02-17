@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -11,10 +13,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Mail, Phone, MapPin, Calendar } from "lucide-react";
+import { Loader2, Mail, Phone, MapPin, Calendar, LogOut } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 
 const Admin = () => {
+  const { session, signOut } = useAuth();
   const [requests, setRequests] = useState<Tables<"renovation_requests">[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -61,6 +64,12 @@ const Admin = () => {
             <p className="mt-6 text-lg text-muted-foreground">
               Pregled svih pristiglih zahtjeva za ponudu renovacije.
             </p>
+            <div className="mt-4 flex items-center justify-center gap-3 text-sm text-muted-foreground">
+              <span>{session?.user?.email}</span>
+              <Button variant="ghost" size="sm" onClick={signOut}>
+                <LogOut className="w-4 h-4 mr-1" /> Odjava
+              </Button>
+            </div>
           </div>
         </div>
       </section>
