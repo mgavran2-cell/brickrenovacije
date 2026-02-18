@@ -25,7 +25,7 @@ const Prijava = () => {
         toast.error(error.message);
       } else {
         toast.success("Uspješna prijava!");
-        navigate("/admin");
+        navigate("/dashboard");
       }
     } else {
       const { error } = await supabase.auth.signUp({ email, password });
@@ -33,7 +33,7 @@ const Prijava = () => {
         toast.error(error.message);
       } else {
         toast.success("Račun kreiran!");
-        navigate("/admin");
+        navigate("/dashboard");
       }
     }
 
