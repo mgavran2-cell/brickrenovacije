@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 import QuoteRequestDialog from "@/components/QuoteRequestDialog";
 
 const Header = () => {
@@ -11,6 +12,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [quoteOpen, setQuoteOpen] = useState(false);
+  const { session } = useAuth();
 
   const handleKakoFunkcionira = useCallback(() => {
     // The section exists only on the home page, so if we're elsewhere, navigate first.
@@ -77,8 +79,8 @@ const Header = () => {
 
           {/* CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" size="sm" onClick={() => navigate("/prijava")}>
-              Prijava
+            <Button variant="ghost" size="sm" onClick={() => navigate(session ? "/dashboard" : "/prijava")}>
+              {session ? "Dashboard" : "Prijava"}
             </Button>
             <Button size="sm" onClick={() => setQuoteOpen(true)}>
               Zatraži ponudu
@@ -141,8 +143,8 @@ const Header = () => {
                 Kontakt
               </a>
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
-                <Button variant="outline" className="w-full" onClick={() => { setIsMobileMenuOpen(false); navigate("/prijava"); }}>
-                  Prijava
+                <Button variant="outline" className="w-full" onClick={() => { setIsMobileMenuOpen(false); navigate(session ? "/dashboard" : "/prijava"); }}>
+                  {session ? "Dashboard" : "Prijava"}
                 </Button>
                 <Button className="w-full" onClick={() => { setIsMobileMenuOpen(false); setQuoteOpen(true); }}>
                   Zatraži ponudu

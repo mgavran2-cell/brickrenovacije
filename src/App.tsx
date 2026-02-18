@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Projekti from "./pages/Projekti";
 import Usluge from "./pages/Usluge";
 import Admin from "./pages/Admin";
+import Dashboard from "./pages/Dashboard";
 import Prijava from "./pages/Prijava";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import NotFound from "./pages/NotFound";
@@ -26,6 +27,8 @@ const App = () => (
           <Route path="/projekti" element={<Projekti />} />
           <Route path="/usluge" element={<Usluge />} />
           <Route path="/prijava" element={<Prijava />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/dashboard/*" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
