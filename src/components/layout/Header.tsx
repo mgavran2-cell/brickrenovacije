@@ -77,7 +77,7 @@ const Header = () => {
 
           {/* CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" onClick={() => navigate("/prijava")}>
               Prijava
             </Button>
             <Button size="sm" onClick={() => setQuoteOpen(true)}>
@@ -141,7 +141,7 @@ const Header = () => {
                 Kontakt
               </a>
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={() => { setIsMobileMenuOpen(false); navigate("/prijava"); }}>
                   Prijava
                 </Button>
                 <Button className="w-full" onClick={() => { setIsMobileMenuOpen(false); setQuoteOpen(true); }}>
