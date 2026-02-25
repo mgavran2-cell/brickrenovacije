@@ -14,6 +14,211 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_log: {
+        Row: {
+          created_at: string
+          description: string | null
+          icon_name: string
+          id: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          icon_name?: string
+          id?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          icon_name?: string
+          id?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      conversations: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ponude: {
+        Row: {
+          amount: number
+          code: string
+          created_at: string
+          date: string
+          id: string
+          project_id: string | null
+          status: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          code: string
+          created_at?: string
+          date?: string
+          id?: string
+          project_id?: string | null
+          status?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          code?: string
+          created_at?: string
+          date?: string
+          id?: string
+          project_id?: string | null
+          status?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ponude_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      poruke: {
+        Row: {
+          conversation_id: string
+          created_at: string
+          id: string
+          receiver_id: string | null
+          sender_id: string
+          sender_name: string
+          text: string
+        }
+        Insert: {
+          conversation_id: string
+          created_at?: string
+          id?: string
+          receiver_id?: string | null
+          sender_id: string
+          sender_name?: string
+          text: string
+        }
+        Update: {
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          receiver_id?: string | null
+          sender_id?: string
+          sender_name?: string
+          text?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          created_at: string
+          id: string
+          location: string | null
+          progress: number
+          start_date: string | null
+          status: string
+          title: string
+          type: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          location?: string | null
+          progress?: number
+          start_date?: string | null
+          status?: string
+          title: string
+          type?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          location?: string | null
+          progress?: number
+          start_date?: string | null
+          status?: string
+          title?: string
+          type?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      racuni: {
+        Row: {
+          amount: number
+          code: string
+          created_at: string
+          date: string
+          id: string
+          project_id: string | null
+          status: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          code: string
+          created_at?: string
+          date?: string
+          id?: string
+          project_id?: string | null
+          status?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          code?: string
+          created_at?: string
+          date?: string
+          id?: string
+          project_id?: string | null
+          status?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "racuni_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       renovation_requests: {
         Row: {
           condition: string
