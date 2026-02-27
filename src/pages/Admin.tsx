@@ -71,10 +71,10 @@ const Admin = () => {
     const [reqRes, profRes, projRes, ponRes, racRes, conRes] = await Promise.all([
       supabase.from("renovation_requests").select("*").order("created_at", { ascending: false }),
       supabase.from("profiles").select("*").order("created_at", { ascending: false }),
-      supabase.from("projects").select("*, profiles(email, full_name)").order("created_at", { ascending: false }),
-      supabase.from("ponude").select("*, profiles(email, full_name), projects(title)").order("created_at", { ascending: false }),
-      supabase.from("racuni").select("*, profiles(email, full_name), projects(title)").order("created_at", { ascending: false }),
-      supabase.from("conversations").select("*, profiles(email, full_name)").order("created_at", { ascending: false }),
+      supabase.from("projects").select("*").order("created_at", { ascending: false }),
+      supabase.from("ponude").select("*").order("created_at", { ascending: false }),
+      supabase.from("racuni").select("*").order("created_at", { ascending: false }),
+      supabase.from("conversations").select("*").order("created_at", { ascending: false }),
     ]);
     setRequests(reqRes.data ?? []);
     setProfiles(profRes.data ?? []);
@@ -85,9 +85,22 @@ const Admin = () => {
     setLoading(false);
   };
 
+  // Helper to lookup profile name by user_id
+  const getProfileName = (userId: string) => {
+    const p = profiles.find((pr) => pr.id === userId);
+    return p?.full_name || p?.email || "—";
+  };
+
+  const getProjectTitle = (projectId: string | null) => {
+    if (!projectId) return "—";
+    const p = projects.find((pr: any) => pr.id === projectId);
+    return p?.title || "—";
+  };
+
   useEffect(() => {
     if (isAdmin) fetchAll();
-  }, [isAdmin]);
+    else if (!adminLoading) setLoading(false);
+  }, [isAdmin, adminLoading]);
 
   const formatDate = (d: string) => {
     try { return format(new Date(d), "dd.MM.yyyy"); } catch { return d; }
@@ -200,7 +213,7 @@ const Admin = () => {
                     {projects.map((p) => (
                       <TableRow key={p.id}>
                         <TableCell className="font-medium">{p.title}</TableCell>
-                        <TableCell className="text-sm">{p.profiles?.full_name || p.profiles?.email || "—"}</TableCell>
+                        <TableCell className="text-sm">{getProfileName(p.user_id)}</TableCell>
                         <TableCell><StatusBadge status={p.status} /></TableCell>
                         <TableCell>{p.progress}%</TableCell>
                         <TableCell className="text-sm text-muted-foreground">{p.location || "—"}</TableCell>
@@ -252,8 +265,8 @@ const Admin = () => {
                       <TableRow key={p.id}>
                         <TableCell className="font-mono text-sm">{p.code}</TableCell>
                         <TableCell className="font-medium">{p.title}</TableCell>
-                        <TableCell className="text-sm">{p.profiles?.full_name || p.profiles?.email || "—"}</TableCell>
-                        <TableCell className="text-sm">{p.projects?.title || "—"}</TableCell>
+                        <TableCell className="text-sm">{getProfileName(p.user_id)}</TableCell>
+                        <TableCell className="text-sm">{getProjectTitle(p.project_id)}</TableCell>
                         <TableCell className="font-bold">{Number(p.amount).toLocaleString("hr-HR")} €</TableCell>
                         <TableCell><StatusBadge status={p.status} /></TableCell>
                         <TableCell className="text-sm text-muted-foreground">{formatDate(p.date)}</TableCell>
@@ -304,8 +317,8 @@ const Admin = () => {
                       <TableRow key={r.id}>
                         <TableCell className="font-mono text-sm">{r.code}</TableCell>
                         <TableCell className="font-medium">{r.title}</TableCell>
-                        <TableCell className="text-sm">{r.profiles?.full_name || r.profiles?.email || "—"}</TableCell>
-                        <TableCell className="text-sm">{r.projects?.title || "—"}</TableCell>
+                        <TableCell className="text-sm">{getProfileName(r.user_id)}</TableCell>
+                        <TableCell className="text-sm">{getProjectTitle(r.project_id)}</TableCell>
                         <TableCell className="font-bold">{Number(r.amount).toLocaleString("hr-HR")} €</TableCell>
                         <TableCell><StatusBadge status={r.status} /></TableCell>
                         <TableCell className="text-sm text-muted-foreground">{formatDate(r.date)}</TableCell>
@@ -350,7 +363,7 @@ const Admin = () => {
                     {conversations.map((c) => (
                       <TableRow key={c.id}>
                         <TableCell className="font-medium">{c.name}</TableCell>
-                        <TableCell className="text-sm">{c.profiles?.full_name || c.profiles?.email || "—"}</TableCell>
+                        <TableCell className="text-sm">{getProfileName(c.user_id)}</TableCell>
                         <TableCell className="text-sm text-muted-foreground">{formatDate(c.created_at)}</TableCell>
                         <TableCell>
                           <Button variant="ghost" size="sm" onClick={async () => {
