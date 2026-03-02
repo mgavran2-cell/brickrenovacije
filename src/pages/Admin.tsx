@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,7 @@ import {
   Phone,
   MapPin,
   Calendar,
+  Send,
 } from "lucide-react";
 import { format } from "date-fns";
 import type { Tables } from "@/integrations/supabase/types";
@@ -365,7 +367,13 @@ const Admin = () => {
                         <TableCell className="font-medium">{c.name}</TableCell>
                         <TableCell className="text-sm">{getProfileName(c.user_id)}</TableCell>
                         <TableCell className="text-sm text-muted-foreground">{formatDate(c.created_at)}</TableCell>
-                        <TableCell>
+                        <TableCell className="flex items-center gap-1">
+                          <AdminChatDialog
+                            conversationId={c.id}
+                            conversationName={c.name}
+                            adminUserId={session?.user?.id ?? ""}
+                            adminName={session?.user?.user_metadata?.full_name ?? session?.user?.email ?? "Admin"}
+                          />
                           <Button variant="ghost" size="sm" onClick={async () => {
                             await supabase.from("conversations").delete().eq("id", c.id);
                             toast.success("Razgovor obrisan");
@@ -690,6 +698,119 @@ const CreateConvoDialog = ({ open, onOpenChange, profiles, onCreated }: any) => 
           </div>
           <div><Label>Naziv razgovora</Label><Input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Ivan – Voditelj projekta" /></div>
           <Button onClick={handleSubmit} className="w-full">Kreiraj razgovor</Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+
+// Admin Chat Dialog
+const AdminChatDialog = ({ conversationId, conversationName, adminUserId, adminName }: {
+  conversationId: string; conversationName: string; adminUserId: string; adminName: string;
+}) => {
+  const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState<any[]>([]);
+  const [newMsg, setNewMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
+
+  const fetchMessages = async () => {
+    setLoading(true);
+    const { data } = await supabase
+      .from("poruke")
+      .select("*")
+      .eq("conversation_id", conversationId)
+      .order("created_at", { ascending: true });
+    setMessages(data ?? []);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    fetchMessages();
+    const channel = supabase
+      .channel(`admin-chat-${conversationId}`)
+      .on("postgres_changes", {
+        event: "INSERT", schema: "public", table: "poruke",
+        filter: `conversation_id=eq.${conversationId}`,
+      }, (payload) => {
+        setMessages((prev) => [...prev, payload.new as any]);
+      })
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [open, conversationId]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSend = async () => {
+    if (!newMsg.trim()) return;
+    await supabase.from("poruke").insert({
+      conversation_id: conversationId,
+      sender_id: adminUserId,
+      sender_name: adminName,
+      text: newMsg.trim(),
+    });
+    setNewMsg("");
+  };
+
+  const formatTime = (d: string) => {
+    try {
+      const date = new Date(d);
+      return `${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
+    } catch { return ""; }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="ghost" size="sm"><MessageSquare className="w-4 h-4" /></Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-lg max-h-[80vh] flex flex-col">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <MessageSquare className="w-5 h-5 text-primary" /> {conversationName}
+          </DialogTitle>
+        </DialogHeader>
+        <div className="flex-1 overflow-y-auto space-y-3 py-4 min-h-[300px] max-h-[400px]">
+          {loading && <p className="text-center text-muted-foreground text-sm">Učitavanje...</p>}
+          {!loading && messages.length === 0 && (
+            <p className="text-center text-muted-foreground text-sm py-8">Nema poruka u ovom razgovoru.</p>
+          )}
+          {messages.map((msg) => {
+            const isAdmin = msg.sender_id === adminUserId;
+            return (
+              <div key={msg.id} className={cn("flex", isAdmin ? "justify-end" : "justify-start")}>
+                <div className={cn(
+                  "max-w-[75%] rounded-2xl px-4 py-2.5",
+                  isAdmin
+                    ? "bg-primary text-primary-foreground rounded-br-md"
+                    : "bg-secondary text-foreground rounded-bl-md"
+                )}>
+                  {!isAdmin && <p className="text-xs font-semibold mb-1 opacity-70">{msg.sender_name}</p>}
+                  <p className="text-sm">{msg.text}</p>
+                  <p className={cn("text-[10px] mt-1", isAdmin ? "text-primary-foreground/60" : "text-muted-foreground")}>
+                    {formatTime(msg.created_at)}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+          <div ref={messagesEndRef} />
+        </div>
+        <div className="border-t border-border/50 pt-3 flex items-center gap-2">
+          <Input
+            placeholder="Napišite poruku..."
+            value={newMsg}
+            onChange={(e) => setNewMsg(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            className="rounded-xl"
+          />
+          <Button size="icon" className="shrink-0 rounded-xl" onClick={handleSend}>
+            <Send className="w-4 h-4" />
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
