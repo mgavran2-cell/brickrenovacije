@@ -69,6 +69,11 @@ const Admin = () => {
   const [racunDialogOpen, setRacunDialogOpen] = useState(false);
   const [convoDialogOpen, setConvoDialogOpen] = useState(false);
 
+  // Edit dialog states
+  const [editProject, setEditProject] = useState<any | null>(null);
+  const [editPonuda, setEditPonuda] = useState<any | null>(null);
+  const [editRacun, setEditRacun] = useState<any | null>(null);
+
   const fetchAll = async () => {
     const [reqRes, profRes, projRes, ponRes, racRes, conRes] = await Promise.all([
       supabase.from("renovation_requests").select("*").order("created_at", { ascending: false }),
@@ -220,7 +225,8 @@ const Admin = () => {
                         <TableCell>{p.progress}%</TableCell>
                         <TableCell className="text-sm text-muted-foreground">{p.location || "—"}</TableCell>
                         <TableCell className="text-sm text-muted-foreground">{p.start_date ? formatDate(p.start_date) : "—"}</TableCell>
-                        <TableCell>
+                        <TableCell className="flex items-center gap-1">
+                          <Button variant="ghost" size="sm" onClick={() => setEditProject(p)}><Edit className="w-4 h-4" /></Button>
                           <Button variant="ghost" size="sm" onClick={async () => {
                             await supabase.from("projects").delete().eq("id", p.id);
                             toast.success("Projekt obrisan");
@@ -273,6 +279,7 @@ const Admin = () => {
                         <TableCell><StatusBadge status={p.status} /></TableCell>
                         <TableCell className="text-sm text-muted-foreground">{formatDate(p.date)}</TableCell>
                         <TableCell>
+                          <Button variant="ghost" size="sm" onClick={() => setEditPonuda(p)}><Edit className="w-4 h-4" /></Button>
                           <Button variant="ghost" size="sm" onClick={async () => {
                             await supabase.from("ponude").delete().eq("id", p.id);
                             toast.success("Ponuda obrisana");
@@ -325,6 +332,7 @@ const Admin = () => {
                         <TableCell><StatusBadge status={r.status} /></TableCell>
                         <TableCell className="text-sm text-muted-foreground">{formatDate(r.date)}</TableCell>
                         <TableCell>
+                          <Button variant="ghost" size="sm" onClick={() => setEditRacun(r)}><Edit className="w-4 h-4" /></Button>
                           <Button variant="ghost" size="sm" onClick={async () => {
                             await supabase.from("racuni").delete().eq("id", r.id);
                             toast.success("Račun obrisan");
@@ -388,6 +396,11 @@ const Admin = () => {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Edit Dialogs */}
+        <EditProjectDialog item={editProject} onClose={() => setEditProject(null)} profiles={profiles} onUpdated={fetchAll} />
+        <EditPonudaDialog item={editPonuda} onClose={() => setEditPonuda(null)} profiles={profiles} projects={projects} onUpdated={fetchAll} />
+        <EditRacunDialog item={editRacun} onClose={() => setEditRacun(null)} profiles={profiles} projects={projects} onUpdated={fetchAll} />
       </div>
     </div>
   );
@@ -811,6 +824,185 @@ const AdminChatDialog = ({ conversationId, conversationName, adminUserId, adminN
           <Button size="icon" className="shrink-0 rounded-xl" onClick={handleSend}>
             <Send className="w-4 h-4" />
           </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+// Edit Project Dialog
+const EditProjectDialog = ({ item, onClose, profiles, onUpdated }: { item: any; onClose: () => void; profiles: any[]; onUpdated: () => void }) => {
+  const [form, setForm] = useState({ title: "", location: "", status: "planned", progress: 0, start_date: "", type: "" });
+
+  useEffect(() => {
+    if (item) setForm({
+      title: item.title ?? "", location: item.location ?? "", status: item.status ?? "planned",
+      progress: item.progress ?? 0, start_date: item.start_date ?? "", type: item.type ?? "",
+    });
+  }, [item]);
+
+  const handleSubmit = async () => {
+    const { error } = await supabase.from("projects").update({
+      title: form.title, location: form.location || null, status: form.status,
+      progress: form.progress, start_date: form.start_date || null, type: form.type || null,
+    }).eq("id", item.id);
+    if (error) { toast.error(error.message); return; }
+    toast.success("Projekt ažuriran!");
+    onClose();
+    onUpdated();
+  };
+
+  return (
+    <Dialog open={!!item} onOpenChange={(v) => !v && onClose()}>
+      <DialogContent>
+        <DialogHeader><DialogTitle>Uredi projekt</DialogTitle></DialogHeader>
+        <div className="space-y-4">
+          <div><Label>Klijent</Label><Input disabled value={profiles.find((p: any) => p.id === item?.user_id)?.full_name || profiles.find((p: any) => p.id === item?.user_id)?.email || ""} /></div>
+          <div><Label>Naslov</Label><Input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} /></div>
+          <div className="grid grid-cols-2 gap-4">
+            <div><Label>Lokacija</Label><Input value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))} /></div>
+            <div><Label>Tip</Label><Input value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} /></div>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <Label>Status</Label>
+              <Select value={form.status} onValueChange={(v) => setForm(f => ({ ...f, status: v }))}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="planned">Planirano</SelectItem>
+                  <SelectItem value="active">U tijeku</SelectItem>
+                  <SelectItem value="completed">Završeno</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div><Label>Napredak (%)</Label><Input type="number" min={0} max={100} value={form.progress} onChange={e => setForm(f => ({ ...f, progress: Number(e.target.value) }))} /></div>
+            <div><Label>Datum početka</Label><Input type="date" value={form.start_date} onChange={e => setForm(f => ({ ...f, start_date: e.target.value }))} /></div>
+          </div>
+          <Button onClick={handleSubmit} className="w-full">Spremi promjene</Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+// Edit Ponuda Dialog
+const EditPonudaDialog = ({ item, onClose, profiles, projects, onUpdated }: { item: any; onClose: () => void; profiles: any[]; projects: any[]; onUpdated: () => void }) => {
+  const [form, setForm] = useState({ project_id: "", code: "", title: "", amount: 0, status: "pending" });
+
+  useEffect(() => {
+    if (item) setForm({
+      project_id: item.project_id ?? "", code: item.code ?? "", title: item.title ?? "",
+      amount: item.amount ?? 0, status: item.status ?? "pending",
+    });
+  }, [item]);
+
+  const handleSubmit = async () => {
+    const { error } = await supabase.from("ponude").update({
+      project_id: form.project_id || null, code: form.code, title: form.title,
+      amount: form.amount, status: form.status,
+    }).eq("id", item.id);
+    if (error) { toast.error(error.message); return; }
+    toast.success("Ponuda ažurirana!");
+    onClose();
+    onUpdated();
+  };
+
+  return (
+    <Dialog open={!!item} onOpenChange={(v) => !v && onClose()}>
+      <DialogContent>
+        <DialogHeader><DialogTitle>Uredi ponudu</DialogTitle></DialogHeader>
+        <div className="space-y-4">
+          <div><Label>Klijent</Label><Input disabled value={profiles.find((p: any) => p.id === item?.user_id)?.full_name || profiles.find((p: any) => p.id === item?.user_id)?.email || ""} /></div>
+          <div>
+            <Label>Projekt (opcionalno)</Label>
+            <Select value={form.project_id} onValueChange={(v) => setForm(f => ({ ...f, project_id: v }))}>
+              <SelectTrigger><SelectValue placeholder="Odaberi projekt" /></SelectTrigger>
+              <SelectContent>
+                {projects.filter((p: any) => p.user_id === item?.user_id).map((p: any) => (
+                  <SelectItem key={p.id} value={p.id}>{p.title}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div><Label>Šifra</Label><Input value={form.code} onChange={e => setForm(f => ({ ...f, code: e.target.value }))} /></div>
+            <div><Label>Iznos (€)</Label><Input type="number" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: Number(e.target.value) }))} /></div>
+          </div>
+          <div><Label>Naslov</Label><Input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} /></div>
+          <div>
+            <Label>Status</Label>
+            <Select value={form.status} onValueChange={(v) => setForm(f => ({ ...f, status: v }))}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="pending">Na čekanju</SelectItem>
+                <SelectItem value="accepted">Prihvaćeno</SelectItem>
+                <SelectItem value="rejected">Odbijeno</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Button onClick={handleSubmit} className="w-full">Spremi promjene</Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+// Edit Racun Dialog
+const EditRacunDialog = ({ item, onClose, profiles, projects, onUpdated }: { item: any; onClose: () => void; profiles: any[]; projects: any[]; onUpdated: () => void }) => {
+  const [form, setForm] = useState({ project_id: "", code: "", title: "", amount: 0, status: "pending" });
+
+  useEffect(() => {
+    if (item) setForm({
+      project_id: item.project_id ?? "", code: item.code ?? "", title: item.title ?? "",
+      amount: item.amount ?? 0, status: item.status ?? "pending",
+    });
+  }, [item]);
+
+  const handleSubmit = async () => {
+    const { error } = await supabase.from("racuni").update({
+      project_id: form.project_id || null, code: form.code, title: form.title,
+      amount: form.amount, status: form.status,
+    }).eq("id", item.id);
+    if (error) { toast.error(error.message); return; }
+    toast.success("Račun ažuriran!");
+    onClose();
+    onUpdated();
+  };
+
+  return (
+    <Dialog open={!!item} onOpenChange={(v) => !v && onClose()}>
+      <DialogContent>
+        <DialogHeader><DialogTitle>Uredi račun</DialogTitle></DialogHeader>
+        <div className="space-y-4">
+          <div><Label>Klijent</Label><Input disabled value={profiles.find((p: any) => p.id === item?.user_id)?.full_name || profiles.find((p: any) => p.id === item?.user_id)?.email || ""} /></div>
+          <div>
+            <Label>Projekt (opcionalno)</Label>
+            <Select value={form.project_id} onValueChange={(v) => setForm(f => ({ ...f, project_id: v }))}>
+              <SelectTrigger><SelectValue placeholder="Odaberi projekt" /></SelectTrigger>
+              <SelectContent>
+                {projects.filter((p: any) => p.user_id === item?.user_id).map((p: any) => (
+                  <SelectItem key={p.id} value={p.id}>{p.title}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div><Label>Šifra</Label><Input value={form.code} onChange={e => setForm(f => ({ ...f, code: e.target.value }))} /></div>
+            <div><Label>Iznos (€)</Label><Input type="number" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: Number(e.target.value) }))} /></div>
+          </div>
+          <div><Label>Naslov</Label><Input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} /></div>
+          <div>
+            <Label>Status</Label>
+            <Select value={form.status} onValueChange={(v) => setForm(f => ({ ...f, status: v }))}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="pending">Čeka uplatu</SelectItem>
+                <SelectItem value="paid">Plaćeno</SelectItem>
+                <SelectItem value="overdue">Dospjelo</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <Button onClick={handleSubmit} className="w-full">Spremi promjene</Button>
         </div>
       </DialogContent>
     </Dialog>
