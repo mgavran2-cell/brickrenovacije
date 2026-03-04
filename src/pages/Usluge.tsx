@@ -295,7 +295,7 @@ const Usluge = () => {
               </p>
               <div className="mt-8">
                 <p className="text-muted-foreground mb-4">Imate dodatna pitanja?</p>
-                <Button variant="outline">Kontaktirajte nas</Button>
+                <Button variant="outline" asChild><a href="/#kontakt">Kontaktirajte nas</a></Button>
               </div>
             </div>
             <div>
