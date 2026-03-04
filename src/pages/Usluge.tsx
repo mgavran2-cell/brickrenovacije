@@ -1,5 +1,7 @@
+import { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import QuoteRequestDialog from "@/components/QuoteRequestDialog";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Home, Bath, ChefHat, Paintbrush, Building2, Wrench } from "lucide-react";
 import {
@@ -116,9 +118,11 @@ const faqs = [
 ];
 
 const Usluge = () => {
+  const [quoteOpen, setQuoteOpen] = useState(false);
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <QuoteRequestDialog open={quoteOpen} onOpenChange={setQuoteOpen} />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -136,12 +140,12 @@ const Usluge = () => {
                 Planirajte sigurno, angažirajte prave majstore i pratite svoj projekt — sve na jednom mjestu. Vi ostajete u kontroli. Mi rješavamo kompleksnost.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="group">
+                <Button size="lg" className="group" onClick={() => setQuoteOpen(true)}>
                   Zatražite procjenu
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
-                <Button size="lg" variant="outline">
-                  Pogledajte projekte
+                <Button size="lg" variant="outline" asChild>
+                  <a href="/projekti">Pogledajte projekte</a>
                 </Button>
               </div>
               <p className="mt-4 text-sm text-muted-foreground">
@@ -235,7 +239,7 @@ const Usluge = () => {
                   </div>
                 )}
 
-                <Button className="mt-8 group">
+                <Button className="mt-8 group" onClick={() => setQuoteOpen(true)}>
                   Zatražite procjenu
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -322,7 +326,7 @@ const Usluge = () => {
             Povežite se s provjerenim majstorima, istražite opcije dizajna ili nabavite materijale — sve na jednom mjestu.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="group">
+            <Button size="lg" variant="secondary" className="group" onClick={() => setQuoteOpen(true)}>
               Zatražite besplatnu procjenu
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
