@@ -58,9 +58,10 @@ const ServicesSection = () => {
         {/* Services Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <div
+            <a
               key={service.title}
-              className="group relative bg-card border border-border rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:border-primary/30 hover:shadow-elevated hover:-translate-y-1"
+              href="/usluge"
+              className="group relative bg-card border border-border rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:border-primary/30 hover:shadow-elevated hover:-translate-y-1 block"
             >
               {/* Icon */}
               <div className="w-12 h-12 rounded-xl bg-brick-light flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
@@ -79,7 +80,7 @@ const ServicesSection = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>

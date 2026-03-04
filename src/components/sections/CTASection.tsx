@@ -6,7 +6,7 @@ import QuoteRequestDialog from "@/components/QuoteRequestDialog";
 const CTASection = () => {
   const [quoteOpen, setQuoteOpen] = useState(false);
   return (
-    <section className="section-padding">
+    <section id="kontakt" className="section-padding scroll-mt-24">
       <div className="container-narrow">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary to-brick-dark p-12 lg:p-20">
           {/* Background Pattern */}
@@ -42,8 +42,9 @@ const CTASection = () => {
                 size="xl"
                 variant="outline"
                 className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                asChild
               >
-                Razgovarajmo
+                <a href="mailto:info@brickrenovacije.hr">Razgovarajmo</a>
               </Button>
             </div>
 

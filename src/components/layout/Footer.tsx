@@ -23,11 +23,11 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Usluge</h4>
             <ul className="space-y-3 text-sm text-background/60">
-              <li><a href="#" className="hover:text-primary transition-colors">Renovacija kupaonice</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Renovacija kuhinje</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Adaptacija stana</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Renovacija kuće</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Fasadni radovi</a></li>
+              <li><a href="/usluge" className="hover:text-primary transition-colors">Renovacija kupaonice</a></li>
+              <li><a href="/usluge" className="hover:text-primary transition-colors">Renovacija kuhinje</a></li>
+              <li><a href="/usluge" className="hover:text-primary transition-colors">Adaptacija stana</a></li>
+              <li><a href="/usluge" className="hover:text-primary transition-colors">Renovacija kuće</a></li>
+              <li><a href="/usluge" className="hover:text-primary transition-colors">Fasadni radovi</a></li>
             </ul>
           </div>
 
@@ -35,11 +35,11 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Tvrtka</h4>
             <ul className="space-y-3 text-sm text-background/60">
-              <li><a href="#" className="hover:text-primary transition-colors">O nama</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Kako funkcionira</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Naši izvođači</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Kontakt</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Posao za izvođače</a></li>
+              <li><a href="/#o-nama" className="hover:text-primary transition-colors">O nama</a></li>
+              <li><a href="/#kako-funkcionira" className="hover:text-primary transition-colors">Kako funkcionira</a></li>
+              <li><a href="/usluge" className="hover:text-primary transition-colors">Naši izvođači</a></li>
+              <li><a href="/#kontakt" className="hover:text-primary transition-colors">Kontakt</a></li>
+              <li><a href="/#kontakt" className="hover:text-primary transition-colors">Posao za izvođače</a></li>
             </ul>
           </div>
 
