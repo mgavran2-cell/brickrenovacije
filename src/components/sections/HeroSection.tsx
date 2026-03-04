@@ -47,8 +47,8 @@ const HeroSection = () => {
               Zatražite besplatnu procjenu
               <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button variant="hero-outline" size="lg">
-              Pogledajte naše usluge
+            <Button variant="hero-outline" size="lg" asChild>
+              <a href="/usluge">Pogledajte naše usluge</a>
             </Button>
           </div>
 
