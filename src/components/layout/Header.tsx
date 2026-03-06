@@ -127,13 +127,16 @@ const Header = () => {
               >
                 Kako funkcionira
               </button>
-              <a
-                href="#o-nama"
-                className="text-base font-medium py-2 hover:text-primary transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button
+                type="button"
+                className="text-base font-medium py-2 hover:text-primary transition-colors text-left"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  handleHashNav("o-nama");
+                }}
               >
                 O nama
-              </a>
+              </button>
               <a
                 href="/projekti"
                 className="text-base font-medium py-2 hover:text-primary transition-colors"
@@ -141,13 +144,16 @@ const Header = () => {
               >
                 Projekti
               </a>
-              <a
-                href="#kontakt"
-                className="text-base font-medium py-2 hover:text-primary transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button
+                type="button"
+                className="text-base font-medium py-2 hover:text-primary transition-colors text-left"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  handleHashNav("kontakt");
+                }}
               >
                 Kontakt
-              </a>
+              </button>
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
                 <Button variant="outline" className="w-full" onClick={() => { setIsMobileMenuOpen(false); navigate(session ? "/dashboard" : "/prijava"); }}>
                   {session ? "Dashboard" : "Prijava"}
