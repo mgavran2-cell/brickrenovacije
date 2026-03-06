@@ -59,20 +59,28 @@ const Header = () => {
             </a>
             <button 
               type="button"
-              onClick={handleKakoFunkcionira}
+              onClick={() => handleHashNav("kako-funkcionira")}
               className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
             >
               Kako funkcionira
             </button>
-            <a href="#o-nama" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+            <button
+              type="button"
+              onClick={() => handleHashNav("o-nama")}
+              className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+            >
               O nama
-            </a>
+            </button>
             <a href="/projekti" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
               Projekti
             </a>
-            <a href="#kontakt" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+            <button
+              type="button"
+              onClick={() => handleHashNav("kontakt")}
+              className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+            >
               Kontakt
-            </a>
+            </button>
           </nav>
 
           {/* CTA */}
@@ -114,7 +122,7 @@ const Header = () => {
                 className="text-base font-medium py-2 hover:text-primary transition-colors text-left"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
-                  handleKakoFunkcionira();
+                  handleHashNav("kako-funkcionira");
                 }}
               >
                 Kako funkcionira
