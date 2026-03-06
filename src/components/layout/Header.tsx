@@ -14,15 +14,13 @@ const Header = () => {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const { session } = useAuth();
 
-  const handleKakoFunkcionira = useCallback(() => {
-    // The section exists only on the home page, so if we're elsewhere, navigate first.
+  const handleHashNav = useCallback((hash: string) => {
     if (location.pathname !== "/") {
-      navigate({ pathname: "/", hash: "#kako-funkcionira" });
+      navigate({ pathname: "/", hash: `#${hash}` });
       return;
     }
-
     document
-      .getElementById("kako-funkcionira")
+      .getElementById(hash)
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [location.pathname, navigate]);
 
@@ -61,20 +59,28 @@ const Header = () => {
             </a>
             <button 
               type="button"
-              onClick={handleKakoFunkcionira}
+              onClick={() => handleHashNav("kako-funkcionira")}
               className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
             >
               Kako funkcionira
             </button>
-            <a href="#o-nama" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+            <button
+              type="button"
+              onClick={() => handleHashNav("o-nama")}
+              className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+            >
               O nama
-            </a>
+            </button>
             <a href="/projekti" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
               Projekti
             </a>
-            <a href="#kontakt" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+            <button
+              type="button"
+              onClick={() => handleHashNav("kontakt")}
+              className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+            >
               Kontakt
-            </a>
+            </button>
           </nav>
 
           {/* CTA */}
@@ -116,18 +122,21 @@ const Header = () => {
                 className="text-base font-medium py-2 hover:text-primary transition-colors text-left"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
-                  handleKakoFunkcionira();
+                  handleHashNav("kako-funkcionira");
                 }}
               >
                 Kako funkcionira
               </button>
-              <a
-                href="#o-nama"
-                className="text-base font-medium py-2 hover:text-primary transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button
+                type="button"
+                className="text-base font-medium py-2 hover:text-primary transition-colors text-left"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  handleHashNav("o-nama");
+                }}
               >
                 O nama
-              </a>
+              </button>
               <a
                 href="/projekti"
                 className="text-base font-medium py-2 hover:text-primary transition-colors"
@@ -135,13 +144,16 @@ const Header = () => {
               >
                 Projekti
               </a>
-              <a
-                href="#kontakt"
-                className="text-base font-medium py-2 hover:text-primary transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button
+                type="button"
+                className="text-base font-medium py-2 hover:text-primary transition-colors text-left"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  handleHashNav("kontakt");
+                }}
               >
                 Kontakt
-              </a>
+              </button>
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
                 <Button variant="outline" className="w-full" onClick={() => { setIsMobileMenuOpen(false); navigate(session ? "/dashboard" : "/prijava"); }}>
                   {session ? "Dashboard" : "Prijava"}
