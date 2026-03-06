@@ -14,15 +14,13 @@ const Header = () => {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const { session } = useAuth();
 
-  const handleKakoFunkcionira = useCallback(() => {
-    // The section exists only on the home page, so if we're elsewhere, navigate first.
+  const handleHashNav = useCallback((hash: string) => {
     if (location.pathname !== "/") {
-      navigate({ pathname: "/", hash: "#kako-funkcionira" });
+      navigate({ pathname: "/", hash: `#${hash}` });
       return;
     }
-
     document
-      .getElementById("kako-funkcionira")
+      .getElementById(hash)
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [location.pathname, navigate]);
 
