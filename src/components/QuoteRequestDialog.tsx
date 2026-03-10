@@ -105,6 +105,13 @@ const QuoteRequestDialog = ({ open, onOpenChange }: QuoteRequestDialogProps) => 
       }
 
       setSubmitted(true);
+      if (typeof (window as any).gtag === "function") {
+        (window as any).gtag("event", "generate_lead", {
+          event_category: "quote_request",
+          event_label: data.propertyType,
+          value: Number(data.sqm) || undefined,
+        });
+      }
     } catch (err: any) {
       console.error("Submit error:", err);
       toast.error("Greška pri slanju zahtjeva. Pokušajte ponovo.");

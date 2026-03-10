@@ -31,6 +31,12 @@ const CTASection = () => {
       setSent(true);
       setForm({ name: "", email: "", phone: "", message: "" });
       toast.success("Poruka je uspješno poslana!");
+      if (typeof (window as any).gtag === "function") {
+        (window as any).gtag("event", "generate_lead", {
+          event_category: "contact_form",
+          event_label: "Kontakt forma",
+        });
+      }
     } catch {
       toast.error("Greška pri slanju. Pokušajte ponovo.");
     } finally {
