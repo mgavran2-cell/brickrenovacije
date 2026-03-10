@@ -105,8 +105,8 @@ const QuoteRequestDialog = ({ open, onOpenChange }: QuoteRequestDialogProps) => 
       }
 
       setSubmitted(true);
-      if (typeof window.gtag === "function") {
-        window.gtag("event", "generate_lead", {
+      if (typeof (window as any).gtag === "function") {
+        (window as any).gtag("event", "generate_lead", {
           event_category: "quote_request",
           event_label: data.propertyType,
           value: Number(data.sqm) || undefined,
