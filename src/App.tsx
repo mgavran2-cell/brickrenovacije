@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToHash from "@/components/routing/ScrollToHash";
+import useScrollDepthTracking from "@/hooks/useScrollDepthTracking";
 import Index from "./pages/Index";
 import Projekti from "./pages/Projekti";
 import Usluge from "./pages/Usluge";
@@ -14,6 +15,11 @@ import ProtectedRoute from "./components/routing/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+
+const ScrollDepthTracker = () => {
+  useScrollDepthTracking();
+  return null;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
