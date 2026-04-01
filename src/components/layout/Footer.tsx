@@ -48,12 +48,36 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Kontakt</h4>
             <ul className="space-y-3 text-sm text-background/60">
               <li>
-                <a href="mailto:info@brickrenovacije.hr" className="hover:text-primary transition-colors">
+                <a
+                  href="mailto:info@brickrenovacije.hr"
+                  className="hover:text-primary transition-colors"
+                  onClick={() => {
+                    if (typeof (window as any).gtag === "function") {
+                      (window as any).gtag("event", "contact_click", {
+                        event_category: "engagement",
+                        event_label: "email",
+                        value: "info@brickrenovacije.hr",
+                      });
+                    }
+                  }}
+                >
                   info@brickrenovacije.hr
                 </a>
               </li>
               <li>
-                <a href="tel:+385991234567" className="hover:text-primary transition-colors">
+                <a
+                  href="tel:+385991234567"
+                  className="hover:text-primary transition-colors"
+                  onClick={() => {
+                    if (typeof (window as any).gtag === "function") {
+                      (window as any).gtag("event", "contact_click", {
+                        event_category: "engagement",
+                        event_label: "phone",
+                        value: "+385991234567",
+                      });
+                    }
+                  }}
+                >
                   +385 99 123 4567
                 </a>
               </li>
