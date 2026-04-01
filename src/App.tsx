@@ -27,6 +27,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollDepthTracker />
         <ScrollToHash />
         <Routes>
           <Route path="/" element={<Index />} />
