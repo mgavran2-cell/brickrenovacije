@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToHash from "@/components/routing/ScrollToHash";
 import useScrollDepthTracking from "@/hooks/useScrollDepthTracking";
+import useTimeOnPageTracking from "@/hooks/useTimeOnPageTracking";
 import Index from "./pages/Index";
 import Projekti from "./pages/Projekti";
 import Usluge from "./pages/Usluge";
