@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToHash from "@/components/routing/ScrollToHash";
 import useScrollDepthTracking from "@/hooks/useScrollDepthTracking";
 import useTimeOnPageTracking from "@/hooks/useTimeOnPageTracking";
+import useOutboundLinkTracking from "@/hooks/useOutboundLinkTracking";
 import Index from "./pages/Index";
 import Projekti from "./pages/Projekti";
 import Usluge from "./pages/Usluge";
@@ -20,6 +21,7 @@ const queryClient = new QueryClient();
 const ScrollDepthTracker = () => {
   useScrollDepthTracking();
   useTimeOnPageTracking();
+  useOutboundLinkTracking();
   return null;
 };
 
