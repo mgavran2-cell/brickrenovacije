@@ -21,6 +21,7 @@ const queryClient = new QueryClient();
 const ScrollDepthTracker = () => {
   useScrollDepthTracking();
   useTimeOnPageTracking();
+  useOutboundLinkTracking();
   return null;
 };
 
