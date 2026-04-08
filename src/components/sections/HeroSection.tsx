@@ -42,8 +42,8 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight"
           >
-            Renovacija bez stresa.{" "}
-            <span className="text-primary">Sve na jednom mjestu.</span>
+            Renoviraj stan bez stresa,{" "}
+            <span className="text-primary">kašnjenja i skrivenih troškova</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -53,8 +53,8 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="text-lg sm:text-xl text-muted-foreground max-w-xl leading-relaxed"
           >
-            Od ideje do ključa u ruke. Provjereni majstori, transparentne cijene 
-            i stručno vođenje projekta — bez iznenađenja.
+            Brick ti daje procjenu cijene, provjerene izvođače i vođenje projekta 
+            — sve na jednom mjestu
           </motion.p>
 
           {/* CTAs */}
