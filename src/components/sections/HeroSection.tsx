@@ -64,31 +64,29 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 pt-4"
           >
-            <Button variant="hero" size="lg" onClick={() => setQuoteOpen(true)}>
-              Zatražite besplatnu procjenu
+            <Button
+              variant="hero"
+              size="lg"
+              onClick={() => setQuoteOpen(true)}
+              className="text-lg px-8 py-6 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all"
+            >
+              Izračunaj cijenu renovacije
               <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button variant="hero-outline" size="lg" asChild>
-              <a href="/usluge">Pogledajte naše usluge</a>
+            <Button variant="hero-outline" size="lg" asChild className="px-8 py-6">
+              <a href="#process">Kako funkcionira</a>
             </Button>
           </motion.div>
 
-          {/* Trust indicators */}
-          <motion.div
+          {/* Trust line */}
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.0 }}
-            className="flex flex-wrap items-center gap-8 pt-8 text-sm text-muted-foreground"
+            className="text-sm text-muted-foreground pt-3"
           >
-            {["100+ završenih projekata", "Provjereni izvođači", "Besplatna procjena"].map((text) => (
-              <div key={text} className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <span>{text}</span>
-              </div>
-            ))}
-          </motion.div>
+            Besplatna procjena • Bez obaveze
+          </motion.p>
         </div>
       </div>
       <QuoteRequestDialog open={quoteOpen} onOpenChange={setQuoteOpen} />
