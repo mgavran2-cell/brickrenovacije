@@ -192,7 +192,7 @@ const Partneri = () => {
 
                 {sent ? (
                   <div className="bg-card border border-border rounded-2xl p-12 text-center">
-                    <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                    <CheckCircle className="w-16 h-16 text-primary mx-auto mb-4" />
                     <h3 className="text-2xl font-bold text-foreground">
                       Hvala na prijavi!
                     </h3>
