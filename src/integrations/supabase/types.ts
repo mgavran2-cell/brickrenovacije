@@ -62,6 +62,48 @@ export type Database = {
         }
         Relationships: []
       }
+      partner_applications: {
+        Row: {
+          city: string
+          company_name: string
+          contact_person: string
+          created_at: string
+          email: string
+          experience_years: number | null
+          id: string
+          message: string | null
+          oib: string | null
+          phone: string
+          services: string[]
+        }
+        Insert: {
+          city: string
+          company_name: string
+          contact_person: string
+          created_at?: string
+          email: string
+          experience_years?: number | null
+          id?: string
+          message?: string | null
+          oib?: string | null
+          phone: string
+          services?: string[]
+        }
+        Update: {
+          city?: string
+          company_name?: string
+          contact_person?: string
+          created_at?: string
+          email?: string
+          experience_years?: number | null
+          id?: string
+          message?: string | null
+          oib?: string | null
+          phone?: string
+          services?: string[]
+        }
+        Relationships: []
+      }
       ponude: {
         Row: {
           amount: number
