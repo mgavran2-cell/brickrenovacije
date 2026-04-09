@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import heroImage from "@/assets/hero-renovation.jpg";
-import QuoteRequestDialog from "@/components/QuoteRequestDialog";
 
 const HeroSection = () => {
-  const [quoteOpen, setQuoteOpen] = useState(false);
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       {/* Background Image */}
@@ -67,11 +64,13 @@ const HeroSection = () => {
             <Button
               variant="hero"
               size="lg"
-              onClick={() => setQuoteOpen(true)}
+              asChild
               className="text-lg px-8 py-6 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all"
             >
-              Izračunaj cijenu renovacije
-              <ArrowRight className="w-5 h-5" />
+              <a href="#estimator">
+                Izračunaj cijenu renovacije
+                <ArrowRight className="w-5 h-5" />
+              </a>
             </Button>
             <Button variant="hero-outline" size="lg" asChild className="px-8 py-6">
               <a href="#process">Kako funkcionira</a>
@@ -89,7 +88,7 @@ const HeroSection = () => {
           </motion.p>
         </div>
       </div>
-      <QuoteRequestDialog open={quoteOpen} onOpenChange={setQuoteOpen} />
+      
     </section>
   );
 };
