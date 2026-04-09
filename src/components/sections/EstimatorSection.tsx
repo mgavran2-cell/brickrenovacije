@@ -13,6 +13,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import QuoteRequestDialog from "@/components/QuoteRequestDialog";
+import type { EstimatorPreFill } from "@/components/QuoteRequestDialog";
 
 const PROPERTY_TYPES = [
   { label: "Stan", icon: Building2 },
