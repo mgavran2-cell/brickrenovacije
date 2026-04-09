@@ -345,7 +345,11 @@ const EstimatorSection = () => {
           </div>
         </div>
       </div>
-      <QuoteRequestDialog open={quoteOpen} onOpenChange={setQuoteOpen} />
+      <QuoteRequestDialog
+        open={quoteOpen}
+        onOpenChange={setQuoteOpen}
+        initialData={{ propertyType: data.propertyType, area: data.area, works: data.works, budget: data.budget }}
+      />
     </section>
   );
 };
