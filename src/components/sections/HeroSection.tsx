@@ -88,7 +88,7 @@ const HeroSection = () => {
           </motion.p>
         </div>
       </div>
-      <QuoteRequestDialog open={quoteOpen} onOpenChange={setQuoteOpen} />
+      
     </section>
   );
 };
