@@ -13,6 +13,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import QuoteRequestDialog from "@/components/QuoteRequestDialog";
+import type { EstimatorPreFill } from "@/components/QuoteRequestDialog";
 
 const PROPERTY_TYPES = [
   { label: "Stan", icon: Building2 },
@@ -344,7 +345,11 @@ const EstimatorSection = () => {
           </div>
         </div>
       </div>
-      <QuoteRequestDialog open={quoteOpen} onOpenChange={setQuoteOpen} />
+      <QuoteRequestDialog
+        open={quoteOpen}
+        onOpenChange={setQuoteOpen}
+        initialData={{ propertyType: data.propertyType, area: data.area, works: data.works, budget: data.budget }}
+      />
     </section>
   );
 };
