@@ -48,19 +48,37 @@ interface QuoteRequestDialogProps {
   initialData?: EstimatorPreFill;
 }
 
-const QuoteRequestDialog = ({ open, onOpenChange }: QuoteRequestDialogProps) => {
+const QuoteRequestDialog = ({ open, onOpenChange, initialData }: QuoteRequestDialogProps) => {
+  // Map estimator property types to dialog property types
+  const mapPropertyType = (type?: string) => {
+    const map: Record<string, string> = { "Stan": "Stan", "Kuću": "Kuća", "Kupaonicu": "Stan", "Kuhinju": "Stan" };
+    return map[type || ""] || "";
+  };
+
+  // Map estimator works to dialog scope options
+  const mapWorks = (works?: string[]) => {
+    if (!works) return [];
+    const map: Record<string, string> = {
+      "Podovi": "Podovi",
+      "Kupaonica": "Kupaonica",
+      "Kuhinja": "Kuhinja",
+      "Instalacije": "Elektroinstalacije",
+    };
+    return works.map(w => map[w]).filter(Boolean) as string[];
+  };
+
   const [step, setStep] = useState(0);
   const [data, setData] = useState({
-    propertyType: "",
+    propertyType: mapPropertyType(initialData?.propertyType),
     location: "",
-    sqm: "",
-    scope: [] as string[],
+    sqm: initialData?.area ? String(initialData.area) : "",
+    scope: mapWorks(initialData?.works),
     condition: "",
     material: "",
     name: "",
     email: "",
     phone: "",
-    message: "",
+    message: initialData?.budget ? `Budžet: ${initialData.budget}` : "",
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
