@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import heroImage from "@/assets/hero-renovation.jpg";
-import QuoteRequestDialog from "@/components/QuoteRequestDialog";
 
 const HeroSection = () => {
-  const [quoteOpen, setQuoteOpen] = useState(false);
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       {/* Background Image */}
