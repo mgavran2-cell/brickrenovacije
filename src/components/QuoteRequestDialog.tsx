@@ -83,6 +83,19 @@ const QuoteRequestDialog = ({ open, onOpenChange, initialData }: QuoteRequestDia
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Sync initialData when dialog opens
+  useEffect(() => {
+    if (open && initialData) {
+      setData((d) => ({
+        ...d,
+        propertyType: mapPropertyType(initialData.propertyType) || d.propertyType,
+        sqm: initialData.area ? String(initialData.area) : d.sqm,
+        scope: mapWorks(initialData.works).length > 0 ? mapWorks(initialData.works) : d.scope,
+        message: initialData.budget ? `Budžet: ${initialData.budget}` : d.message,
+      }));
+    }
+  }, [open, initialData]);
+
   const toggleScope = (item: string) => {
     setData((d) => ({
       ...d,
