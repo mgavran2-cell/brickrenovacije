@@ -35,9 +35,17 @@ const STEPS = [
   { icon: User, label: "Kontakt" },
 ];
 
+export interface EstimatorPreFill {
+  propertyType?: string;
+  area?: number;
+  works?: string[];
+  budget?: string;
+}
+
 interface QuoteRequestDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  initialData?: EstimatorPreFill;
 }
 
 const QuoteRequestDialog = ({ open, onOpenChange }: QuoteRequestDialogProps) => {
