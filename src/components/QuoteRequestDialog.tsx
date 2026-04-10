@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, ArrowLeft, Check, Home, Wrench, Sparkles, PaintBucket, User, Loader2 } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Home, Wrench, Sparkles, PaintBucket, User, Loader2, ClipboardList } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -33,6 +33,7 @@ const STEPS = [
   { icon: PaintBucket, label: "Stanje" },
   { icon: Sparkles, label: "Materijali" },
   { icon: User, label: "Kontakt" },
+  { icon: ClipboardList, label: "Sažetak" },
 ];
 
 export interface EstimatorPreFill {
@@ -109,6 +110,7 @@ const QuoteRequestDialog = ({ open, onOpenChange, initialData }: QuoteRequestDia
     if (step === 2) return data.condition;
     if (step === 3) return data.material;
     if (step === 4) return data.name && data.email && data.phone;
+    if (step === 5) return true;
     return false;
   };
 
@@ -213,9 +215,10 @@ const QuoteRequestDialog = ({ open, onOpenChange, initialData }: QuoteRequestDia
                   {step === 2 && "Stanje nekretnine"}
                   {step === 3 && "Standard materijala"}
                   {step === 4 && "Vaši kontakt podaci"}
+                  {step === 5 && "Pregled zahtjeva"}
                 </DialogTitle>
                 <DialogDescription>
-                  Korak {step + 1} od 5
+                  {step < 5 ? `Korak ${step + 1} od 6` : "Provjerite podatke prije slanja"}
                 </DialogDescription>
               </DialogHeader>
 
@@ -360,17 +363,31 @@ const QuoteRequestDialog = ({ open, onOpenChange, initialData }: QuoteRequestDia
                 </div>
               )}
 
+              {/* Step 5: Summary */}
+              {step === 5 && (
+                <div className="space-y-3">
+                  <div className="rounded-xl border border-border divide-y divide-border">
+                    <SummaryRow label="Nekretnina" value={`${data.propertyType}, ${data.location}, ${data.sqm} m²`} onEdit={() => setStep(0)} />
+                    <SummaryRow label="Opseg radova" value={data.scope.join(", ")} onEdit={() => setStep(1)} />
+                    <SummaryRow label="Stanje" value={data.condition} onEdit={() => setStep(2)} />
+                    <SummaryRow label="Materijali" value={data.material} onEdit={() => setStep(3)} />
+                    <SummaryRow label="Kontakt" value={`${data.name} • ${data.email} • ${data.phone}`} onEdit={() => setStep(4)} />
+                    {data.message && <SummaryRow label="Poruka" value={data.message} />}
+                  </div>
+                </div>
+              )}
+
               {/* Navigation */}
               <div className="flex justify-between pt-2">
                 <Button variant="ghost" onClick={() => setStep((s) => s - 1)} disabled={step === 0}>
                   <ArrowLeft className="w-4 h-4 mr-1" /> Natrag
                 </Button>
-                {step < 4 ? (
+                {step < 5 ? (
                   <Button onClick={() => setStep((s) => s + 1)} disabled={!canNext()}>
                     Dalje <ArrowRight className="w-4 h-4 ml-1" />
                   </Button>
                 ) : (
-                  <Button onClick={handleSubmit} disabled={!canNext() || loading}>
+                  <Button onClick={handleSubmit} disabled={loading}>
                     {loading ? <><Loader2 className="w-4 h-4 mr-1 animate-spin" /> Šaljem...</> : <>Pošalji zahtjev <Check className="w-4 h-4 ml-1" /></>}
                   </Button>
                 )}
@@ -382,5 +399,19 @@ const QuoteRequestDialog = ({ open, onOpenChange, initialData }: QuoteRequestDia
     </Dialog>
   );
 };
+
+const SummaryRow = ({ label, value, onEdit }: { label: string; value: string; onEdit?: () => void }) => (
+  <div className="flex items-center justify-between px-4 py-3 gap-3">
+    <div className="min-w-0">
+      <p className="text-xs text-muted-foreground">{label}</p>
+      <p className="text-sm font-medium truncate">{value}</p>
+    </div>
+    {onEdit && (
+      <button type="button" onClick={onEdit} className="text-xs text-primary hover:underline shrink-0">
+        Uredi
+      </button>
+    )}
+  </div>
+);
 
 export default QuoteRequestDialog;
