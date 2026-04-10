@@ -59,8 +59,8 @@ const WORK_PRICES: Record<string, { low: number; high: number; label: string }> 
 const PROPERTY_MULTIPLIER: Record<string, number> = {
   "Stan": 1.0,
   "Kuću": 1.2,
-  "Kupaonicu": 0.6,  // manji prostor, ali intenzivniji radovi
-  "Kuhinju": 0.5,
+  "Kupaonicu": 1.4,  // intenzivniji radovi na malom prostoru
+  "Kuhinju": 1.3,
 };
 
 // Efektivna površina za kupaonicu/kuhinju kad korisnik unese cijeli stan
