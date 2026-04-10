@@ -45,25 +45,64 @@ type EstimatorData = {
   budget: string;
 };
 
-const PRICE_RANGES: Record<string, [number, number]> = {
-  "< 10.000€": [5000, 10000],
-  "10.000€ – 25.000€": [10000, 25000],
-  "25.000€ – 50.000€": [25000, 50000],
-  "50.000€+": [50000, 80000],
+// Cijena po m² za svaku vrstu rada (EUR)
+const WORK_PRICES: Record<string, { low: number; high: number; label: string }> = {
+  "Rušenje":     { low: 15, high: 30, label: "Rušenje i odvoz šute" },
+  "Instalacije": { low: 40, high: 75, label: "Električne i vodovodne instalacije" },
+  "Podovi":      { low: 35, high: 65, label: "Podne obloge i priprema" },
+  "Zidovi":      { low: 20, high: 45, label: "Zidovi – gletanje, bojanje, obloge" },
+  "Kupaonica":   { low: 60, high: 120, label: "Kompletna kupaonica" },
+  "Kuhinja":     { low: 50, high: 100, label: "Kompletna kuhinja" },
 };
 
+// Množitelj prema tipu nekretnine
+const PROPERTY_MULTIPLIER: Record<string, number> = {
+  "Stan": 1.0,
+  "Kuću": 1.2,
+  "Kupaonicu": 0.6,  // manji prostor, ali intenzivniji radovi
+  "Kuhinju": 0.5,
+};
+
+// Efektivna površina za kupaonicu/kuhinju kad korisnik unese cijeli stan
+function getEffectiveArea(type: string, area: number) {
+  if (type === "Kupaonicu") return Math.min(area, 12); // max 12m² za kupaonicu
+  if (type === "Kuhinju") return Math.min(area, 20);   // max 20m² za kuhinju
+  return area;
+}
+
+type CostBreakdownItem = { label: string; low: number; high: number };
+
 function calculateEstimate(data: EstimatorData) {
-  const [low, high] = PRICE_RANGES[data.budget] || [10000, 25000];
-  const workMultiplier = 1 + (data.works.length - 1) * 0.08;
-  const areaMultiplier = data.area > 80 ? 1.15 : data.area > 50 ? 1.05 : 1;
+  const effectiveArea = getEffectiveArea(data.propertyType, data.area);
+  const propMultiplier = PROPERTY_MULTIPLIER[data.propertyType] || 1;
 
-  const estimatedLow = Math.round((low * workMultiplier * areaMultiplier) / 100) * 100;
-  const estimatedHigh = Math.round((high * workMultiplier * areaMultiplier) / 100) * 100;
+  const breakdown: CostBreakdownItem[] = [];
+  let totalLow = 0;
+  let totalHigh = 0;
 
-  const weeksLow = Math.max(2, Math.round(data.works.length * 1.2));
-  const weeksHigh = weeksLow + Math.round(data.area / 30) + 1;
+  for (const work of data.works) {
+    const prices = WORK_PRICES[work];
+    if (!prices) continue;
+    const low = Math.round(prices.low * effectiveArea * propMultiplier / 10) * 10;
+    const high = Math.round(prices.high * effectiveArea * propMultiplier / 10) * 10;
+    breakdown.push({ label: prices.label, low, high });
+    totalLow += low;
+    totalHigh += high;
+  }
 
-  return { estimatedLow, estimatedHigh, weeksLow, weeksHigh };
+  // Dodaj projektiranje i nadzor (8-12%)
+  const projectLow = Math.round(totalLow * 0.08 / 10) * 10;
+  const projectHigh = Math.round(totalHigh * 0.12 / 10) * 10;
+  breakdown.push({ label: "Projektiranje i nadzor", low: projectLow, high: projectHigh });
+  totalLow += projectLow;
+  totalHigh += projectHigh;
+
+  // Trajanje: bazno 1 tjedan + po radu ~0.8-1.5 tjedna, skalirano s površinom
+  const areeFactor = Math.max(1, effectiveArea / 50);
+  const weeksLow = Math.max(2, Math.round(data.works.length * 0.8 * areeFactor));
+  const weeksHigh = Math.max(weeksLow + 1, Math.round(data.works.length * 1.5 * areeFactor));
+
+  return { totalLow, totalHigh, weeksLow, weeksHigh, breakdown };
 }
 
 const EstimatorSection = () => {
@@ -286,10 +325,26 @@ const EstimatorSection = () => {
                       Okvirna cijena
                     </p>
                     <p className="text-3xl sm:text-4xl font-extrabold text-foreground">
-                      {estimate.estimatedLow.toLocaleString("hr-HR")} –{" "}
-                      {estimate.estimatedHigh.toLocaleString("hr-HR")} €
+                      {estimate.totalLow.toLocaleString("hr-HR")} –{" "}
+                      {estimate.totalHigh.toLocaleString("hr-HR")} €
                     </p>
                   </div>
+
+                  {/* Breakdown */}
+                  <div className="w-full max-w-md text-left">
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Stavke</p>
+                    <div className="divide-y divide-border border border-border rounded-xl overflow-hidden">
+                      {estimate.breakdown.map((item) => (
+                        <div key={item.label} className="flex justify-between items-center px-4 py-2.5 text-sm">
+                          <span className="text-foreground">{item.label}</span>
+                          <span className="text-muted-foreground font-medium whitespace-nowrap ml-3">
+                            {item.low.toLocaleString("hr-HR")} – {item.high.toLocaleString("hr-HR")} €
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
                   <div>
                     <p className="text-sm text-muted-foreground mb-1">
                       Procijenjeno trajanje
