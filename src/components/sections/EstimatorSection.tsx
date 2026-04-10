@@ -325,10 +325,26 @@ const EstimatorSection = () => {
                       Okvirna cijena
                     </p>
                     <p className="text-3xl sm:text-4xl font-extrabold text-foreground">
-                      {estimate.estimatedLow.toLocaleString("hr-HR")} –{" "}
-                      {estimate.estimatedHigh.toLocaleString("hr-HR")} €
+                      {estimate.totalLow.toLocaleString("hr-HR")} –{" "}
+                      {estimate.totalHigh.toLocaleString("hr-HR")} €
                     </p>
                   </div>
+
+                  {/* Breakdown */}
+                  <div className="w-full max-w-md text-left">
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Stavke</p>
+                    <div className="divide-y divide-border border border-border rounded-xl overflow-hidden">
+                      {estimate.breakdown.map((item) => (
+                        <div key={item.label} className="flex justify-between items-center px-4 py-2.5 text-sm">
+                          <span className="text-foreground">{item.label}</span>
+                          <span className="text-muted-foreground font-medium whitespace-nowrap ml-3">
+                            {item.low.toLocaleString("hr-HR")} – {item.high.toLocaleString("hr-HR")} €
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
                   <div>
                     <p className="text-sm text-muted-foreground mb-1">
                       Procijenjeno trajanje
