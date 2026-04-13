@@ -3,7 +3,6 @@ import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
 import EstimatorSection from "@/components/sections/EstimatorSection";
 import HowItWorksSection from "@/components/sections/HowItWorksSection";
-import ProcessSection from "@/components/sections/ProcessSection";
 import ServicesSection from "@/components/sections/ServicesSection";
 import BeforeAfterSection from "@/components/sections/BeforeAfterSection";
 import TrustSection from "@/components/sections/TrustSection";
@@ -20,7 +19,6 @@ const Index = () => {
         <HeroSection />
         <EstimatorSection />
         <HowItWorksSection />
-        <ProcessSection />
         <ServicesSection />
         <BeforeAfterSection />
         <TrustSection />
