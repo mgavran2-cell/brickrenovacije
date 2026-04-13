@@ -353,6 +353,16 @@ const EstimatorSection = () => {
                       {estimate.weeksLow}–{estimate.weeksHigh} tjedana
                     </p>
                   </div>
+
+                  {/* Disclaimer */}
+                  <div className="max-w-md mx-auto bg-muted/50 rounded-lg p-4 border border-border">
+                    <p className="text-xs text-muted-foreground text-center leading-relaxed">
+                      <strong>Napomena:</strong> Navedena cijena je okvirna procjena. 
+                      Stvarna cijena ovisi o specifičnim uvjetima na terenu, 
+                      odabiru materijala i dodatnim radovima koji mogu nastati tijekom izvođenja.
+                    </p>
+                  </div>
+
                   <Button
                     variant="hero"
                     size="lg"
