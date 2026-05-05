@@ -2,16 +2,16 @@ import { Clock, Handshake, Award, Heart, Building2 } from "lucide-react";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 
 const stats = [
-  { value: "15+", label: "godina iskustva" },
-  { value: "500+", label: "završenih projekata" },
-  { value: "50+", label: "provjerenih partnera" },
-  { value: "98%", label: "zadovoljnih klijenata" },
+  { value: "15+", label: "godina iskustva u struci" },
+  { value: "280+", label: "završenih projekata" },
+  { value: "2015.", label: "osnovanja tvrtke" },
+  { value: "100%", label: "osobna posvećenost" },
 ];
 
 const values = [
   { icon: Heart, title: "Obiteljski pristup", description: "Svaki projekt tretiramo kao da je za našu obitelj. Osobna posvećenost i briga o detaljima su temelj našeg rada." },
   { icon: Clock, title: "Dugogodišnje iskustvo", description: "Više od 15 godina gradimo povjerenje kroz kvalitetu. Znamo što funkcionira i kako izbjeći uobičajene greške." },
-  { icon: Handshake, title: "Provjereni partneri", description: "Surađujemo samo s majstorima i dobavljačima koje poznajemo godinama. Vaš projekt je u sigurnim rukama." },
+  { icon: Handshake, title: "Pouzdani kooperanti", description: "Surađujemo s mrežom provjerenih majstora za specijalizirane radove — elektrika, vodoinstalacije, stolarija. Svi su provjereni godinama suradnje." },
   { icon: Award, title: "Garancija kvalitete", description: "Stojimo iza svakog rada. Nudimo punu garanciju i ostajemo dostupni i nakon završetka projekta." },
 ];
 
@@ -31,11 +31,11 @@ const AboutSection = () => {
                     <Building2 className="w-6 h-6 text-primary-foreground" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">2009.</p>
-                    <p className="text-sm text-muted-foreground">osnovani</p>
+                    <p className="text-2xl font-bold">2015.</p>
+                    <p className="text-sm text-muted-foreground">tvrtka osnovana</p>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground">Od malih radova do kompletnih renovacija — rastemo zajedno s vama.</p>
+                <p className="text-sm text-muted-foreground">Iskustvo u struci još od 2009. — gradimo zajedno s vama.</p>
               </div>
             </div>
           </ScrollReveal>
@@ -45,13 +45,13 @@ const AboutSection = () => {
               <span className="text-sm font-semibold text-primary uppercase tracking-wider">O nama</span>
               <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">Obiteljska tvrtka s vizijom moderne renovacije</h2>
               <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-                Brick Renovacije nastale su iz jednostavne ideje: renovacija ne mora biti stresna. Kao obiteljska tvrtka s više od 15 godina iskustva u građevini, razumijemo što znači urediti dom u kojem ćete živjeti.
+                Brick Renovacije poslovni je brand obiteljske tvrtke CORAX-STIL j.d.o.o., osnovane 2015. godine. Iza nas stoji više od 15 godina iskustva u građevini — glavni izvođač vodi svaki projekt osobno, od prve procjene do predaje ključeva.
               </p>
               <p className="mt-4 text-muted-foreground leading-relaxed">
-                Kroz godine smo izgradili mrežu provjerenih partnera — majstora, arhitekata i dobavljača — koji dijele našu posvećenost kvaliteti. Svaki član našeg tima prolazi rigoroznu provjeru jer znamo da vam u dom ulaze ljudi kojima morate vjerovati.
+                Kroz godine smo izgradili pouzdanu mrežu kooperanata — majstora za specijalizirane radove, dizajnera interijera i dobavljača materijala. Svaki od njih je provjeren i surađuje s nama godinama, pa znate da u vaš dom ulaze ljudi kojima vjerujemo.
               </p>
               <p className="mt-4 text-muted-foreground leading-relaxed">
-                Danas spajamo tradicionalne vrijednosti s modernom tehnologijom kako bismo vam omogućili renovaciju bez briga — s jasnim cijenama, transparentnom komunikacijom i rezultatima na koje možete biti ponosni.
+                Brick Renovacije spaja obiteljski pristup s modernim načinom rada — jasne cijene, transparentna komunikacija, jedan kontakt od početka do kraja. Bez komplikacija, bez skrivenih troškova, bez stresa.
               </p>
             </div>
           </ScrollReveal>
