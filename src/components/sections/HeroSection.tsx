@@ -50,8 +50,8 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="text-lg sm:text-xl text-muted-foreground max-w-xl leading-relaxed"
           >
-            Brick ti daje procjenu cijene, provjerene izvođače i vođenje projekta 
-            — sve na jednom mjestu
+            Naš tim vodi tvoj projekt od prve procjene do predaje ključeva.
+            Jedan kontakt, transparentna cijena, kvaliteta s 15+ godina iskustva.
           </motion.p>
 
           {/* CTAs */}
