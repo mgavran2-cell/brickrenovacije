@@ -10,7 +10,7 @@ const trustPoints = [
 
 const TrustSection = () => {
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-brick-light">
       <div className="container-narrow">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-14">
