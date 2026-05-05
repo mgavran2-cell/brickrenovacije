@@ -12,13 +12,13 @@ const steps = [
     icon: FileCheck,
     number: "02",
     title: "Dobij plan i ponudu",
-    description: "Spajamo te s provjerenim izvođačima i definiramo trošak i rok",
+    description: "Izlazimo na lokaciju, dogovaramo detalje i radimo detaljnu ponudu s jasnim troškovima i rokom",
   },
   {
     icon: Settings,
     number: "03",
     title: "Mi vodimo projekt",
-    description: "Koordiniramo radove i brinemo da sve ide po planu",
+    description: "Izvodimo radove s provjerenim kooperantima, koordiniramo nabavu materijala i predajemo gotov prostor",
   },
 ];
 
