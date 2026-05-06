@@ -65,7 +65,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="tel:+385991234567"
+                  href="tel:+385998358317"
                   className="hover:text-primary transition-colors"
                   onClick={() => {
                     if (typeof (window as any).gtag === "function") {
