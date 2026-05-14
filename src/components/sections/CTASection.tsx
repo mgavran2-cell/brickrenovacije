@@ -22,12 +22,25 @@ const CTASection = () => {
     }
     setSending(true);
     try {
-      const { error } = await supabase.from("renovation_requests").insert({
-        name: form.name, email: form.email, phone: form.phone || "",
-        message: form.message, property_type: "Upit", location: "N/A",
-        scope: "Kontakt forma", condition: "N/A", material: "N/A",
-      });
+      const { data: insertedRow, error } = await supabase
+        .from("renovation_requests")
+        .insert({
+          name: form.name, email: form.email, phone: form.phone || "",
+          message: form.message, property_type: "Upit", location: "N/A",
+          scope: "Kontakt forma", condition: "N/A", material: "N/A",
+        })
+        .select()
+        .single();
       if (error) throw error;
+
+      try {
+        await supabase.functions.invoke("notify-new-request", {
+          body: { record: insertedRow },
+        });
+      } catch (notifyErr) {
+        console.error("notify-new-request failed:", notifyErr);
+      }
+
       setSent(true);
       setForm({ name: "", email: "", phone: "", message: "" });
       toast.success("Poruka je uspješno poslana!");
