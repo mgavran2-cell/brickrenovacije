@@ -65,7 +65,7 @@ const allServices = [
   {
     icon: Home,
     title: "Kompletna renovacija",
-    description: "Potpuna transformacija stana ili kuće",
+    description: "Potpuna transformacija nekretnine",
   },
   {
     icon: Bath,
