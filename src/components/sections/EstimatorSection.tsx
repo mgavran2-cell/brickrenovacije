@@ -5,8 +5,7 @@ import { Input } from "@/components/ui/input";
 import {
   ArrowRight,
   ArrowLeft,
-  Home,
-  Building2,
+  Bath,
   Bath,
   UtensilsCrossed,
   Phone,
