@@ -2,11 +2,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import ScrollReveal from "@/components/animations/ScrollReveal";
 
 const faqs = [
-  { question: "Koliko traje prosječna renovacija?", answer: "Trajanje ovisi o opsegu projekta. Renovacija kupaonice obično traje 2-3 tjedna, dok kompletna adaptacija stana može trajati 6-12 tjedana. Nakon prvih konzultacija, dat ćemo vam precizan vremenski okvir." },
+  { question: "Koliko traje prosječna renovacija?", answer: "Trajanje ovisi o opsegu projekta. Renovacija kupaonice obično traje 2-3 tjedna, dok kompletna renovacija nekretnine može trajati 6-12 tjedana. Nakon prvih konzultacija, dat ćemo vam precizan vremenski okvir." },
   { question: "Kako funkcionira procjena cijena?", answer: "Nakon što ispunite upitnik, naš tim organizira besplatan izlazak na teren. Na temelju toga dobivate detaljnu ponudu s jasno razdvojenim stavkama za materijal i rad. Bez skrivenih troškova." },
   { question: "Koji izvođači rade na mojim projektima?", answer: "Surađujemo samo s provjerenim izvođačima koji prolaze rigorozan proces selekcije. Svaki majstor ima minimalno 5 godina iskustva i pozitivne reference od prethodnih klijenata." },
   { question: "Što ako nisam zadovoljan radovima?", answer: "Vaše zadovoljstvo nam je prioritet. Ako bilo što nije kako ste očekivali, naš tim projektnog menadžmenta odmah reagira i osigurava popravak bez dodatnih troškova za vas." },
-  { question: "Mogu li živjeti u stanu tijekom renovacije?", answer: "Ovisi o opsegu radova. Za manje projekte poput kupaonice ili kuhinje, to je moguće uz određena prilagođavanja. Za veće adaptacije preporučujemo privremeni smještaj — možemo vam pomoći s organizacijom." },
+  { question: "Mogu li ostati u nekretnini tijekom renovacije?", answer: "Ovisi o opsegu radova. Za manje projekte poput kupaonice ili kuhinje, to je moguće uz određena prilagođavanja. Za veće adaptacije preporučujemo privremeni smještaj — možemo vam pomoći s organizacijom." },
   { question: "Uključuje li cijena materijal?", answer: "Da, naše ponude uključuju i rad i materijal. Možete izabrati materijale iz naše ponude ili nabaviti vlastite — u tom slučaju cijena se prilagođava." },
 ];
 

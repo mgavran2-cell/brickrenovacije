@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import {
   ArrowRight,
   ArrowLeft,
-  Home,
   Building2,
   Bath,
   UtensilsCrossed,
@@ -16,8 +15,7 @@ import QuoteRequestDialog from "@/components/QuoteRequestDialog";
 import type { EstimatorPreFill } from "@/components/QuoteRequestDialog";
 
 const PROPERTY_TYPES = [
-  { label: "Stan", icon: Building2 },
-  { label: "Kuću", icon: Home },
+  { label: "Nekretninu", icon: Building2 },
   { label: "Kupaonicu", icon: Bath },
   { label: "Kuhinju", icon: UtensilsCrossed },
 ];
@@ -57,13 +55,12 @@ const WORK_PRICES: Record<string, { low: number; high: number; label: string }> 
 
 // Množitelj prema tipu nekretnine
 const PROPERTY_MULTIPLIER: Record<string, number> = {
-  "Stan": 1.0,
-  "Kuću": 1.2,
+  "Nekretninu": 1.0,
   "Kupaonicu": 1.4,  // intenzivniji radovi na malom prostoru
   "Kuhinju": 1.3,
 };
 
-// Efektivna površina za kupaonicu/kuhinju kad korisnik unese cijeli stan
+// Efektivna površina za kupaonicu/kuhinju kad korisnik unese cijelu nekretninu
 function getEffectiveArea(type: string, area: number) {
   if (type === "Kupaonicu") return Math.min(area, 12); // max 12m² za kupaonicu
   if (type === "Kuhinju") return Math.min(area, 20);   // max 20m² za kuhinju
@@ -184,7 +181,7 @@ const EstimatorSection = () => {
                   <h3 className="text-xl font-bold text-foreground mb-6">
                     Što renoviraš?
                   </h3>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {PROPERTY_TYPES.map(({ label, icon: Icon }) => (
                       <button
                         key={label}

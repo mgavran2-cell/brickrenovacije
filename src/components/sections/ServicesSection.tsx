@@ -1,11 +1,10 @@
-import { Bath, ChefHat, Home, Building2, Paintbrush, Zap, Droplets } from "lucide-react";
+import { Bath, ChefHat, Building2, Paintbrush, Zap, Droplets } from "lucide-react";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 
 const services = [
   { icon: Bath, title: "Kupaonica", description: "Kompletna renovacija kupaonice, od pločica do instalacija." },
   { icon: ChefHat, title: "Kuhinja", description: "Moderna kuhinja prilagođena vašim potrebama i prostoru." },
-  { icon: Home, title: "Stan", description: "Potpuna adaptacija stana — od zidova do podova." },
-  { icon: Building2, title: "Kuća", description: "Renovacija kuće, nadogradnje i rekonstrukcije." },
+  { icon: Building2, title: "Nekretnina", description: "Potpuna renovacija nekretnine — od zidova do podova." },
   { icon: Paintbrush, title: "Fasada", description: "Obnova fasade, izolacija i moderni završni radovi." },
   { icon: Zap, title: "Elektrika", description: "Električne instalacije, rasvjeta i pametna rješenja." },
   { icon: Droplets, title: "Vodovod", description: "Vodovodne instalacije, grijanje i sanitarni radovi." },

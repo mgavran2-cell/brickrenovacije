@@ -39,7 +39,7 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight"
           >
-            Renoviraj stan bez stresa,{" "}
+            Renoviraj nekretninu bez stresa,{" "}
             <span className="text-primary">kašnjenja i skrivenih troškova</span>
           </motion.h1>
 
