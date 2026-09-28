@@ -7,7 +7,6 @@ import {
   ArrowLeft,
   Building2,
   Bath,
-  Bath,
   UtensilsCrossed,
   Phone,
   CheckCircle,
