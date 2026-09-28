@@ -14,7 +14,7 @@ import { ArrowRight, ArrowLeft, Check, Home, Wrench, Sparkles, PaintBucket, User
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-const PROPERTY_TYPES = ["Stan", "Kuća", "Poslovni prostor", "Apartman"];
+const PROPERTY_TYPES = ["Nekretnina", "Poslovni prostor", "Apartman"];
 const LOCATIONS = ["Zagreb", "Velika Gorica", "Samobor", "Zaprešić", "Sesvete", "Dugo Selo", "Ostalo"];
 const SCOPE_OPTIONS = [
   "Kupaonica", "Kuhinja", "Dnevni boravak", "Spavaća soba",
@@ -52,7 +52,7 @@ interface QuoteRequestDialogProps {
 const QuoteRequestDialog = ({ open, onOpenChange, initialData }: QuoteRequestDialogProps) => {
   // Map estimator property types to dialog property types
   const mapPropertyType = (type?: string) => {
-    const map: Record<string, string> = { "Stan": "Stan", "Kuću": "Kuća", "Kupaonicu": "Stan", "Kuhinju": "Stan" };
+    const map: Record<string, string> = { "Nekretninu": "Nekretnina", "Kupaonicu": "Nekretnina", "Kuhinju": "Nekretnina" };
     return map[type || ""] || "";
   };
 
