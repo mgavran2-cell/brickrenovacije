@@ -2,7 +2,7 @@ import { ShieldCheck, Receipt, UserCheck, Clock } from "lucide-react";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 
 const trustPoints = [
-  { icon: ShieldCheck, title: "Provjereni izvođači", text: "Radimo samo s pouzdanim i provjerenim majstorima" },
+  { icon: ShieldCheck, title: "Jedan izvođač, jedna odgovornost", text: "Mi smo izvođač — od prvog susreta do predaje ključeva imate jedan kontakt i jasnu odgovornost" },
   { icon: Receipt, title: "Transparentna cijena", text: "Dobivaš jasnu procjenu bez skrivenih troškova" },
   { icon: UserCheck, title: "Vođenje projekta", text: "Jedna osoba koordinira cijeli proces" },
   { icon: Clock, title: "Ušteda vremena i živaca", text: "Bez traženja majstora i neizvjesnosti" },
