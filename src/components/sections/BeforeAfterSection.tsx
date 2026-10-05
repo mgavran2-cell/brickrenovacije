@@ -40,10 +40,10 @@ const BeforeAfterSection = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
           {[
-            { value: "100+", label: "Zadovoljnih klijenata" },
-            { value: "98%", label: "Završeno na vrijeme" },
-            { value: "4.9", label: "Prosječna ocjena" },
-            { value: "20+", label: "Godina iskustva" },
+            { value: "280+", label: "Završenih projekata" },
+            { value: "15+", label: "Godina iskustva u struci" },
+            { value: "2015.", label: "Tvrtka osnovana" },
+            { value: "100%", label: "Osobna posvećenost" },
           ].map((stat, index) => (
             <ScrollReveal key={stat.label} delay={index * 0.1}>
               <div className="text-center">
