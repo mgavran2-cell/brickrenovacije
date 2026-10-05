@@ -4,10 +4,12 @@ import ScrollReveal from "@/components/animations/ScrollReveal";
 const faqs = [
   { question: "Koliko traje prosječna renovacija?", answer: "Trajanje ovisi o opsegu projekta. Renovacija kupaonice obično traje 2-3 tjedna, dok kompletna renovacija nekretnine može trajati 6-12 tjedana. Nakon prvih konzultacija, dat ćemo vam precizan vremenski okvir." },
   { question: "Kako funkcionira procjena cijena?", answer: "Nakon što ispunite upitnik, naš tim organizira besplatan izlazak na teren. Na temelju toga dobivate detaljnu ponudu s jasno razdvojenim stavkama za materijal i rad. Bez skrivenih troškova." },
-  { question: "Koji izvođači rade na mojim projektima?", answer: "Surađujemo samo s provjerenim izvođačima koji prolaze rigorozan proces selekcije. Svaki majstor ima minimalno 5 godina iskustva i pozitivne reference od prethodnih klijenata." },
+  { question: "Tko izvodi radove?", answer: "Brick Renovacije dio je obiteljske tvrtke CORAX-STIL j.d.o.o. Glavni izvođač vodi svaki projekt osobno, a surađujemo s pouzdanom mrežom kooperanata za specijalizirane radove (elektrika, vodoinstalacije, stolarija). Svaki kooperant provjeren je kroz godine suradnje." },
   { question: "Što ako nisam zadovoljan radovima?", answer: "Vaše zadovoljstvo nam je prioritet. Ako bilo što nije kako ste očekivali, naš tim projektnog menadžmenta odmah reagira i osigurava popravak bez dodatnih troškova za vas." },
   { question: "Mogu li ostati u nekretnini tijekom renovacije?", answer: "Ovisi o opsegu radova. Za manje projekte poput kupaonice ili kuhinje, to je moguće uz određena prilagođavanja. Za veće adaptacije preporučujemo privremeni smještaj — možemo vam pomoći s organizacijom." },
-  { question: "Uključuje li cijena materijal?", answer: "Da, naše ponude uključuju i rad i materijal. Možete izabrati materijale iz naše ponude ili nabaviti vlastite — u tom slučaju cijena se prilagođava." },
+  { question: "Što je uključeno u cijenu?", answer: "Ponuda uvijek jasno razdvaja cijenu rada i cijenu materijala. Materijale možete nabaviti sami ili preko naših partnerstava s dobavljačima — tada koordiniramo nabavu i dostavu na gradilište. Odluku donosite vi." },
+  { question: "Radite li 3D vizualizacije ili dizajn interijera?", answer: "Za potrebe projektiranja i dizajna surađujemo s partnerskim dizajnerima interijera. Ako želite 3D vizualizaciju ili detaljno uređenje prostora, povežemo vas s njima i koordiniramo njihov rad s izvođenjem." },
+  { question: "Dajete li jamstvo na radove?", answer: "Da. Na sve izvedene radove dajemo pisano jamstvo sukladno Zakonu o obveznim odnosima. Rok jamstva ovisi o vrsti radova i definira se u ugovoru." },
 ];
 
 const FAQSection = () => {
