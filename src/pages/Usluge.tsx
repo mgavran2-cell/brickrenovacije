@@ -34,27 +34,28 @@ const services = [
 
 const detailedServices = [
   {
-    title: "Dizajnirajte svoj prostor",
-    subtitle: "Vizualizirajte prije nego što počnete",
-    description: "Započnite s besplatnim konzultacijama za istraživanje ideja i opcija rasporeda. Kada budete spremni, dodajte stručnu podršku — od brzih savjeta do 3D vizualizacija.",
+    title: "Dizajn interijera s partnerima",
+    subtitle: "Suradnja s dizajnerima po potrebi",
+    description: "Ako želite stručni dizajn interijera prije radova, povežemo vas s našim partnerskim dizajnerima. Oni rade koncept, odabir materijala i po potrebi 3D vizualizaciju, a mi koordiniramo njihov rad s izvođenjem.",
     features: [
-      "Besplatne konzultacije — provjerite svoje ideje",
-      "Savjetovanje o dizajnu — stil, raspored, materijali",
-      "2D planiranje — nacrti za izvođače",
-      "3D vizualizacija — realistične slike vašeg budućeg prostora",
+      "Besplatna uvodna konzultacija — procjena opsega radova",
+      "Preporuka partnera za dizajn interijera",
+      "Koncept i raspored prostora",
+      "Odabir materijala i boja",
+      "3D vizualizacija (opcionalno, preko partnera)",
     ],
     image: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80",
     testimonial: null,
   },
   {
     title: "Nabavite kvalitetne materijale",
-    subtitle: "Sve na jednom mjestu",
-    description: "Brick Renovacije olakšava nabavu. Pregledajte naš katalog, naručite izravno i uskladite dostave s rasporedom izvođača. Bez jurnjave za narudžbama.",
+    subtitle: "Preko naših partnerstava ili po vašem izboru",
+    description: "Imamo partnerstva s provjerenim dobavljačima materijala i opreme. Ako želite, preuzimamo cijelu nabavu — od odabira do dostave na gradilište. Ako imate svog dobavljača, radimo s njim bez problema.",
     features: [
-      "Pristup provjerenim dobavljačima",
-      "Širok izbor materijala i opreme",
-      "Kurirana ponuda testiranih proizvoda",
-      "Koordinirane dostave na gradilište",
+      "Preporuke dobavljača s kojima surađujemo",
+      "Pogodnosti kroz naša partnerstva (cijene, uvjeti)",
+      "Koordinacija dostave na gradilište",
+      "Opcija vlastite nabave materijala",
     ],
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
     testimonial: null,
@@ -97,23 +98,23 @@ const allServices = [
 const faqs = [
   {
     question: "Moram li koristiti sve vaše usluge?",
-    answer: "Ne, možete odabrati samo usluge koje vam trebaju. Bilo da vam treba samo pronalazak majstora, dizajn ili nabava materijala — tu smo za vas.",
+    answer: "Ne. Birate ono što trebate. Možete uzeti samo renovaciju kupaonice ili cijelu kompletnu renovaciju stana. Isto vrijedi za dizajn i nabavu materijala — koristite naše partnere ili svoje.",
   },
   {
     question: "Je li dizajn obavezan prije početka radova?",
-    answer: "Dizajn nije obavezan, ali ga preporučujemo. Dobar dizajn pomaže u donošenju odluka, ubrzava radove i smanjuje neočekivane troškove.",
+    answer: "Nije. Za jednostavnije radove dovoljan je dogovor na licu mjesta. Za kompletne renovacije preporučujemo barem osnovni plan rasporeda i odabir materijala — možete ga napraviti sami ili s našim partnerskim dizajnerom.",
   },
   {
-    question: "Kako funkcioniraju ponude izvođača?",
-    answer: "Nakon što opišete svoj projekt, šaljemo provjerene izvođače na vašu lokaciju. Svaki izvođač daje detaljnu ponudu koju možete usporediti s drugima.",
+    question: "Kako izgleda ponuda?",
+    answer: "Nakon što izađemo na lokaciju, radimo detaljnu ponudu s jasno razdvojenim stavkama rada i materijala, procjenom trajanja i uvjetima plaćanja. Ponuda vrijedi 30 dana. Nema skrivenih troškova.",
   },
   {
-    question: "Mogu li dovesti svog izvođača?",
-    answer: "Da, možete koristiti vlastite izvođače i dalje koristiti naše usluge dizajna i nabave materijala.",
+    question: "Mogu li koristiti svog majstora za dio radova?",
+    answer: "Da, fleksibilni smo. Ako imate provjerenog elektroinstalatera, vodoinstalatera ili stolara s kojim ste zadovoljni, surađujemo s njim i uključimo njegov dio u koordinaciju projekta.",
   },
   {
     question: "Što ako nešto pođe po zlu tijekom radova?",
-    answer: "Svi radovi su pokriveni garancijom. Naš tim je tu da pomogne riješiti bilo kakve probleme koji se mogu pojaviti tijekom ili nakon renovacije.",
+    answer: "Rješavamo odmah. Glavni izvođač je stalno dostupan tijekom radova, a problemi se rješavaju na licu mjesta bez odgađanja. Na sve izvedene radove dajemo pisano jamstvo sukladno Zakonu o obveznim odnosima.",
   },
 ];
 
@@ -137,7 +138,7 @@ const Usluge = () => {
                 Renovirajte s povjerenjem
               </h1>
               <p className="mt-6 text-lg text-muted-foreground max-w-lg">
-                Planirajte sigurno, angažirajte prave majstore i pratite svoj projekt — sve na jednom mjestu. Vi ostajete u kontroli. Mi rješavamo kompleksnost.
+                Naš tim vodi vaš projekt od prve procjene do predaje ključeva. Jedan kontakt, jasna cijena, radovi koje osobno nadziremo.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <Button size="lg" className="group" onClick={() => setQuoteOpen(true)}>
@@ -171,7 +172,7 @@ const Usluge = () => {
               Sve što trebate za uspješnu renovaciju
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Brick Renovacije vam pomaže pronaći prave majstore, dizajnirati prostor i nabaviti kvalitetne materijale — sve na jednom mjestu.
+              Izvodimo kompletne renovacije i manje adaptacije, a za dizajn i nabavu materijala surađujemo s pouzdanim partnerima.
             </p>
           </div>
 
