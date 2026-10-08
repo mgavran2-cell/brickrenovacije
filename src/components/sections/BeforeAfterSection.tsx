@@ -48,7 +48,7 @@ const BeforeAfterSection = () => {
             <ScrollReveal key={stat.label} delay={index * 0.1}>
               <div className="text-center">
                 <div className="text-4xl sm:text-5xl font-extrabold text-primary mb-2">{stat.value}</div>
-                <div className="text-sm text-background/70">{stat.label}</div>
+                <div className="text-sm text-muted-foreground">{stat.label}</div>
               </div>
             </ScrollReveal>
           ))}
