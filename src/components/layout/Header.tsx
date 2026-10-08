@@ -1,9 +1,19 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogIn } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import QuoteRequestDialog from "@/components/QuoteRequestDialog";
+
+/**
+ * Shared style for the primary nav items.
+ * Hover = subtle underline drawn left-to-right from the primary (terracotta) colour.
+ */
+const navLinkClass =
+  "relative text-sm font-medium text-foreground/70 transition-colors duration-200 hover:text-foreground " +
+  "after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 " +
+  "after:rounded-full after:bg-primary after:transition-transform after:duration-200 after:ease-out " +
+  "hover:after:scale-x-100";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -24,6 +34,10 @@ const Header = () => {
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [location.pathname, navigate]);
 
+  const goToAccount = useCallback(() => {
+    navigate(session ? "/dashboard" : "/prijava");
+  }, [navigate, session]);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -43,70 +57,79 @@ const Header = () => {
       <div className="container-narrow px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+          <a href="/" className="flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-xl font-bold text-primary-foreground">B</span>
             </div>
-            <span className="text-xl font-bold text-foreground hidden sm:block">
-              brick renovacije
-            </span>
+            <span className="text-lg font-bold text-foreground">Brick</span>
           </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            <a href="/usluge" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+          <nav className="hidden md:flex items-center gap-[38px]">
+            <a href="/usluge" className={navLinkClass}>
               Usluge
             </a>
-            <button 
+            <button
               type="button"
               onClick={() => handleHashNav("kako-funkcionira")}
-              className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+              className={navLinkClass}
             >
               Kako funkcionira
             </button>
             <button
               type="button"
               onClick={() => handleHashNav("o-nama")}
-              className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+              className={navLinkClass}
             >
               O nama
             </button>
-            <a href="/projekti" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+            <a href="/projekti" className={navLinkClass}>
               Projekti
             </a>
-            <a href="/izvodaci" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+            <a href="/izvodaci" className={navLinkClass}>
               Izvođači
             </a>
             <button
               type="button"
               onClick={() => handleHashNav("kontakt")}
-              className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+              className={navLinkClass}
             >
               Kontakt
             </button>
           </nav>
 
-          {/* CTA */}
-          <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" size="sm" onClick={() => navigate(session ? "/dashboard" : "/prijava")}>
-              {session ? "Dashboard" : "Prijava"}
-            </Button>
-            <Button size="sm" onClick={() => setQuoteOpen(true)}>
+          {/* Right side: discreet sign-in icon, CTA, mobile toggle */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              type="button"
+              aria-label={session ? "Dashboard" : "Prijava"}
+              title={session ? "Dashboard" : "Prijava"}
+              onClick={goToAccount}
+              className="p-2 rounded-lg text-foreground/60 hover:text-foreground hover:bg-secondary transition-colors"
+            >
+              <LogIn className="w-4 h-4" />
+            </button>
+
+            <Button
+              size="sm"
+              className="hidden md:inline-flex px-5 py-2.5 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/35"
+              onClick={() => setQuoteOpen(true)}
+            >
               Zatraži ponudu
             </Button>
-          </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -165,10 +188,13 @@ const Header = () => {
                 Kontakt
               </button>
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
-                <Button variant="outline" className="w-full" onClick={() => { setIsMobileMenuOpen(false); navigate(session ? "/dashboard" : "/prijava"); }}>
-                  {session ? "Dashboard" : "Prijava"}
-                </Button>
-                <Button className="w-full" onClick={() => { setIsMobileMenuOpen(false); setQuoteOpen(true); }}>
+                <Button
+                  className="w-full px-5 py-2.5 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/35"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    setQuoteOpen(true);
+                  }}
+                >
                   Zatraži ponudu
                 </Button>
               </div>
