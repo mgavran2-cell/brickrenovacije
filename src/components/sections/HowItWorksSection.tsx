@@ -24,7 +24,7 @@ const steps = [
 
 const HowItWorksSection = () => {
   return (
-    <section className="section-padding bg-warm-grey overflow-hidden">
+    <section id="kako-funkcionira" className="section-padding bg-warm-grey overflow-hidden scroll-mt-24">
       <div className="container-narrow">
         {/* Header */}
         <ScrollReveal>
