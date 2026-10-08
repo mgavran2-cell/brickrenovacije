@@ -78,7 +78,7 @@ const Footer = () => {
                   }
                 }}
               >
-                +385 99 8358 317
+                +385 99 835 8317
                 </a>
               </li>
               <li>Zagreb, Hrvatska</li>
