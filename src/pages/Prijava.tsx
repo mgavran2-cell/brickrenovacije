@@ -55,7 +55,7 @@ const Prijava = () => {
             <div className="w-10 h-10 rounded-xl bg-primary-foreground/20 flex items-center justify-center backdrop-blur-sm">
               <span className="text-xl font-bold">B</span>
             </div>
-            <span className="text-xl font-bold">brick renovacije</span>
+            <span className="text-xl font-bold">Brick</span>
           </a>
         </div>
 
@@ -122,7 +122,7 @@ const Prijava = () => {
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-sm font-bold text-primary-foreground">B</span>
             </div>
-            <span className="text-sm font-bold text-foreground">brick renovacije</span>
+            <span className="text-sm font-bold text-foreground">Brick</span>
           </div>
         </div>
 

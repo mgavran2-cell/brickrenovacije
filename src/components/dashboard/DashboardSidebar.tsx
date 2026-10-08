@@ -46,7 +46,7 @@ const DashboardSidebar = () => {
             <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shrink-0">
               <span className="text-sm font-bold text-primary-foreground">B</span>
             </div>
-            <span className="text-sm font-bold text-foreground">brick renovacije</span>
+            <span className="text-sm font-bold text-foreground">Brick</span>
           </a>
         )}
         {collapsed && (
