@@ -14,8 +14,8 @@ const TrustSection = () => {
       <div className="container-narrow">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="text-sm font-semibold text-primary uppercase tracking-wider">Povjerenje</span>
-            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold">Zašto Brick</h2>
+            <span className="eyebrow">Povjerenje</span>
+            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl">Zašto Brick</h2>
           </div>
         </ScrollReveal>
 

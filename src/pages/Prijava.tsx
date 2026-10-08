@@ -62,7 +62,7 @@ const Prijava = () => {
         {/* Center: value props */}
         <div className="relative z-10 space-y-10">
           <div>
-            <h1 className="text-3xl xl:text-4xl font-bold leading-tight">
+            <h1 className="text-3xl xl:text-4xl leading-tight">
               Vaš prostor.<br />Vaš pregled.<br />Sve na jednom mjestu.
             </h1>
             <p className="mt-4 text-primary-foreground/70 text-lg max-w-md">
@@ -130,7 +130,7 @@ const Prijava = () => {
         <div className="flex-1 flex items-center justify-center px-6 pb-12">
           <div className="w-full max-w-sm space-y-8">
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold tracking-tight">
+              <h2 className="text-2xl tracking-tight">
                 {isLogin ? "Dobrodošli natrag" : "Kreirajte račun"}
               </h2>
               <p className="text-muted-foreground text-sm">

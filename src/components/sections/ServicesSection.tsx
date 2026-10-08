@@ -16,8 +16,8 @@ const ServicesSection = () => {
       <div className="container-narrow">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-sm font-semibold text-primary uppercase tracking-wider">Naše usluge</span>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold">Sve što vam treba za renovaciju</h2>
+            <span className="eyebrow">Naše usluge</span>
+            <h2 className="mt-3 text-3xl sm:text-4xl">Sve što vam treba za renovaciju</h2>
             <p className="mt-4 text-lg text-muted-foreground">Od manjih adaptacija do kompletnih renovacija — naš tim vodi projekt, a za dizajn i materijale surađujemo s pouzdanim partnerima.</p>
           </div>
         </ScrollReveal>

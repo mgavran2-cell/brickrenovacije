@@ -29,10 +29,10 @@ const HowItWorksSection = () => {
         {/* Header */}
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+            <span className="eyebrow">
               Kako funkcionira
             </span>
-            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold">
+            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl">
               Tri jednostavna koraka
             </h2>
           </div>

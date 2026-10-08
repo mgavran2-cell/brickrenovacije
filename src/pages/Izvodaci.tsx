@@ -117,7 +117,7 @@ const Izvodaci = () => {
                 <Handshake className="w-4 h-4" />
                 Za izvođače
               </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl text-foreground leading-tight">
                 Priključi se našoj mreži izvođača
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -138,7 +138,7 @@ const Izvodaci = () => {
         <section id="zasto" className="section-padding scroll-mt-24">
           <div className="container-narrow px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-center mb-12">Zašto raditi s nama</h2>
+              <h2 className="text-3xl sm:text-4xl text-foreground text-center mb-12">Zašto raditi s nama</h2>
             </ScrollReveal>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {BENEFITS.map((b, i) => (
@@ -159,7 +159,7 @@ const Izvodaci = () => {
         <section className="section-padding bg-warm-grey">
           <div className="container-narrow px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-center mb-12">Koga tražimo</h2>
+              <h2 className="text-3xl sm:text-4xl text-foreground text-center mb-12">Koga tražimo</h2>
             </ScrollReveal>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {PROFESSIONS.map((p) => (
@@ -178,7 +178,7 @@ const Izvodaci = () => {
         <section id="prijava" className="section-padding scroll-mt-24">
           <div className="container-narrow px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl mx-auto">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-center mb-10">Prijavi se</h2>
+              <h2 className="text-3xl sm:text-4xl text-foreground text-center mb-10">Prijavi se</h2>
               {sent ? (
                 <div className="bg-card border border-border rounded-2xl p-12 text-center">
                   <CheckCircle className="w-16 h-16 text-primary mx-auto mb-4" />
