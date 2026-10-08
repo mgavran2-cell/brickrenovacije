@@ -10,7 +10,7 @@ import useOutboundLinkTracking from "@/hooks/useOutboundLinkTracking";
 import Index from "./pages/Index";
 import Projekti from "./pages/Projekti";
 import Usluge from "./pages/Usluge";
-import Partneri from "./pages/Partneri";
+import Izvodaci from "./pages/Izvodaci";
 import Admin from "./pages/Admin";
 import Dashboard from "./pages/Dashboard";
 import Prijava from "./pages/Prijava";
