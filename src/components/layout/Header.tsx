@@ -74,6 +74,9 @@ const Header = () => {
             <a href="/projekti" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
               Projekti
             </a>
+            <a href="/izvodaci" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
+              Izvođači
+            </a>
             <button
               type="button"
               onClick={() => handleHashNav("kontakt")}
@@ -143,6 +146,13 @@ const Header = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Projekti
+              </a>
+              <a
+                href="/izvodaci"
+                className="text-base font-medium py-2 hover:text-primary transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Izvođači
               </a>
               <button
                 type="button"
