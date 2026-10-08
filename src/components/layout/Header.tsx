@@ -10,7 +10,7 @@ import QuoteRequestDialog from "@/components/QuoteRequestDialog";
  * Hover = subtle underline drawn left-to-right from the primary (terracotta) colour.
  */
 const navLinkClass =
-  "relative text-sm font-medium text-foreground/70 transition-colors duration-200 hover:text-foreground " +
+  "relative whitespace-nowrap text-sm font-medium text-foreground/70 transition-colors duration-200 hover:text-foreground " +
   "after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 " +
   "after:rounded-full after:bg-primary after:transition-transform after:duration-200 after:ease-out " +
   "hover:after:scale-x-100";
@@ -57,7 +57,7 @@ const Header = () => {
       <div className="container-narrow px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2.5">
+          <a href="/" className="flex items-center gap-2.5 flex-shrink-0 pr-4">
             <div className="w-10 h-10 rounded-[8px] bg-primary flex items-center justify-center">
               <span className="text-xl font-bold text-primary-foreground">B</span>
             </div>
@@ -65,7 +65,7 @@ const Header = () => {
           </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-[38px]">
+          <nav className="hidden lg:flex items-center gap-7 xl:gap-9 flex-shrink-0">
             <a href="/usluge" className={navLinkClass}>
               Usluge
             </a>
@@ -112,7 +112,7 @@ const Header = () => {
 
             <Button
               size="sm"
-              className="hidden md:inline-flex px-5 py-2.5 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/35"
+              className="hidden lg:inline-flex px-5 py-2.5 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/35"
               onClick={() => setQuoteOpen(true)}
             >
               Zatraži ponudu
@@ -120,7 +120,7 @@ const Header = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
+              className="lg:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? (
@@ -134,7 +134,7 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border shadow-elevated animate-fade-in">
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-background border-b border-border shadow-elevated animate-fade-in">
             <nav className="flex flex-col p-6 gap-4">
               <a
                 href="/usluge"
