@@ -144,7 +144,7 @@ const Izvodaci = () => {
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
                 Rastemo i trebamo pouzdane majstore za dodatni posao. Ako si
                 samostalan izvođač s iskustvom u građevini i tražiš stabilan
-                protokol projekata, javi nam se.
+                protok projekata, javi nam se.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button
