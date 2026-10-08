@@ -16,10 +16,10 @@ const TestimonialsSection = () => {
               <MessageSquareQuote className="w-8 h-8 text-primary" />
             </div>
 
-            <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+            <span className="eyebrow">
               Uskoro
             </span>
-            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold">
+            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl">
               Recenzije klijenata
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">

@@ -75,7 +75,7 @@ const CTASection = () => {
 
             <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
               <div className="text-center lg:text-left">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-primary-foreground leading-tight">Spremni za svoju renovaciju iz snova?</h2>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl text-primary-foreground leading-tight">Spremni za svoju renovaciju iz snova?</h2>
                 <p className="mt-6 text-lg sm:text-xl text-primary-foreground/80 max-w-2xl">Zatražite besplatnu procjenu danas i započnite transformaciju svog doma bez stresa, skrivenih troškova i briga.</p>
                 <div className="mt-8">
                   <Button size="xl" className="bg-background text-foreground hover:bg-background/90 shadow-floating" onClick={() => setQuoteOpen(true)}>

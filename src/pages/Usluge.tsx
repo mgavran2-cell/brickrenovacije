@@ -131,10 +131,10 @@ const Usluge = () => {
         <div className="container-narrow relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+              <span className="eyebrow">
                 Naše usluge
               </span>
-              <h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+              <h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl leading-tight">
                 Renovirajte s povjerenjem
               </h1>
               <p className="mt-6 text-lg text-muted-foreground max-w-lg">
@@ -168,7 +168,7 @@ const Usluge = () => {
       <section className="section-padding bg-card">
         <div className="container-narrow">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold">
+            <h2 className="text-3xl sm:text-4xl">
               Sve što trebate za uspješnu renovaciju
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
@@ -213,7 +213,7 @@ const Usluge = () => {
           <div className="container-narrow">
             <div className={`grid lg:grid-cols-2 gap-16 items-center ${index % 2 === 1 ? "lg:flex-row-reverse" : ""}`}>
               <div className={index % 2 === 1 ? "lg:order-2" : ""}>
-                <h2 className="text-3xl sm:text-4xl font-bold">{service.title}</h2>
+                <h2 className="text-3xl sm:text-4xl">{service.title}</h2>
                 <p className="mt-2 text-lg text-primary font-medium">{service.subtitle}</p>
                 <p className="mt-4 text-muted-foreground leading-relaxed">
                   {service.description}
@@ -261,7 +261,7 @@ const Usluge = () => {
       <section className="section-padding bg-card">
         <div className="container-narrow">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold">Sve naše usluge</h2>
+            <h2 className="text-3xl sm:text-4xl">Sve naše usluge</h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Od malih popravaka do kompletnih renovacija — pokrivamo sve.
             </p>
@@ -290,7 +290,7 @@ const Usluge = () => {
         <div className="container-narrow">
           <div className="grid lg:grid-cols-2 gap-16">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold">Često postavljana pitanja</h2>
+              <h2 className="text-3xl sm:text-4xl">Često postavljana pitanja</h2>
               <p className="mt-4 text-lg text-muted-foreground">
                 Sve što trebate znati o našim uslugama.
               </p>
@@ -320,7 +320,7 @@ const Usluge = () => {
       {/* CTA Section */}
       <section className="section-padding bg-primary">
         <div className="container-narrow text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-primary-foreground">
+          <h2 className="text-3xl sm:text-4xl text-primary-foreground">
             Započnite renovaciju na jednostavan način
           </h2>
           <p className="mt-4 text-lg text-primary-foreground/80 max-w-2xl mx-auto">

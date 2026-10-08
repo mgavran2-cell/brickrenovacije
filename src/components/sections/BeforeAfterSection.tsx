@@ -11,8 +11,8 @@ const BeforeAfterSection = () => {
       <div className="container-narrow">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-sm font-semibold text-primary uppercase tracking-wider">Prije i Poslije</span>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-background">Pogledajte transformaciju</h2>
+            <span className="eyebrow">Prije i Poslije</span>
+            <h2 className="mt-3 text-3xl sm:text-4xl text-background">Pogledajte transformaciju</h2>
             <p className="mt-4 text-lg text-background/70">Pravi rezultati naših klijenata. Povucite slider da vidite razliku.</p>
           </div>
         </ScrollReveal>

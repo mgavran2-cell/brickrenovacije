@@ -72,10 +72,10 @@ const Projekti = () => {
       <section className="pt-32 pb-16 section-padding">
         <div className="container-narrow">
           <div className="text-center max-w-3xl mx-auto">
-            <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+            <span className="eyebrow">
               Naši projekti
             </span>
-            <h1 className="mt-3 text-4xl sm:text-5xl font-bold">
+            <h1 className="mt-3 text-4xl sm:text-5xl">
               Pogledajte naše realizirane projekte
             </h1>
             <p className="mt-6 text-lg text-muted-foreground">

@@ -9,7 +9,7 @@ const ContractorCTA = () => (
         <Hammer className="w-6 h-6 text-primary" />
       </div>
       <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Za izvođače</p>
-      <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Jesi izvođač? Priključi nam se.</h2>
+      <h2 className="text-2xl sm:text-3xl text-foreground">Jesi izvođač? Priključi nam se.</h2>
       <p className="mt-3 text-muted-foreground">Tražimo pouzdane majstore za dugoročnu suradnju i dodatni posao.</p>
       <Button variant="outline" size="lg" asChild className="mt-6">
         <Link to="/izvodaci">Saznaj više</Link>
