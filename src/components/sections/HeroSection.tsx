@@ -89,6 +89,19 @@ const HeroSection = () => {
         </div>
       </div>
       
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1.5 }}
+        className="hidden lg:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-xs text-muted-foreground"
+      >
+        <span className="uppercase tracking-widest">Skrolaj</span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="w-px h-10 bg-gradient-to-b from-muted-foreground/40 to-transparent"
+        />
+      </motion.div>
     </section>
   );
 };

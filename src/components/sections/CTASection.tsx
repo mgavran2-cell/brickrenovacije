@@ -75,8 +75,8 @@ const CTASection = () => {
 
             <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
               <div className="text-center lg:text-left">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl text-primary-foreground leading-tight">Spremni za svoju renovaciju iz snova?</h2>
-                <p className="mt-6 text-lg sm:text-xl text-primary-foreground/80 max-w-2xl">Zatražite besplatnu procjenu danas i započnite transformaciju svog doma bez stresa, skrivenih troškova i briga.</p>
+                <h2 className="text-primary-foreground">Spremni za svoju renovaciju iz snova?</h2>
+                <p className="lead mt-6 max-w-2xl text-primary-foreground/80">Zatražite besplatnu procjenu danas i započnite transformaciju svog doma bez stresa, skrivenih troškova i briga.</p>
                 <div className="mt-8">
                   <Button size="xl" className="bg-background text-foreground hover:bg-background/90 shadow-floating" onClick={() => setQuoteOpen(true)}>
                     Zatražite besplatnu procjenu
@@ -86,7 +86,7 @@ const CTASection = () => {
                 <p className="mt-6 text-sm text-primary-foreground/60">Bez obaveza • Odgovaramo u roku 24 sata • 100% besplatno</p>
               </div>
 
-              <div className="bg-background/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-primary-foreground/10">
+              <div className="bg-background/10 backdrop-blur-md rounded-2xl p-6 md:p-10 border border-primary-foreground/10">
                 {sent ? (
                   <div className="text-center py-8">
                     <CheckCircle className="w-16 h-16 text-green-300 mx-auto mb-4" />
@@ -98,9 +98,9 @@ const CTASection = () => {
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <h3 className="text-xl font-bold text-primary-foreground mb-2">Razgovarajmo</h3>
                     <p className="text-sm text-primary-foreground/60 mb-4">Pošaljite nam poruku i javit ćemo vam se u roku 24 sata.</p>
-                    <Input placeholder="Ime i prezime *" value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))} className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40 focus-visible:ring-primary-foreground/30" required />
-                    <Input type="email" placeholder="Email adresa *" value={form.email} onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))} className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40 focus-visible:ring-primary-foreground/30" required />
-                    <Input type="tel" placeholder="Telefon (opcionalno)" value={form.phone} onChange={(e) => setForm(f => ({ ...f, phone: e.target.value }))} className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40 focus-visible:ring-primary-foreground/30" />
+                    <Input placeholder="Ime i prezime *" value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))} className="h-12 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40 focus-visible:ring-primary-foreground/30" required />
+                    <Input type="email" placeholder="Email adresa *" value={form.email} onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))} className="h-12 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40 focus-visible:ring-primary-foreground/30" required />
+                    <Input type="tel" placeholder="Telefon (opcionalno)" value={form.phone} onChange={(e) => setForm(f => ({ ...f, phone: e.target.value }))} className="h-12 bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40 focus-visible:ring-primary-foreground/30" />
                     <Textarea placeholder="Vaša poruka *" value={form.message} onChange={(e) => setForm(f => ({ ...f, message: e.target.value }))} className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/40 focus-visible:ring-primary-foreground/30 min-h-[100px]" required />
                     <Button type="submit" disabled={sending} className="w-full bg-background text-foreground hover:bg-background/90 shadow-soft" size="lg">
                       {sending ? "Šalje se..." : "Pošaljite poruku"}

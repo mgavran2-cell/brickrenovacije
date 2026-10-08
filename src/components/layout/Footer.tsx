@@ -3,7 +3,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-foreground text-background">
-      <div className="section-padding container-narrow">
+      <div className="px-4 sm:px-6 lg:px-8 py-20 md:py-24 container-narrow">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
@@ -21,7 +21,7 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold mb-4">Usluge</h4>
+            <h4 className="eyebrow mb-6">Usluge</h4>
             <ul className="space-y-3 text-sm text-background/60">
               <li><a href="/usluge" className="hover:text-primary transition-colors">Renovacija kupaonice</a></li>
               <li><a href="/usluge" className="hover:text-primary transition-colors">Renovacija kuhinje</a></li>
@@ -33,7 +33,7 @@ const Footer = () => {
 
           {/* Company */}
           <div>
-            <h4 className="font-semibold mb-4">Tvrtka</h4>
+            <h4 className="eyebrow mb-6">Tvrtka</h4>
             <ul className="space-y-3 text-sm text-background/60">
               <li><a href="/#o-nama" className="hover:text-primary transition-colors">O nama</a></li>
               <li><a href="/#kako-funkcionira" className="hover:text-primary transition-colors">Kako funkcionira</a></li>
@@ -45,7 +45,7 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold mb-4">Kontakt</h4>
+            <h4 className="eyebrow mb-6">Kontakt</h4>
             <ul className="space-y-3 text-sm text-background/60">
               <li>
                 <a
