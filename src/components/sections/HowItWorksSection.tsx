@@ -32,14 +32,14 @@ const HowItWorksSection = () => {
             <span className="eyebrow">
               Kako funkcionira
             </span>
-            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl">
+            <h2 className="mt-4">
               Tri jednostavna koraka
             </h2>
           </div>
         </ScrollReveal>
 
         {/* Steps - Horizontal Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {steps.map((step, index) => (
             <ScrollReveal key={step.number} delay={index * 0.15}>
               <div className="relative flex flex-col items-center text-center">

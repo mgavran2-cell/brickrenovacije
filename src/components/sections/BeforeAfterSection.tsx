@@ -7,13 +7,13 @@ const BeforeAfterSection = () => {
   const [sliderPosition, setSliderPosition] = useState(50);
 
   return (
-    <section className="section-padding bg-foreground text-background">
+    <section className="section-padding bg-background">
       <div className="container-narrow">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="eyebrow">Prije i Poslije</span>
-            <h2 className="mt-3 text-3xl sm:text-4xl text-background">Pogledajte transformaciju</h2>
-            <p className="mt-4 text-lg text-background/70">Pravi rezultati naših klijenata. Povucite slider da vidite razliku.</p>
+            <h2 className="mt-4">Pogledajte transformaciju</h2>
+            <p className="lead mt-6 max-w-2xl mx-auto">Pravi rezultati naših klijenata. Povucite slider da vidite razliku.</p>
           </div>
         </ScrollReveal>
 
@@ -48,7 +48,7 @@ const BeforeAfterSection = () => {
             <ScrollReveal key={stat.label} delay={index * 0.1}>
               <div className="text-center">
                 <div className="text-4xl sm:text-5xl font-extrabold text-primary mb-2">{stat.value}</div>
-                <div className="text-sm text-background/70">{stat.label}</div>
+                <div className="text-sm text-muted-foreground">{stat.label}</div>
               </div>
             </ScrollReveal>
           ))}

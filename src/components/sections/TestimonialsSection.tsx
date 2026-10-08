@@ -19,10 +19,10 @@ const TestimonialsSection = () => {
             <span className="eyebrow">
               Uskoro
             </span>
-            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl">
+            <h2 className="mt-4">
               Recenzije klijenata
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <p className="lead mt-6 max-w-2xl mx-auto">
               Stranica uskoro objavljuje stvarne recenzije naših klijenata.
             </p>
 

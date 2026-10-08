@@ -6,6 +6,12 @@
 
 @layer base {
   :root {
+    --stack-xs: 0.5rem;
+    --stack-sm: 1rem;
+    --stack-md: 1.5rem;
+    --stack-lg: 2.5rem;
+    --stack-xl: 4rem;
+
     /* Brick Renovacije Color System */
     --background: 0 0% 100%;
     --foreground: 0 0% 12%;
@@ -164,11 +170,23 @@
 
 @layer components {
   .section-padding {
-    @apply px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+    @apply px-4 sm:px-6 lg:px-8 py-24 md:py-32 lg:py-40;
+  }
+
+  .section-padding-sm {
+    @apply px-4 sm:px-6 lg:px-8 py-16 md:py-20;
   }
 
   .container-narrow {
     @apply max-w-6xl mx-auto;
+  }
+
+  .container-tight {
+    @apply max-w-4xl mx-auto;
+  }
+
+  .container-reading {
+    @apply max-w-2xl mx-auto;
   }
 
   .text-gradient {
