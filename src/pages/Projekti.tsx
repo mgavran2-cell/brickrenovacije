@@ -78,7 +78,7 @@ const Projekti = () => {
             <h1 className="mt-4">
               Pogledajte naše realizirane projekte
             </h1>
-            <p className="lead mt-6 max-w-2xl">
+            <p className="lead mt-6 max-w-2xl mx-auto">
               Svaki projekt je priča za sebe. Pregledajte našu galeriju završenih 
               renovacija i uvjerite se u kvalitetu naših radova.
             </p>

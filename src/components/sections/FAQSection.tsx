@@ -21,7 +21,7 @@ const FAQSection = () => {
             <div className="lg:sticky lg:top-24 lg:self-start">
               <span className="eyebrow">FAQ</span>
               <h2 className="mt-4">Često postavljana pitanja</h2>
-              <p className="lead mt-6 max-w-2xl mx-auto">Imate dodatnih pitanja? Slobodno nas kontaktirajte — tu smo da pomognemo.</p>
+              <p className="lead mt-6 max-w-2xl">Imate dodatnih pitanja? Slobodno nas kontaktirajte — tu smo da pomognemo.</p>
               <div className="mt-8 flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
                   <svg className="w-6 h-6 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
