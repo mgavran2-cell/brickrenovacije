@@ -11,7 +11,7 @@ const Footer = () => {
               <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
                 <span className="text-xl font-bold text-primary-foreground">B</span>
               </div>
-              <span className="text-xl font-bold">brick renovacije</span>
+              <span className="text-xl font-bold">Brick</span>
             </div>
             <p className="text-background/60 text-sm leading-relaxed">
               Pouzdane renovacije u Hrvatskoj. Sve na jednom mjestu — 
