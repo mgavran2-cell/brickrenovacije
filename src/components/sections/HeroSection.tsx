@@ -73,7 +73,7 @@ const HeroSection = () => {
               </a>
             </Button>
             <Button variant="hero-outline" size="lg" asChild className="px-8 py-6">
-              <a href="#process">Kako funkcionira</a>
+              <a href="#kako-funkcionira">Kako funkcionira</a>
             </Button>
           </motion.div>
 
