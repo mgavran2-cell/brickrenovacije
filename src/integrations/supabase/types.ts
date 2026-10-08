@@ -41,6 +41,48 @@ export type Database = {
         }
         Relationships: []
       }
+      contractor_applications: {
+        Row: {
+          about: string | null
+          created_at: string
+          email: string
+          experience: string
+          id: string
+          legal_form: string
+          location: string
+          name: string
+          phone: string
+          profession: string
+          status: string
+        }
+        Insert: {
+          about?: string | null
+          created_at?: string
+          email: string
+          experience: string
+          id?: string
+          legal_form: string
+          location: string
+          name: string
+          phone: string
+          profession: string
+          status?: string
+        }
+        Update: {
+          about?: string | null
+          created_at?: string
+          email?: string
+          experience?: string
+          id?: string
+          legal_form?: string
+          location?: string
+          name?: string
+          phone?: string
+          profession?: string
+          status?: string
+        }
+        Relationships: []
+      }
       conversations: {
         Row: {
           created_at: string
