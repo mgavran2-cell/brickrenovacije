@@ -93,14 +93,14 @@ const Projekti = () => {
             {projects.map((project, index) => (
               <div
                 key={project.id}
-                className="group rounded-2xl overflow-hidden bg-card border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-elevated opacity-0 animate-fade-up"
+                className="group rounded-2xl overflow-hidden bg-card border border-border/50 hover:border-primary/40 transition-all duration-500 hover:shadow-xl opacity-0 animate-fade-up"
                 style={{ animationDelay: `${index * 0.1}s`, animationFillMode: "forwards" }}
               >
-                <div className="aspect-[4/3] overflow-hidden">
+                <div className="aspect-[4/5] overflow-hidden">
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[800ms] ease-out"
                   />
                 </div>
                 <div className="p-6">
