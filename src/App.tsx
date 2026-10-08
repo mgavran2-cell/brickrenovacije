@@ -10,7 +10,7 @@ import useOutboundLinkTracking from "@/hooks/useOutboundLinkTracking";
 import Index from "./pages/Index";
 import Projekti from "./pages/Projekti";
 import Usluge from "./pages/Usluge";
-import Partneri from "./pages/Partneri";
+import Izvodaci from "./pages/Izvodaci";
 import Admin from "./pages/Admin";
 import Dashboard from "./pages/Dashboard";
 import Prijava from "./pages/Prijava";
@@ -38,7 +38,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/projekti" element={<Projekti />} />
           <Route path="/usluge" element={<Usluge />} />
-          <Route path="/partneri" element={<Partneri />} />
+          <Route path="/izvodaci" element={<Izvodaci />} />
           <Route path="/prijava" element={<Prijava />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/dashboard/*" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

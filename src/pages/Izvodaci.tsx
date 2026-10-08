@@ -10,13 +10,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import {
+  Briefcase,
+  HandCoins,
+  UserCheck,
   Handshake,
   CheckCircle,
   Send,
-  Building2,
-  TrendingUp,
-  Users,
-  Shield,
 } from "lucide-react";
 
 const SERVICE_OPTIONS = [
@@ -35,32 +34,32 @@ const SERVICE_OPTIONS = [
 
 const BENEFITS = [
   {
-    icon: TrendingUp,
-    title: "Stalni priljev poslova",
+    icon: Briefcase,
+    title: "Redoviti protok posla",
     description:
-      "Povezujemo vas s kvalificiranim klijentima koji traže upravo vaše usluge.",
+      "Imamo stalan priliv projekata — ti radiš, mi dovodimo klijente i koordiniramo sve ostalo.",
   },
   {
-    icon: Shield,
-    title: "Bez početnih troškova",
+    icon: HandCoins,
+    title: "Uredno i redovito plaćanje",
     description:
-      "Pridruživanje je potpuno besplatno — plaćate samo kada dobijete posao.",
+      "Sve kroz tvrtku, R1 računi, isplate po dogovorenim rokovima bez čekanja.",
   },
   {
-    icon: Users,
-    title: "Podrška i vidljivost",
+    icon: UserCheck,
+    title: "Jedan kontakt, bez stresa",
     description:
-      "Promovirati ćemo vaš obrt kroz naše kanale i osigurati vidljivost kod klijenata.",
+      "Komuniciraš samo s nama, ne s klijentom. Mi preuzimamo organizaciju, promjene i reklamacije.",
   },
   {
-    icon: Building2,
-    title: "Profesionalna suradnja",
+    icon: Handshake,
+    title: "Dugoročna suradnja",
     description:
-      "Radimo samo s pouzdanim partnerima — vaša kvaliteta je naš prioritet.",
+      "Tražimo partnere s kojima gradimo odnos — ne jednokratne izvođače.",
   },
 ];
 
-const Partneri = () => {
+const Izvodaci = () => {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({
@@ -137,25 +136,39 @@ const Partneri = () => {
             <ScrollReveal>
               <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
                 <Handshake className="w-4 h-4" />
-                Partnerski program
+                Za izvođače
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground leading-tight">
-                Postanite naš partner
+                Priključi se našoj mreži izvođača
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-                Tražimo pouzdane obrtnike i tvrtke za suradnju na renovacijskim
-                projektima. Pridružite se našoj mreži i rastite zajedno s nama.
+                Rastemo i trebamo pouzdane majstore za dodatni posao. Ako si
+                samostalan izvođač s iskustvom u građevini i tražiš stabilan
+                protok projekata, javi nam se.
               </p>
+              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Button
+                  variant="hero"
+                  size="lg"
+                  asChild
+                  className="text-lg px-8 py-6 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all"
+                >
+                  <a href="#prijava">Prijavi se</a>
+                </Button>
+                <Button variant="hero-outline" size="lg" asChild className="px-8 py-6">
+                  <a href="#zasto">Saznaj više</a>
+                </Button>
+              </div>
             </ScrollReveal>
           </div>
         </section>
 
         {/* Benefits */}
-        <section className="section-padding">
+        <section id="zasto" className="section-padding scroll-mt-24">
           <div className="container-narrow px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-center mb-12">
-                Zašto surađivati s nama?
+                Zašto raditi s nama
               </h2>
             </ScrollReveal>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -179,12 +192,12 @@ const Partneri = () => {
         </section>
 
         {/* Form */}
-        <section className="section-padding bg-secondary/30">
+        <section id="prijava" className="section-padding bg-secondary/30 scroll-mt-24">
           <div className="container-narrow px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="max-w-2xl mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-center mb-4">
-                  Prijavite se
+                  Prijavi se
                 </h2>
                 <p className="text-center text-muted-foreground mb-10">
                   Ispunite obrazac i javit ćemo vam se u roku 48 sati.
@@ -375,4 +388,4 @@ const Partneri = () => {
   );
 };
 
-export default Partneri;
+export default Izvodaci;
