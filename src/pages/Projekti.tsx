@@ -75,10 +75,10 @@ const Projekti = () => {
             <span className="eyebrow">
               Naši projekti
             </span>
-            <h1 className="mt-3 text-4xl sm:text-5xl">
+            <h1 className="mt-4">
               Pogledajte naše realizirane projekte
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground">
+            <p className="lead mt-6 max-w-2xl">
               Svaki projekt je priča za sebe. Pregledajte našu galeriju završenih 
               renovacija i uvjerite se u kvalitetu naših radova.
             </p>
@@ -89,7 +89,7 @@ const Projekti = () => {
       {/* Projects Grid */}
       <section className="section-padding pb-24">
         <div className="container-narrow">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
             {projects.map((project, index) => (
               <div
                 key={project.id}

@@ -12,17 +12,17 @@ const services = [
 
 const ServicesSection = () => {
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-background">
       <div className="container-narrow">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="eyebrow">Naše usluge</span>
-            <h2 className="mt-3 text-3xl sm:text-4xl">Sve što vam treba za renovaciju</h2>
-            <p className="mt-4 text-lg text-muted-foreground">Od manjih adaptacija do kompletnih renovacija — naš tim vodi projekt, a za dizajn i materijale surađujemo s pouzdanim partnerima.</p>
+            <h2 className="mt-4">Sve što vam treba za renovaciju</h2>
+            <p className="lead mt-6 max-w-2xl mx-auto">Od manjih adaptacija do kompletnih renovacija — naš tim vodi projekt, a za dizajn i materijale surađujemo s pouzdanim partnerima.</p>
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {services.map((service, index) => (
             <ScrollReveal key={service.title} delay={index * 0.08}>
               <a href="/usluge" className="group relative bg-card border border-border rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:border-primary/30 hover:shadow-elevated hover:-translate-y-1 block h-full">

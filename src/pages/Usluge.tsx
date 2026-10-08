@@ -134,10 +134,10 @@ const Usluge = () => {
               <span className="eyebrow">
                 Naše usluge
               </span>
-              <h1 className="mt-3 text-4xl sm:text-5xl lg:text-6xl leading-tight">
+              <h1 className="mt-4">
                 Renovirajte s povjerenjem
               </h1>
-              <p className="mt-6 text-lg text-muted-foreground max-w-lg">
+              <p className="lead mt-6 max-w-2xl">
                 Naš tim vodi vaš projekt od prve procjene do predaje ključeva. Jedan kontakt, jasna cijena, radovi koje osobno nadziremo.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
@@ -267,7 +267,7 @@ const Usluge = () => {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {allServices.map((service, index) => (
               <div
                 key={service.title}

@@ -10,16 +10,16 @@ const trustPoints = [
 
 const TrustSection = () => {
   return (
-    <section className="section-padding bg-brick-light">
+    <section className="section-padding bg-warm-grey">
       <div className="container-narrow">
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-14">
             <span className="eyebrow">Povjerenje</span>
-            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl">Zašto Brick</h2>
+            <h2 className="mt-4">Zašto Brick</h2>
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
           {trustPoints.map((item, index) => (
             <ScrollReveal key={item.title} delay={index * 0.1}>
               <div className="flex gap-5 p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg">

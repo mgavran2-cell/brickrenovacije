@@ -43,8 +43,8 @@ const AboutSection = () => {
           <ScrollReveal direction="right">
             <div>
               <span className="eyebrow">O nama</span>
-              <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl leading-tight">Obiteljska tvrtka s vizijom moderne renovacije</h2>
-              <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+              <h2 className="mt-4">Obiteljska tvrtka s vizijom moderne renovacije</h2>
+              <p className="lead mt-6 max-w-2xl">
                 Brick Renovacije poslovni je brand obiteljske tvrtke CORAX-STIL j.d.o.o., osnovane 2015. godine. Iza nas stoji više od 15 godina iskustva u građevini — glavni izvođač vodi svaki projekt osobno, od prve procjene do predaje ključeva.
               </p>
               <p className="mt-4 text-muted-foreground leading-relaxed">
