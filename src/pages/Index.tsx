@@ -10,6 +10,7 @@ import AboutSection from "@/components/sections/AboutSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import FAQSection from "@/components/sections/FAQSection";
 import CTASection from "@/components/sections/CTASection";
+import ContractorCTA from "@/components/sections/ContractorCTA";
 
 const Index = () => {
   return (
@@ -25,6 +26,7 @@ const Index = () => {
         <AboutSection />
         <TestimonialsSection />
         <FAQSection />
+        <ContractorCTA />
         <CTASection />
       </main>
       <Footer />

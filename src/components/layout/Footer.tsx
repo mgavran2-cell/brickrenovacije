@@ -39,6 +39,7 @@ const Footer = () => {
               <li><a href="/#kako-funkcionira" className="hover:text-primary transition-colors">Kako funkcionira</a></li>
               <li><a href="/#kontakt" className="hover:text-primary transition-colors">Kontakt</a></li>
               <li><a href="/projekti" className="hover:text-primary transition-colors">Realizirani projekti</a></li>
+              <li><a href="/izvodaci" className="hover:text-primary transition-colors">Za izvođače</a></li>
             </ul>
           </div>
 
