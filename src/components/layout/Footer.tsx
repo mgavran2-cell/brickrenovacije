@@ -105,13 +105,13 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-background/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/50">
-          <p>© {currentYear} CORAX-STIL j.d.o.o. — Brick Renovacije. Sva prava pridržana.</p>
-          <div className="flex gap-6">
-            <a href="/uvjeti" className="hover:text-background transition-colors">Uvjeti korištenja</a>
-            <a href="/privatnost" className="hover:text-background transition-colors">Privatnost</a>
-            <a href="/kolacici" className="hover:text-background transition-colors">Kolačići</a>
-            <a href="/impressum" className="hover:text-background transition-colors">Impressum</a>
-          </div>
+          <p>© {currentYear} Brick Renovacije. Sva prava pridržana.</p>
+          <ul className="flex flex-wrap gap-6">
+            <li><span className="text-background/40 cursor-not-allowed">Uvjeti korištenja uskoro</span></li>
+            <li><span className="text-background/40 cursor-not-allowed">Politika privatnosti uskoro</span></li>
+            <li><span className="text-background/40 cursor-not-allowed">Politika kolačića uskoro</span></li>
+            <li><span className="text-background/40 cursor-not-allowed">Impressum uskoro</span></li>
+          </ul>
         </div>
       </div>
     </footer>

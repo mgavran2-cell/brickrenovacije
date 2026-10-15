@@ -3,9 +3,9 @@ import ScrollReveal from "@/components/animations/ScrollReveal";
 
 const stats = [
   { value: "15+", label: "godina iskustva u struci" },
-  { value: "280+", label: "završenih projekata" },
-  { value: "2015.", label: "osnovanja tvrtke" },
+  { value: "250+", label: "projekata iza nas" },
   { value: "100%", label: "osobna posvećenost" },
+  { value: "ZG", label: "područje djelovanja" },
 ];
 
 const values = [
@@ -31,11 +31,11 @@ const AboutSection = () => {
                     <Building2 className="w-6 h-6 text-primary-foreground" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">2015.</p>
-                    <p className="text-sm text-muted-foreground">tvrtka osnovana</p>
+                    <p className="text-2xl font-bold">15+ godina</p>
+                    <p className="text-sm text-muted-foreground">iskustva</p>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground">Iskustvo u struci još od 2009. — gradimo zajedno s vama.</p>
+                <p className="text-sm text-muted-foreground">Obiteljsko iskustvo u struci — gradimo zajedno s vama.</p>
               </div>
             </div>
           </ScrollReveal>
@@ -43,15 +43,15 @@ const AboutSection = () => {
           <ScrollReveal direction="right">
             <div>
               <span className="eyebrow">O nama</span>
-              <h2 className="mt-4">Obiteljska tvrtka s vizijom moderne renovacije</h2>
+              <h2 className="mt-4">Nova generacija renovacijskih usluga u Zagrebu</h2>
               <p className="lead mt-6 max-w-2xl">
-                Brick Renovacije poslovni je brand obiteljske tvrtke CORAX-STIL j.d.o.o., osnovane 2015. godine. Iza nas stoji više od 15 godina iskustva u građevini — glavni izvođač vodi svaki projekt osobno, od prve procjene do predaje ključeva.
+                Brick Renovacije donosi novi, moderan pristup obnovama uz više od 15 godina obiteljskog iskustva u građevini. Glavni izvođač vodi svaki projekt osobno — od prve procjene do predaje ključeva.
               </p>
               <p className="mt-4 text-muted-foreground leading-relaxed">
-                Kroz godine smo izgradili pouzdanu mrežu kooperanata — majstora za specijalizirane radove, dizajnera interijera i dobavljača materijala. Svaki od njih je provjeren i surađuje s nama godinama, pa znate da u vaš dom ulaze ljudi kojima vjerujemo.
+                Iza nas je mreža kooperanata izgrađena kroz godine rada — majstori za specijalizirane radove, dizajneri interijera i dobavljači materijala. Svaki je provjeren kroz dugogodišnju suradnju, pa znate da u vaš dom ulaze ljudi kojima vjerujemo.
               </p>
               <p className="mt-4 text-muted-foreground leading-relaxed">
-                Brick Renovacije spaja obiteljski pristup s modernim načinom rada — jasne cijene, transparentna komunikacija, jedan kontakt od početka do kraja. Bez komplikacija, bez skrivenih troškova, bez stresa.
+                Spajamo obiteljski pristup s modernim načinom rada — jasne cijene, transparentna komunikacija, jedan kontakt od početka do kraja. Bez komplikacija, bez skrivenih troškova, bez stresa.
               </p>
             </div>
           </ScrollReveal>
