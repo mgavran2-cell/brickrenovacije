@@ -11,7 +11,6 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <Logo size={40} className="[&>rect]:text-background" />
-              <span className="text-xl font-bold">Brick</span>
             </div>
             <p className="text-background/60 text-sm leading-relaxed">
               Pouzdane renovacije u Hrvatskoj. Sve na jednom mjestu — 
