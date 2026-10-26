@@ -52,8 +52,9 @@ const Prijava = () => {
 
         {/* Top: logo */}
         <div className="relative z-10">
-          <a href="/" className="flex items-center gap-3">
+          <a href="/" className="flex items-center gap-2.5">
             <Logo size={48} className="[&>g]:stroke-primary-foreground" />
+            <span className="text-xl font-serif font-normal tracking-tight">brick.hr</span>
           </a>
         </div>
 
@@ -116,8 +117,9 @@ const Prijava = () => {
             <ArrowLeft className="w-4 h-4" />
             Natrag
           </button>
-          <div className="lg:hidden flex items-center gap-2">
+          <div className="lg:hidden flex items-center gap-2.5">
             <Logo size={48} />
+            <span className="text-xl font-serif font-normal tracking-tight">brick.hr</span>
           </div>
         </div>
 

@@ -22,15 +22,14 @@ const CTASection = () => {
     }
     setSending(true);
     try {
-      const { data: insertedRow, error } = await supabase
-        .from("renovation_requests")
-        .insert({
-          name: form.name, email: form.email, phone: form.phone || "",
+      // Anonymous visitors can insert but not read back, so build the record client-side.
+      const insertedRow = {
+        id: crypto.randomUUID(), created_at: new Date().toISOString(),
+        name: form.name, email: form.email, phone: form.phone || "",
           message: form.message, property_type: "Upit", location: "N/A",
-          scope: "Kontakt forma", condition: "N/A", material: "N/A",
-        })
-        .select()
-        .single();
+        scope: "Kontakt forma", condition: "N/A", material: "N/A",
+      };
+      const { error } = await supabase.from("renovation_requests").insert(insertedRow);
       if (error) throw error;
 
       try {

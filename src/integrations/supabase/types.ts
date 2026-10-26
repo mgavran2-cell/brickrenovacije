@@ -333,6 +333,7 @@ export type Database = {
           condition: string
           created_at: string
           email: string
+          estimated_range: string | null
           id: string
           location: string
           material: string
@@ -349,6 +350,7 @@ export type Database = {
           condition: string
           created_at?: string
           email: string
+          estimated_range?: string | null
           id?: string
           location: string
           material: string
@@ -365,6 +367,7 @@ export type Database = {
           condition?: string
           created_at?: string
           email?: string
+          estimated_range?: string | null
           id?: string
           location?: string
           material?: string

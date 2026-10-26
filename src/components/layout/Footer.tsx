@@ -9,8 +9,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2.5 mb-4">
               <Logo size={40} className="[&>rect]:text-background" />
+              <span className="text-xl font-serif font-normal tracking-tight">brick.hr</span>
             </div>
             <p className="text-background/60 text-sm leading-relaxed">
               Pouzdane renovacije u Hrvatskoj. Sve na jednom mjestu — 
