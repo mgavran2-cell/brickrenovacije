@@ -48,7 +48,8 @@ const DashboardSidebar = () => {
     <aside className="hidden md:flex flex-col w-64 h-screen sticky top-0 bg-dash-bg border-r border-dash-border p-6 font-dashboard">
       <Link to="/dashboard" className="flex items-center gap-2.5 mb-10">
         <Logo size={40} />
-        <span className="text-2xl font-serif font-normal text-foreground">Brick</span>
+        <span className="text-xl font-serif font-normal tracking-tight">brick.hr</span>
+
       </Link>
 
       <nav className="space-y-1">
