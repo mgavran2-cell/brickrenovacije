@@ -11,7 +11,8 @@ import Index from "./pages/Index";
 import Projekti from "./pages/Projekti";
 import Usluge from "./pages/Usluge";
 import Izvodaci from "./pages/Izvodaci";
-import Admin from "./pages/Admin";
+// Old Admin.tsx is deprecated and kept only as reference until the new panel is confirmed.
+import AdminPanel from "./pages/admin/AdminPanel";
 import Dashboard from "./pages/Dashboard";
 import Prijava from "./pages/Prijava";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
@@ -42,7 +43,7 @@ const App = () => (
           <Route path="/prijava" element={<Prijava />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/dashboard/*" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+          <Route path="/admin/*" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
