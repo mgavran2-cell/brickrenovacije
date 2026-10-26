@@ -23,7 +23,7 @@ const Upiti = () => {
   const [params] = useSearchParams();
   const { rows, setRows, isMock } = useAdminRequests();
   const [statusFilter, setStatusFilter] = useState(params.get("status") ?? "all");
-  const [dateFilter, setDateFilter] = useState("30");
+  const [dateFilter, setDateFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
   const [q, setQ] = useState("");
   const [selected, setSelected] = useState<AdminRequest | null>(null);
