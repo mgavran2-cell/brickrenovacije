@@ -16,8 +16,22 @@ export default {
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
         serif: ['Fraunces', 'Georgia', 'serif'],
+        dashboard: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
+        dash: {
+          bg: "hsl(var(--dashboard-bg))",
+          card: "hsl(var(--dashboard-card))",
+          border: "hsl(var(--dashboard-border))",
+          soft: "hsl(var(--dashboard-border-soft))",
+          line: "hsl(var(--dashboard-line))",
+          ink: "hsl(var(--dashboard-text))",
+          muted: "hsl(var(--dashboard-text-muted))",
+          subtle: "hsl(var(--dashboard-text-subtle))",
+          faint: "hsl(var(--dashboard-text-faint))",
+          hover: "hsl(var(--dashboard-sidebar-hover))",
+          active: "hsl(var(--dashboard-sidebar-active))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
