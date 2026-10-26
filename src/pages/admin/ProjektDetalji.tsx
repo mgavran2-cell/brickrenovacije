@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ImageIcon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { Breadcrumb } from "@/components/admin/AdminPage";
 import StatusBadge from "@/components/admin/StatusBadge";
 import { supabase } from "@/integrations/supabase/client";
@@ -156,7 +155,6 @@ const ProjektDetalji = () => {
         </TabsContent>
         <TabsContent value="fotografije" className="mt-6"><Empty text="Fotografije s gradilišta još nisu dodane." /></TabsContent>
       </Tabs>
-      <div className="hidden"><Button /></div>
     </div>
   );
 };
