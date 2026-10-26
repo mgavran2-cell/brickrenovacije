@@ -1,139 +1,197 @@
 import { useEffect, useState } from "react";
-import StatCard from "@/components/dashboard/StatCard";
-import ProjectCard from "@/components/dashboard/ProjectCard";
-import ActivityItem from "@/components/dashboard/ActivityItem";
+import { Link, useNavigate } from "react-router-dom";
+import { Check } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  FolderKanban,
-  FileText,
-  Receipt,
-  Clock,
-  HardHat,
-  CheckCircle2,
-  Activity,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
-const iconMap: Record<string, any> = {
-  HardHat, FileText, CheckCircle2, Receipt, Activity, Clock, FolderKanban,
+const PHASES = ["Procjena", "Ugovor", "Priprema", "Izvođenje", "Predaja"];
+
+const DOCUMENTS = [
+  { title: "Ugovor o izvođenju radova", meta: "PDF · 4 str. · poslano 20. listopada", status: "pending" },
+  { title: "Troškovnik — revizija 2", meta: "PDF · 2 str. · poslano 22. listopada", status: "review" },
+  { title: "Ponuda br. 2026-014", meta: "PDF · 3 str. · potpisano 2. listopada", status: "signed" },
+];
+
+const formatDate = (d: Date) => {
+  const s = new Intl.DateTimeFormat("hr-HR", { weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(d);
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
+
+const timeAgo = (d: string) => {
+  const mins = Math.floor((Date.now() - new Date(d).getTime()) / 60000);
+  if (mins < 60) return `prije ${Math.max(mins, 1)} min`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `prije ${hrs} h`;
+  return `prije ${Math.floor(hrs / 24)} d`;
+};
+
+const initialsOf = (n: string) => n.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join("");
+
+const statusLabel: Record<string, string> = {
+  pending: "Čeka procjenu",
+  active: "U izvođenju",
+  completed: "Završeno",
 };
 
 const DashboardHome = () => {
   const { session } = useAuth();
-  const [projects, setProjects] = useState<any[]>([]);
-  const [ponudeCount, setPonudeCount] = useState(0);
-  const [pendingPonude, setPendingPonude] = useState(0);
-  const [racuniCount, setRacuniCount] = useState(0);
-  const [activities, setActivities] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const [fullName, setFullName] = useState("");
+  const [project, setProject] = useState<any | null>(null);
+  const [latestActivity, setLatestActivity] = useState<string | null>(null);
+  const [messages, setMessages] = useState<any[]>([]);
 
   useEffect(() => {
-    if (!session?.user?.id) return;
-    const uid = session.user.id;
-
-    const fetchAll = async () => {
-      const [projRes, ponRes, racRes, actRes] = await Promise.all([
-        supabase.from("projects").select("*").eq("user_id", uid).order("created_at", { ascending: false }),
-        supabase.from("ponude").select("id, status").eq("user_id", uid),
-        supabase.from("racuni").select("id").eq("user_id", uid),
-        supabase.from("activity_log").select("*").eq("user_id", uid).order("created_at", { ascending: false }).limit(5),
+    const uid = session?.user?.id;
+    if (!uid) return;
+    (async () => {
+      const [prof, proj, act, msg] = await Promise.all([
+        supabase.from("profiles").select("full_name").eq("id", uid).maybeSingle(),
+        supabase.from("projects").select("*").eq("user_id", uid).order("created_at", { ascending: false }).limit(1),
+        supabase.from("activity_log").select("title, description").eq("user_id", uid).order("created_at", { ascending: false }).limit(1),
+        supabase.from("poruke").select("*").or(`receiver_id.eq.${uid},sender_id.eq.${uid}`).order("created_at", { ascending: false }).limit(3),
       ]);
-
-      setProjects(projRes.data ?? []);
-      const ponude = ponRes.data ?? [];
-      setPonudeCount(ponude.length);
-      setPendingPonude(ponude.filter(p => p.status === "pending").length);
-      setRacuniCount((racRes.data ?? []).length);
-      setActivities(actRes.data ?? []);
-      setLoading(false);
-    };
-
-    fetchAll();
+      setFullName(prof.data?.full_name || session.user.user_metadata?.full_name || session.user.email?.split("@")[0] || "");
+      setProject(proj.data?.[0] ?? null);
+      const a = act.data?.[0];
+      setLatestActivity(a ? a.description || a.title : null);
+      setMessages(msg.data ?? []);
+    })();
   }, [session?.user?.id]);
 
-  const activeCount = projects.filter(p => p.status === "active").length;
+  const firstName = fullName.split(" ")[0];
+  const progress = project?.progress ?? 0;
+  const currentPhase = !project ? -1 : project.status === "completed" ? 5 : project.status === "active" ? 3 : 0;
 
-  const formatDate = (d: string) => {
-    try { return format(new Date(d), "dd.MM.yyyy"); } catch { return d; }
-  };
+  const stats = project
+    ? [
+        { label: "Status projekta", value: statusLabel[project.status] ?? project.status, sub: project.title },
+        { label: "Sljedeća faza", value: PHASES[Math.min(currentPhase + 1, 4)], sub: currentPhase < 5 ? "Nakon trenutne faze" : "Projekt predan" },
+        { label: "Dovršenost", value: `${progress}%`, sub: project.type ?? "Renovacija" },
+        { label: "Početak radova", value: project.start_date ? new Date(project.start_date).toLocaleDateString("hr-HR", { day: "numeric", month: "short" }) : "—", sub: project.location ?? "Lokacija nije unesena" },
+      ]
+    : [
+        { label: "Status projekta", value: "Čeka procjenu", sub: "Javit ćemo se u roku 48h" },
+        { label: "Sljedeća faza", value: "—", sub: "Nakon procjene" },
+        { label: "Ukupna cijena", value: "—", sub: "Nakon ponude" },
+        { label: "Dani do predaje", value: "—", sub: "Nakon ugovora" },
+      ];
 
-  const timeAgo = (d: string) => {
-    const diff = Date.now() - new Date(d).getTime();
-    const mins = Math.floor(diff / 60000);
-    if (mins < 60) return `Prije ${mins} min`;
-    const hrs = Math.floor(mins / 60);
-    if (hrs < 24) return `Prije ${hrs}h`;
-    const days = Math.floor(hrs / 24);
-    return `Prije ${days} dana`;
-  };
-
-  if (loading) {
-    return (
-      <div className="px-6 lg:px-8 py-8 space-y-8 max-w-6xl">
-        <p className="text-muted-foreground">Učitavanje...</p>
-      </div>
-    );
-  }
+  const pendingDocs = DOCUMENTS.filter((d) => d.status !== "signed").length;
 
   return (
-    <div className="px-6 lg:px-8 py-8 space-y-8 max-w-6xl">
-      {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Aktivni projekti" value={activeCount} subtitle={`${projects.length} ukupno`} icon={FolderKanban} />
-        <StatCard title="Ponude" value={ponudeCount} subtitle={pendingPonude > 0 ? `${pendingPonude} čeka odobrenje` : "Sve riješeno"} icon={FileText} />
-        <StatCard title="Računi" value={racuniCount} subtitle="Ukupno izdanih" icon={Receipt} />
-        <StatCard title="Projekti" value={projects.length} subtitle={`${activeCount} u tijeku`} icon={Clock} />
+    <div className="max-w-5xl p-6 md:p-10 bg-dash-bg">
+      {/* Hero */}
+      <div className="mb-10">
+        <p className="text-sm text-dash-subtle mb-2 font-dashboard">{formatDate(new Date())}</p>
+        <h1 className="text-4xl md:text-5xl font-serif font-normal mb-4">
+          Dobar dan{firstName ? `, ${firstName}` : ""} <span className="inline-block">👋</span>
+        </h1>
+        <p className="text-lg text-dash-muted max-w-2xl mb-6 font-dashboard">
+          {latestActivity ?? "Vaš projekt je u tijeku. Pogledajte detalje."}
+        </p>
+        <Button size="lg" onClick={() => navigate("/dashboard/moj-projekt")}>Pogledaj projekt</Button>
       </div>
 
-      {/* Projects */}
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-foreground">Vaši projekti</h2>
-        </div>
-        {projects.length === 0 ? (
-          <div className="rounded-2xl bg-card border border-border/50 p-8 text-center">
-            <p className="text-muted-foreground">Nemate još projekata.</p>
+      {/* Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
+        {stats.map((s) => (
+          <div key={s.label} className="bg-dash-card rounded-2xl p-7 border border-dash-border">
+            <p className="text-sm text-dash-subtle mb-3 font-dashboard">{s.label}</p>
+            <p className="text-4xl font-serif font-normal mb-2">{s.value}</p>
+            <p className="text-sm text-dash-muted font-dashboard">{s.sub}</p>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {projects.slice(0, 6).map((p) => (
-              <ProjectCard
-                key={p.id}
-                title={p.title}
-                location={p.location ?? ""}
-                status={p.status}
-                progress={p.progress}
-                startDate={p.start_date ? formatDate(p.start_date) : "—"}
-                type={p.type ?? ""}
-              />
-            ))}
-          </div>
-        )}
-      </section>
+        ))}
+      </div>
 
-      {/* Activity */}
-      <section>
-        <h2 className="text-lg font-bold text-foreground mb-4">Nedavna aktivnost</h2>
-        {activities.length === 0 ? (
-          <div className="rounded-2xl bg-card border border-border/50 p-8 text-center">
-            <p className="text-muted-foreground">Nema nedavnih aktivnosti.</p>
-          </div>
+      {/* Phases */}
+      <div className="bg-dash-card rounded-2xl p-8 border border-dash-border mb-10">
+        <div className="flex justify-between items-start mb-6">
+          <h2 className="text-2xl font-serif font-normal">Faze projekta</h2>
+          {project && <span className="text-sm text-dash-subtle font-dashboard">Faza {Math.min(currentPhase + 1, 5)} od 5</span>}
+        </div>
+        <div className="flex items-start overflow-x-auto">
+          {PHASES.map((name, i) => {
+            const done = i < currentPhase;
+            const current = i === currentPhase;
+            return (
+              <div key={name} className="flex-1 min-w-[96px]">
+                <div className="flex items-center">
+                  <div
+                    className={cn(
+                      "w-10 h-10 rounded-full flex items-center justify-center shrink-0",
+                      done && "bg-dash-ink text-primary-foreground",
+                      current && "bg-dash-card border-2 border-primary",
+                      !done && !current && "bg-dash-card border border-dash-line"
+                    )}
+                  >
+                    {done && <Check className="w-4 h-4" />}
+                    {current && <span className="w-3 h-3 rounded-full bg-primary" />}
+                  </div>
+                  {i < PHASES.length - 1 && <div className={cn("h-px flex-1 mx-2", done ? "bg-dash-ink" : "bg-dash-line")} />}
+                </div>
+                <p className="text-base font-serif mt-3">{name}</p>
+                {current && <p className="text-sm text-primary font-dashboard mt-0.5">U tijeku · {progress}%</p>}
+              </div>
+            );
+          })}
+        </div>
+        {!project && (
+          <p className="text-sm text-dash-subtle font-dashboard mt-6">Faze će se otključati nakon potvrde projekta.</p>
+        )}
+      </div>
+
+      {/* Messages */}
+      <div className="bg-dash-card rounded-2xl p-8 border border-dash-border mb-10">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-serif font-normal">Poruke voditelja</h2>
+          <Link to="/dashboard/poruke" className="text-sm text-primary font-serif hover:underline">Sve poruke</Link>
+        </div>
+        {messages.length === 0 ? (
+          <p className="text-sm text-dash-subtle font-dashboard">Nema poruka za sada. Javit će vam se voditelj projekta.</p>
         ) : (
-          <div className="rounded-2xl bg-card border border-border/50 px-5 divide-y divide-border/50">
-            {activities.map((a) => (
-              <ActivityItem
-                key={a.id}
-                icon={iconMap[a.icon_name] ?? Activity}
-                title={a.title}
-                description={a.description ?? ""}
-                time={timeAgo(a.created_at)}
-              />
+          <div className="space-y-5">
+            {messages.map((m) => (
+              <div key={m.id} className="flex gap-4 pb-5 border-b border-dash-soft last:border-0">
+                <div className="w-10 h-10 rounded-full bg-dash-ink text-primary-foreground flex items-center justify-center text-xs font-medium shrink-0">
+                  {initialsOf(m.sender_name)}
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="font-medium text-foreground font-dashboard">{m.sender_name}</p>
+                    <p className="text-xs text-dash-subtle font-dashboard">{timeAgo(m.created_at)}</p>
+                  </div>
+                  <p className="text-sm text-dash-muted font-dashboard leading-relaxed">{m.text}</p>
+                </div>
+              </div>
             ))}
           </div>
         )}
-      </section>
+      </div>
+
+      {/* Documents (sample until documents table exists) */}
+      <div className="bg-dash-card rounded-2xl p-8 border border-dash-border">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-serif font-normal">Dokumenti za potpis</h2>
+          <span className="text-sm text-dash-subtle font-dashboard">{pendingDocs} čeka</span>
+        </div>
+        <div className="space-y-4">
+          {DOCUMENTS.map((d) => (
+            <div key={d.title} className="flex items-center gap-4 py-3 border-b border-dash-soft last:border-0">
+              <div className="w-12 h-14 rounded border border-dash-line flex items-center justify-center text-xs text-dash-subtle font-medium font-dashboard">PDF</div>
+              <div className="flex-1">
+                <p className="font-medium font-dashboard">{d.title}</p>
+                <p className="text-sm text-dash-subtle font-dashboard">{d.meta}</p>
+              </div>
+              {d.status === "pending" && <Button size="sm">Potpiši</Button>}
+              {d.status === "review" && <Button size="sm">Potvrdi</Button>}
+              {d.status === "signed" && <span className="text-sm text-dash-subtle font-dashboard">✓ Potpisano</span>}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
