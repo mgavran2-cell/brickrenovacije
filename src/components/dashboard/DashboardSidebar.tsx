@@ -45,7 +45,6 @@ const DashboardSidebar = () => {
         {!collapsed && (
           <a href="/" className="flex items-center gap-2">
             <Logo size={32} />
-            <span className="text-sm font-bold text-foreground">Brick</span>
           </a>
         )}
         {collapsed && (

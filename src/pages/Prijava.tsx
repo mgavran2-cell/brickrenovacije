@@ -54,7 +54,6 @@ const Prijava = () => {
         <div className="relative z-10">
           <a href="/" className="flex items-center gap-3">
             <Logo size={48} className="[&>g]:stroke-primary-foreground" />
-            <span className="text-xl font-bold">Brick</span>
           </a>
         </div>
 
@@ -119,7 +118,6 @@ const Prijava = () => {
           </button>
           <div className="lg:hidden flex items-center gap-2">
             <Logo size={48} />
-            <span className="text-sm font-bold text-foreground">Brick</span>
           </div>
         </div>
 

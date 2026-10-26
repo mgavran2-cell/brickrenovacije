@@ -60,7 +60,6 @@ const Header = () => {
           {/* Logo */}
           <a href="/" className="flex items-center gap-2.5 flex-shrink-0 pr-4">
             <Logo size={40} />
-            <span className="text-lg font-bold text-foreground">Brick</span>
           </a>
 
           {/* Desktop Navigation */}
