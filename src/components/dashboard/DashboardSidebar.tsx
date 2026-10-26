@@ -13,6 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/Logo";
 
 const navItems = [
   { label: "Pregled", icon: LayoutDashboard, path: "/dashboard" },
@@ -43,16 +44,12 @@ const DashboardSidebar = () => {
       <div className="flex items-center justify-between p-4 border-b border-border">
         {!collapsed && (
           <a href="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shrink-0">
-              <span className="text-sm font-bold text-primary-foreground">B</span>
-            </div>
+            <Logo size={32} />
             <span className="text-sm font-bold text-foreground">Brick</span>
           </a>
         )}
         {collapsed && (
-          <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center mx-auto">
-            <span className="text-sm font-bold text-primary-foreground">B</span>
-          </div>
+          <Logo size={32} className="mx-auto" />
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}

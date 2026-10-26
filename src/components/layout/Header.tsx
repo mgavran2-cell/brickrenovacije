@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, LogIn } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import QuoteRequestDialog from "@/components/QuoteRequestDialog";
+import Logo from "@/components/Logo";
 
 /**
  * Shared style for the primary nav items.
@@ -58,9 +59,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a href="/" className="flex items-center gap-2.5 flex-shrink-0 pr-4">
-            <div className="w-10 h-10 rounded-[8px] bg-primary flex items-center justify-center">
-              <span className="text-xl font-bold text-primary-foreground">B</span>
-            </div>
+            <Logo size={40} />
             <span className="text-lg font-bold text-foreground">Brick</span>
           </a>
 
