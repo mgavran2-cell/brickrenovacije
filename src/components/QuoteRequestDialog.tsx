@@ -41,7 +41,11 @@ export interface EstimatorPreFill {
   area?: number;
   works?: string[];
   budget?: string;
+  estimateLow?: number;
+  estimateHigh?: number;
 }
+
+const fmtEur = (n: number) => new Intl.NumberFormat("hr-HR", { maximumFractionDigits: 0 }).format(n);
 
 interface QuoteRequestDialogProps {
   open: boolean;
@@ -117,9 +121,13 @@ const QuoteRequestDialog = ({ open, onOpenChange, initialData }: QuoteRequestDia
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const { data: insertedRow, error } = await supabase
-        .from("renovation_requests")
-        .insert({
+      // Anonymous visitors can insert but not read back, so build the record client-side.
+      const insertedRow = {
+          id: crypto.randomUUID(),
+          created_at: new Date().toISOString(),
+          estimated_range: initialData?.estimateLow && initialData?.estimateHigh
+            ? `${fmtEur(initialData.estimateLow)} – ${fmtEur(initialData.estimateHigh)} €`
+            : null,
           property_type: data.propertyType,
           location: data.location,
           sqm: data.sqm ? parseInt(data.sqm) : null,
@@ -130,9 +138,8 @@ const QuoteRequestDialog = ({ open, onOpenChange, initialData }: QuoteRequestDia
           email: data.email,
           phone: data.phone,
           message: data.message || "",
-        })
-        .select()
-        .single();
+      };
+      const { error } = await supabase.from("renovation_requests").insert(insertedRow);
 
       if (error) throw error;
 

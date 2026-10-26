@@ -22,7 +22,7 @@ export const mockProjects: AdminProject[] = [
 export type AdminRequest = {
   id: string; created_at: string; name: string; email: string; phone: string; location: string;
   property_type: string; sqm: number | null; scope: string; condition: string; material: string;
-  message: string | null; status: string; admin_notes: string | null; estimated_range?: string; mock?: boolean;
+  message: string | null; status: string; admin_notes: string | null; estimated_range?: string | null; mock?: boolean;
 };
 
 export const mockRequests: AdminRequest[] = [

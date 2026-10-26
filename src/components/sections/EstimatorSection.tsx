@@ -410,7 +410,7 @@ const EstimatorSection = () => {
       <QuoteRequestDialog
         open={quoteOpen}
         onOpenChange={setQuoteOpen}
-        initialData={{ propertyType: data.propertyType, area: data.area, works: data.works, budget: data.budget }}
+        initialData={{ propertyType: data.propertyType, area: data.area, works: data.works, budget: data.budget, estimateLow: estimate?.totalLow, estimateHigh: estimate?.totalHigh }}
       />
     </section>
   );
