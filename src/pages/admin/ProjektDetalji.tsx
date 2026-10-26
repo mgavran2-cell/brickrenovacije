@@ -17,11 +17,11 @@ const Card = ({ title, children }: { title: string; children: React.ReactNode })
 const Empty = ({ text }: { text: string }) => <p className="text-dash-subtle py-8 text-center border border-dashed border-dash-line rounded-2xl">{text}</p>;
 
 const PHASES = ["Procjena", "Ugovor", "Priprema", "Izvođenje", "Predaja"];
-const COSTS = [
+const COSTS: { cat: string; items: [string, string, number][] }[] = [
   { cat: "Materijali", items: [["Keramika 60x60, kupaonica", "24 m²", 38], ["Laminat hrast, AC5", "52 m²", 29], ["Sanitarije (WC, umivaonik, tuš)", "1 kpl", 2150]] },
   { cat: "Rad", items: [["Rušenje i odvoz šute", "1 pauš.", 2400], ["Elektroinstalacije", "68 m²", 45], ["Polaganje keramike", "38 m²", 32]] },
   { cat: "Dodaci", items: [["Koordinacija i nadzor", "1 pauš.", 1800]] },
-] as const;
+];
 
 const ProjektDetalji = () => {
   const { id } = useParams();
