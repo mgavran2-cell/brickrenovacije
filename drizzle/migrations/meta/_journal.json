@@ -8,6 +8,13 @@
       "when": 1791459737619,
       "tag": "0000_create_contractor_applications",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793022189660,
+      "tag": "0001_admin_request_status_notes",
+      "breakpoints": true
     }
   ]
 }

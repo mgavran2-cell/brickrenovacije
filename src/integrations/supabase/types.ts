@@ -44,6 +44,7 @@ export type Database = {
       contractor_applications: {
         Row: {
           about: string | null
+          admin_notes: string | null
           created_at: string
           email: string
           experience: string
@@ -57,6 +58,7 @@ export type Database = {
         }
         Insert: {
           about?: string | null
+          admin_notes?: string | null
           created_at?: string
           email: string
           experience: string
@@ -70,6 +72,7 @@ export type Database = {
         }
         Update: {
           about?: string | null
+          admin_notes?: string | null
           created_at?: string
           email?: string
           experience?: string
@@ -326,6 +329,7 @@ export type Database = {
       }
       renovation_requests: {
         Row: {
+          admin_notes: string | null
           condition: string
           created_at: string
           email: string
@@ -338,8 +342,10 @@ export type Database = {
           property_type: string
           scope: string
           sqm: number | null
+          status: string
         }
         Insert: {
+          admin_notes?: string | null
           condition: string
           created_at?: string
           email: string
@@ -352,8 +358,10 @@ export type Database = {
           property_type: string
           scope: string
           sqm?: number | null
+          status?: string
         }
         Update: {
+          admin_notes?: string | null
           condition?: string
           created_at?: string
           email?: string
@@ -366,6 +374,7 @@ export type Database = {
           property_type?: string
           scope?: string
           sqm?: number | null
+          status?: string
         }
         Relationships: []
       }
