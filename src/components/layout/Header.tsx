@@ -60,6 +60,7 @@ const Header = () => {
           {/* Logo */}
           <a href="/" className="flex items-center gap-2.5 flex-shrink-0 pr-4">
             <Logo size={40} />
+            <span className="text-xl font-serif font-normal tracking-tight hidden sm:inline">brick.hr</span>
           </a>
 
           {/* Desktop Navigation */}
