@@ -87,12 +87,12 @@ const Upiti = () => {
       </div>
 
       <div className="bg-dash-card rounded-2xl border border-dash-border overflow-x-auto">
-        <table className="w-full min-w-[900px]">
+        <table className="w-full min-w-[1000px]">
           <thead><tr className="border-b border-dash-border">
-            {["Datum", "Ime", "Kontakt", "Lokacija", "Tip", "Kvadratura", "Status", "Akcije"].map((h) => <th key={h} className={TH}>{h}</th>)}
+            {["Datum", "Ime", "Kontakt", "Lokacija", "Tip", "Kvadratura", "Procjena", "Status", "Akcije"].map((h) => <th key={h} className={TH}>{h}</th>)}
           </tr></thead>
           <tbody>
-            {list.length === 0 && <tr><td colSpan={8} className="px-5 py-10 text-center text-dash-subtle">Nema upita za odabrane filtere.</td></tr>}
+            {list.length === 0 && <tr><td colSpan={9} className="px-5 py-10 text-center text-dash-subtle">Nema upita za odabrane filtere.</td></tr>}
             {list.map((r) => (
               <tr key={r.id} className="border-b border-dash-soft last:border-0 hover:bg-dash-hover/40 cursor-pointer" onClick={() => { setSelected(r); setNotes(r.admin_notes ?? ""); }}>
                 <td className="px-5 py-5"><p className="font-medium">{formatShortDate(r.created_at)}</p><p className="text-xs text-dash-subtle">{formatTime(r.created_at)}</p></td>
@@ -101,6 +101,7 @@ const Upiti = () => {
                 <td className="px-5 py-5">{r.location}</td>
                 <td className="px-5 py-5">{r.property_type}</td>
                 <td className="px-5 py-5">{r.sqm ? `${r.sqm} m²` : "—"}</td>
+                <td className="px-5 py-5 whitespace-nowrap">{r.estimated_range || "—"}</td>
                 <td className="px-5 py-5"><StatusBadge status={r.status} /></td>
                 <td className="px-5 py-5"><Button variant="ghost" size="sm">Detalji →</Button></td>
               </tr>
@@ -124,6 +125,7 @@ const Upiti = () => {
                 <a href={`tel:${selected.phone}`} className="block text-primary hover:underline">{selected.phone}</a>
               </Block>
               <Block title="Nekretnina"><p>{selected.property_type} · {selected.location}{selected.sqm ? ` · ${selected.sqm} m²` : ""}</p></Block>
+              {selected.estimated_range && <Block title="Procjena"><p>{selected.estimated_range}</p></Block>}
               <Block title="Opseg radova"><p>{selected.scope}</p></Block>
               <Block title="Detalji"><p>Stanje: {selected.condition}</p><p>Materijali: {selected.material}</p></Block>
               {selected.message && <Block title="Poruka klijenta"><p className="text-dash-muted leading-relaxed">{selected.message}</p></Block>}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Info } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import StatusBadge from "@/components/admin/StatusBadge";
@@ -16,6 +17,11 @@ const AdminHome = () => {
   const [ponude, setPonude] = useState<{ title: string; amount: number }[]>([]);
   const [revenue, setRevenue] = useState<{ now: number; prev: number }>({ now: 0, prev: 0 });
   const [messages, setMessages] = useState<Msg[]>([]);
+  const [noRealProjects, setNoRealProjects] = useState(false);
+
+  useEffect(() => {
+    supabase.from("projects").select("id", { count: "exact", head: true }).then(({ count }) => setNoRealProjects(count === 0));
+  }, []);
   const { rows: requests } = useAdminRequests();
   const { rows: projects } = useAdminProjects();
 
@@ -62,10 +68,19 @@ const AdminHome = () => {
       <p className="text-lg text-dash-muted max-w-3xl mb-6">
         Danas imate {novi.length} novih upita, {ponude.length} ponude čekaju potpis i 0 sastanka.
       </p>
-      <div className="flex flex-wrap gap-3 mb-12">
+      <div className="flex flex-wrap gap-3 mb-10">
         <Button variant="outline" size="lg" onClick={() => navigate("/admin/upiti")}>Otvori upite</Button>
         <Button size="lg" onClick={() => navigate("/admin/ponude")}>Nova ponuda</Button>
       </div>
+
+      {noRealProjects && (
+        <div className="bg-dash-active border border-dash-border rounded-xl px-5 py-4 mb-10 flex items-start gap-3">
+          <Info className="w-5 h-5 text-dash-subtle shrink-0 mt-0.5" />
+          <div className="text-sm text-dash-muted">
+            <strong className="font-medium">Prikaz s probnim podacima.</strong> Projekti i podaci "danas na gradilištima" su primjeri za demo. Čim kreirate prvi pravi projekt, zamijenit će se stvarnim podacima.
+          </div>
+        </div>
+      )}
 
       <h2 className="text-3xl font-serif font-normal mb-6">Hitne akcije</h2>
       <div className="grid sm:grid-cols-2 gap-5 mb-10">
@@ -124,7 +139,7 @@ const AdminHome = () => {
             </div>
             <div className="md:text-right">
               <p className="text-sm text-dash-subtle mb-1">Procjena</p>
-              <p className="font-medium">{r.estimated_range ?? "—"}</p>
+              <p className="font-medium">{r.estimated_range || "—"}</p>
             </div>
             <p className="text-sm text-dash-subtle">{timeAgo(r.created_at)}</p>
           </div>
