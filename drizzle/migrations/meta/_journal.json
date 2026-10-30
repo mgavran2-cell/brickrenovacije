@@ -36,6 +36,13 @@
       "when": 1793359631307,
       "tag": "0004_production_projects_and_atomic_conversion",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793362143410,
+      "tag": "0005_create_project_tasks",
+      "breakpoints": true
     }
   ]
 }

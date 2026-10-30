@@ -355,6 +355,81 @@ export type Database = {
           },
         ]
       }
+      project_tasks: {
+        Row: {
+          assigned_to_text: string | null
+          assigned_to_user_id: string | null
+          completed_at: string | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          name: string
+          phase_id: string | null
+          priority: string | null
+          progress_percent: number | null
+          project_id: string
+          requires_client_presence: boolean | null
+          start_date: string | null
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          assigned_to_text?: string | null
+          assigned_to_user_id?: string | null
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          name: string
+          phase_id?: string | null
+          priority?: string | null
+          progress_percent?: number | null
+          project_id: string
+          requires_client_presence?: boolean | null
+          start_date?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          assigned_to_text?: string | null
+          assigned_to_user_id?: string | null
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          name?: string
+          phase_id?: string | null
+          priority?: string | null
+          progress_percent?: number | null
+          project_id?: string
+          requires_client_presence?: boolean | null
+          start_date?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_tasks_phase_id_fkey"
+            columns: ["phase_id"]
+            isOneToOne: false
+            referencedRelation: "project_phases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_tasks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
           address: string | null
@@ -614,6 +689,10 @@ export type Database = {
           full_name: string
           id: string
         }[]
+      }
+      recalc_project_progress: {
+        Args: { _project_id: string }
+        Returns: undefined
       }
     }
     Enums: {

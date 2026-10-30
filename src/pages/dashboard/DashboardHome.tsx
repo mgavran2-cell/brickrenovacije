@@ -8,14 +8,14 @@ import type { Tables } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import EmptyState from "@/components/EmptyState";
 import PageSkeleton from "@/components/skeletons/PageSkeleton";
-import { PhaseList } from "@/components/ProjectVisuals";
+import PhaseTimeline from "@/components/PhaseTimeline";
 import { statusLabel } from "@/components/admin/StatusBadge";
 import { daysUntil, phaseName } from "@/lib/projects";
 import { eur, timeAgo } from "@/lib/adminFormat";
 
 const DashboardHome = () => {
   const { session } = useAuth(); const navigate = useNavigate();
-  const { project, phases, loading, error } = useProject(undefined, true);
+  const { project, phases, tasks, loading, error } = useProject(undefined, true);
   const [name, setName] = useState(""); const [messages, setMessages] = useState<Tables<"poruke">[]>([]);
   useEffect(() => {
     const uid = session?.user.id; if (!uid) return;
@@ -37,7 +37,7 @@ const DashboardHome = () => {
     <p className="text-lg text-dash-muted mb-6">{error || (project ? `Vaš projekt ${project.title} je u fazi ${phaseName(project, phases)}. ${project.progress_percent ?? 0}% dovršeno.` : "Vaš projekt čeka procjenu.")}</p>
     <Button size="lg" className="mb-10" onClick={() => navigate("/dashboard/moj-projekt")}>Pogledaj projekt</Button>
     <div className="grid sm:grid-cols-2 gap-5 mb-10">{stats.map(([label,value,sub]) => <div key={label} className="bg-dash-card rounded-2xl border border-dash-border p-7 min-w-0"><p className="text-sm text-dash-subtle mb-3">{label}</p><p className="text-3xl font-serif break-words mb-2">{value}</p><p className="text-sm text-dash-muted">{sub}</p></div>)}</div>
-    <section className="mb-10"><h2 className="text-2xl font-serif mb-5">Faze projekta</h2>{project ? <PhaseList phases={phases} /> : <p className="text-dash-subtle">Faze će se otključati nakon potvrde projekta.</p>}</section>
+    <section className="mb-10"><h2 className="text-2xl font-serif mb-5">Faze projekta</h2>{project ? <PhaseTimeline phases={phases} tasks={tasks} /> : <p className="text-dash-subtle">Faze će se otključati nakon potvrde projekta.</p>}</section>
     <section className="mb-10"><div className="flex justify-between gap-3 mb-5"><h2 className="text-2xl font-serif">Poruke voditelja</h2><Link className="text-primary" to="/dashboard/poruke">Sve poruke</Link></div>{messages.length ? messages.map(m => <div key={m.id} className="py-4 border-b border-dash-border"><p className="font-medium">{m.sender_name}</p><p className="text-dash-muted mt-2">{m.text}</p><p className="text-xs text-dash-subtle mt-2">{timeAgo(m.created_at)}</p></div>) : <EmptyState icon={MessageSquare} title="Nema poruka" description="Javit će Vam se voditelj projekta." />}</section>
     <section><h2 className="text-2xl font-serif mb-5">Dokumenti za potpis</h2><EmptyState icon={FileText} title="Dokumenti" description="Dokumenti dolaze u sljedećem krugu." /></section>
   </div>;
