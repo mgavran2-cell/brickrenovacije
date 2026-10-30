@@ -17,14 +17,7 @@ const AdminHome = () => {
   const navigate = useNavigate();
   const { session } = useAuth();
   const [firstName, setFirstName] = useState("");
-  const [ponude, setPonude] = useState<{ title: string; amount: number }[]>([]);
-  const [revenue, setRevenue] = useState<{ now: number; prev: number }>({ now: 0, prev: 0 });
   const [messages, setMessages] = useState<Msg[]>([]);
-  const [noRealProjects, setNoRealProjects] = useState(false);
-
-  useEffect(() => {
-    supabase.from("projects").select("id", { count: "exact", head: true }).then(({ count }) => setNoRealProjects(count === 0));
-  }, []);
   const { rows: requests } = useAdminRequests();
   const { rows: projects, loading, error: projectError } = useAdminProjects();
 
@@ -32,19 +25,11 @@ const AdminHome = () => {
     const uid = session?.user?.id;
     if (!uid) return;
     (async () => {
-      const now = new Date();
-      const m0 = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-      const m1 = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString();
-      const [prof, pon, rac, msg] = await Promise.all([
+      const [prof, msg] = await Promise.all([
         supabase.from("profiles").select("full_name").eq("id", uid).maybeSingle(),
-        supabase.from("ponude").select("title, amount, status").in("status", ["waiting", "pending", "na_cekanju", "poslano"]).order("created_at", { ascending: false }),
-        supabase.from("racuni").select("amount, date, status").gte("date", m1),
         supabase.from("poruke").select("id, sender_name, text, created_at").neq("sender_id", uid).order("created_at", { ascending: false }).limit(3),
       ]);
       setFirstName((prof.data?.full_name || session.user.email || "").split(/[\s@]/)[0]);
-      setPonude(pon.data ?? []);
-      const r = rac.data ?? [];
-      setRevenue({ now: r.filter((x) => x.date >= m0.slice(0, 10)).reduce((s, x) => s + Number(x.amount), 0), prev: r.filter((x) => x.date < m0.slice(0, 10)).reduce((s, x) => s + Number(x.amount), 0) });
       setMessages(msg.data ?? []);
     })();
   }, [session?.user?.id]);
@@ -53,17 +38,16 @@ const AdminHome = () => {
   const formattedDate = now.toLocaleDateString("hr-HR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
   const realRequests = requests.filter(r => !r.mock);
   const novi = realRequests.filter((r) => r.status === "novi");
-  const active = projects.filter((p) => ["izvodenje", "active"].includes(p.status));
+  const active = projects.filter((p) => !p.is_draft && p.status === "izvodenje");
   const withEnd = active.flatMap(p => { const d = daysUntil(p.end_date); return d == null ? [] : [{ p, d }]; }).sort((a, b) => a.d - b.d);
   const critical = withEnd[0];
   const projectRevenue = projects.filter(p => !p.is_draft && new Date(p.created_at).getMonth() === now.getMonth() && new Date(p.created_at).getFullYear() === now.getFullYear()).reduce((sum,p) => sum + (p.total_price ?? 0), 0);
-  const pct = revenue.prev ? Math.round(((revenue.now - revenue.prev) / revenue.prev) * 100) : null;
 
   const cards = [
     { label: "Novi upiti", value: String(novi.length), actionText: "Odgovorite danas", url: "/admin/upiti?status=novi", detail: novi.slice(0, 3).map((r) => r.name).join(", ") || "Nema novih upita" },
-    { label: "Ponude čekaju", value: "0", actionText: "Potpisi", url: "/admin/ponude", detail: ponude.slice(0, 2).map((p) => `${p.title} ${eur(p.amount)} €`).join(" · ") || "Nema podataka" },
+    { label: "Ponude čekaju", value: "0", actionText: "Potpisi", url: "/admin/ponude", detail: "Ponude dolaze u sljedećem krugu" },
     { label: "Dani do predaje", value: critical ? String(critical.d) : "—", actionText: "Projekt", url: critical ? `/admin/projekti/${critical.p.id}` : "/admin/projekti", detail: critical ? `${critical.p.title} · ${critical.p.client_name}` : "Nema podataka" },
-    { label: "Prihod ovaj mjesec", value: `${eur(projectRevenue)} €`, actionText: "Analitika", url: "/admin/analitika", detail: pct == null ? "Nema podataka za prošli mjesec" : `${pct > 0 ? "+" : ""}${pct}% vs prošli mjesec` },
+    { label: "Prihod ovaj mjesec", value: `${eur(projectRevenue)} €`, actionText: "Analitika", url: "/admin/analitika", detail: "Ukupna vrijednost projekata kreiranih ovaj mjesec" },
   ];
 
   if (loading) return <PageSkeleton />;
