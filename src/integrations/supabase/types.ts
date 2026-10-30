@@ -285,44 +285,182 @@ export type Database = {
           },
         ]
       }
+      project_internal_notes: {
+        Row: {
+          internal_notes: string | null
+          project_id: string
+        }
+        Insert: {
+          internal_notes?: string | null
+          project_id: string
+        }
+        Update: {
+          internal_notes?: string | null
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_internal_notes_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: true
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_phases: {
+        Row: {
+          completed_at: string | null
+          created_at: string | null
+          end_date: string | null
+          id: string
+          name: string
+          notes: string | null
+          phase_order: number
+          project_id: string
+          start_date: string | null
+          status: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string | null
+          end_date?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          phase_order: number
+          project_id: string
+          start_date?: string | null
+          status?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string | null
+          end_date?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          phase_order?: number
+          project_id?: string
+          start_date?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_phases_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
+          address: string | null
+          area_sqm: number | null
+          city: string | null
+          client_email: string | null
+          client_id: string | null
+          client_name: string
+          client_phone: string | null
           created_at: string
+          currency: string | null
+          current_phase: number | null
+          end_date: string | null
+          hero_image_url: string | null
           id: string
+          is_draft: boolean
           location: string | null
+          neighborhood: string | null
+          paid_amount: number | null
           progress: number
+          progress_percent: number | null
+          project_manager_id: string | null
+          property_type: string | null
+          source_request_id: string | null
           start_date: string | null
           status: string
           title: string
+          total_phases: number | null
+          total_price: number | null
           type: string | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          address?: string | null
+          area_sqm?: number | null
+          city?: string | null
+          client_email?: string | null
+          client_id?: string | null
+          client_name?: string
+          client_phone?: string | null
           created_at?: string
+          currency?: string | null
+          current_phase?: number | null
+          end_date?: string | null
+          hero_image_url?: string | null
           id?: string
+          is_draft?: boolean
           location?: string | null
+          neighborhood?: string | null
+          paid_amount?: number | null
           progress?: number
+          progress_percent?: number | null
+          project_manager_id?: string | null
+          property_type?: string | null
+          source_request_id?: string | null
           start_date?: string | null
           status?: string
           title: string
-          type?: string | null
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          location?: string | null
-          progress?: number
-          start_date?: string | null
-          status?: string
-          title?: string
+          total_phases?: number | null
+          total_price?: number | null
           type?: string | null
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Update: {
+          address?: string | null
+          area_sqm?: number | null
+          city?: string | null
+          client_email?: string | null
+          client_id?: string | null
+          client_name?: string
+          client_phone?: string | null
+          created_at?: string
+          currency?: string | null
+          current_phase?: number | null
+          end_date?: string | null
+          hero_image_url?: string | null
+          id?: string
+          is_draft?: boolean
+          location?: string | null
+          neighborhood?: string | null
+          paid_amount?: number | null
+          progress?: number
+          progress_percent?: number | null
+          project_manager_id?: string | null
+          property_type?: string | null
+          source_request_id?: string | null
+          start_date?: string | null
+          status?: string
+          title?: string
+          total_phases?: number | null
+          total_price?: number | null
+          type?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_source_request_id_fkey"
+            columns: ["source_request_id"]
+            isOneToOne: false
+            referencedRelation: "renovation_requests"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       racuni: {
         Row: {
@@ -371,6 +509,8 @@ export type Database = {
       renovation_requests: {
         Row: {
           admin_notes: string | null
+          city: string | null
+          client_id: string | null
           condition: string
           created_at: string
           email: string
@@ -381,6 +521,7 @@ export type Database = {
           message: string | null
           name: string
           phone: string
+          property_address: string | null
           property_type: string
           scope: string
           sqm: number | null
@@ -388,6 +529,8 @@ export type Database = {
         }
         Insert: {
           admin_notes?: string | null
+          city?: string | null
+          client_id?: string | null
           condition: string
           created_at?: string
           email: string
@@ -398,6 +541,7 @@ export type Database = {
           message?: string | null
           name: string
           phone: string
+          property_address?: string | null
           property_type: string
           scope: string
           sqm?: number | null
@@ -405,6 +549,8 @@ export type Database = {
         }
         Update: {
           admin_notes?: string | null
+          city?: string | null
+          client_id?: string | null
           condition?: string
           created_at?: string
           email?: string
@@ -415,6 +561,7 @@ export type Database = {
           message?: string | null
           name?: string
           phone?: string
+          property_address?: string | null
           property_type?: string
           scope?: string
           sqm?: number | null
@@ -445,12 +592,28 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_project_from_request: {
+        Args: {
+          details: Json
+          phases: Json
+          request_id: string
+          save_draft?: boolean
+        }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      project_managers: {
+        Args: never
+        Returns: {
+          full_name: string
+          id: string
+        }[]
       }
     }
     Enums: {
