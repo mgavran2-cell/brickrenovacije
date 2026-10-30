@@ -15,4 +15,4 @@
 - [x] Admin ProjektDetalji: Faze tab s karticama i zadacima, Pregled s "Trenutno u izvođenju" i "Aktivnost".
 - [x] Klijent MojProjekt: stvarni aktivni zadaci i raspored sljedećih 7 dana.
 - [x] DashboardHome: timeline faza sa stvarnim statusima i postocima.
-- [ ] E2E provjera u pregledniku (admin dodaje task → klijent vidi progress).
+- [x] E2E provjera u pregledniku (admin dodaje task → klijent vidi progress).
