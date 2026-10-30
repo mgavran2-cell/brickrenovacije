@@ -18,6 +18,6 @@
 - [x] E2E provjera u pregledniku (admin dodaje task → klijent vidi progress).
 
 ## Faza C — fotografije
-- [ ] Privatna pohrana, metadata, javni linkovi ograničeni tokenom i zapis aktivnosti.
-- [ ] Galerija, upload, lightbox, hero slika, dijeljenje i ZIP.
-- [ ] Admin, klijent i javna stranica; provjera prava, testovi i stvarni upload.
+- [x] Privatna pohrana, metadata, javni linkovi ograničeni tokenom i zapis aktivnosti.
+- [x] Galerija, upload, lightbox, hero slika, dijeljenje i ZIP.
+- [x] Admin, klijent i javna stranica; provjera prava, testovi i stvarni upload.

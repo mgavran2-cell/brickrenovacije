@@ -39,7 +39,13 @@ const ProjektDetalji = () => {
   useEffect(() => { supabase.rpc("project_managers").then(({ data }) => setTeam(data ?? [])); }, []);
 
   const deleteProject = async () => {
-    if (!p || deleting) return; setDeleting(true);
+    if (!p || deleting || !isAdmin) return; setDeleting(true);
+    const photos = await supabase.from("project_photos").select("storage_path").eq("project_id", p.id);
+    if (photos.error) { setDeleting(false); toast.error("Projekt nije obrisan", "Fotografije nije moguće provjeriti."); return; }
+    if (photos.data.length) {
+      const removal = await supabase.storage.from("project-photos").remove(photos.data.map(photo => photo.storage_path));
+      if (removal.error) { setDeleting(false); toast.error("Projekt nije obrisan", "Fotografije nisu uklonjene."); return; }
+    }
     const { data, error } = await supabase.from("projects").delete().eq("id", p.id).select("id");
     setDeleting(false);
     if (error || !data?.length) { toast.error("Projekt nije obrisan", "Pokušajte ponovno."); return; }
