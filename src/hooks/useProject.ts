@@ -53,6 +53,7 @@ export function useProject(id?: string, client = false) {
       if (live && pid) {
         channel = supabase
           .channel(`project-${pid}`)
+          .on("postgres_changes", { event: "*", schema: "public", table: "projects", filter: `id=eq.${pid}` }, () => void load())
           .on("postgres_changes", { event: "*", schema: "public", table: "project_tasks", filter: `project_id=eq.${pid}` }, () => void load())
           .on("postgres_changes", { event: "*", schema: "public", table: "project_activity_log", filter: `project_id=eq.${pid}` }, () => void load())
           .on("postgres_changes", { event: "*", schema: "public", table: "project_phases", filter: `project_id=eq.${pid}` }, () => void load())

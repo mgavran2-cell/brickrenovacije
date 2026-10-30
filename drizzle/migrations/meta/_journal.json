@@ -43,6 +43,13 @@
       "when": 1793362143410,
       "tag": "0005_create_project_tasks",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793365827572,
+      "tag": "0006_project_photos_private_sharing",
+      "breakpoints": true
     }
   ]
 }
