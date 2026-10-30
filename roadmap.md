@@ -16,3 +16,8 @@
 - [x] Klijent MojProjekt: stvarni aktivni zadaci i raspored sljedećih 7 dana.
 - [x] DashboardHome: timeline faza sa stvarnim statusima i postocima.
 - [x] E2E provjera u pregledniku (admin dodaje task → klijent vidi progress).
+
+## Faza C — fotografije
+- [ ] Privatna pohrana, metadata, javni linkovi ograničeni tokenom i zapis aktivnosti.
+- [ ] Galerija, upload, lightbox, hero slika, dijeljenje i ZIP.
+- [ ] Admin, klijent i javna stranica; provjera prava, testovi i stvarni upload.
