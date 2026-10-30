@@ -6,6 +6,7 @@ import PageSkeleton from "@/components/skeletons/PageSkeleton";
 import StatusBadge from "@/components/admin/StatusBadge";
 import { ProjectImage, PhaseList } from "@/components/ProjectVisuals";
 import { next7Days, projectPlace, taskAssignee } from "@/lib/projects";
+import PhotoGallery from "@/components/PhotoGallery";
 import { formatDate } from "@/lib/adminFormat";
 
 const MojProjekt = () => {
@@ -60,7 +61,7 @@ const MojProjekt = () => {
         ))}
       </div>
     </section>
-    <section className="mb-10"><h2 className="text-2xl font-serif mb-5">Napredak s gradilišta</h2><EmptyState icon={ImageIcon} title="Fotografije dolaze uskoro" description="Dolazi u sljedećem krugu." /></section>
+    <section className="mb-10"><h2 className="text-2xl font-serif mb-5">Napredak s gradilišta</h2><PhotoGallery projectId={p.id} phases={phases} canUpload={false} canDelete={false} canShare={false} canDownloadZip={false} /></section>
   </div>;
 };
 export default MojProjekt;

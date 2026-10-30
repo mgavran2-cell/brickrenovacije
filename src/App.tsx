@@ -17,6 +17,7 @@ import Dashboard from "./pages/Dashboard";
 import Prijava from "./pages/Prijava";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import NotFound from "./pages/NotFound";
+import ShareGallery from "./pages/ShareGallery";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/projekti" element={<Projekti />} />
           <Route path="/usluge" element={<Usluge />} />
           <Route path="/izvodaci" element={<Izvodaci />} />
+          <Route path="/g/:token" element={<ShareGallery />} />
           <Route path="/prijava" element={<Prijava />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/dashboard/*" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

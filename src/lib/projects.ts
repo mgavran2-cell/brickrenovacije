@@ -46,6 +46,10 @@ export const next7Days = (tasks: ProjectTask[], today = new Date()): DayPlan[] =
 export const formatActivity = (a: ProjectActivity) => {
   const m = (a.metadata ?? {}) as Record<string, string>;
   switch (a.action) {
+    case "photos_uploaded": return `${m.count} fotografija dodano u fazu ${m.phase}`;
+    case "photo_deleted": return `Fotografija „${m.name}” obrisana`;
+    case "hero_image_set": return "Hero slika projekta promijenjena";
+    case "share_link_created": return "Javni link galerije kreiran";
     case "task_created": return `Zadatak „${m.name}” dodan${m.phase ? ` u fazu ${m.phase}` : ""}`;
     case "task_status_changed": return `Zadatak „${m.name}”: ${m.from} → ${m.to}`;
     case "task_completed": return `Zadatak „${m.name}” završen`;
