@@ -2,6 +2,8 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export type Project = Tables<"projects">;
 export type ProjectPhase = Tables<"project_phases">;
+export type ProjectTask = Tables<"project_tasks">;
+export type ProjectActivity = Tables<"project_activity_log">;
 export const DEFAULT_PHASES = ["Procjena", "Ugovor", "Priprema", "Izvođenje", "Predaja"];
 export const phaseName = (project: Project, phases: ProjectPhase[]) => phases.find(p => p.status === "u_tijeku")?.name ?? phases.find(p => p.phase_order === project.current_phase)?.name ?? "—";
 export const daysUntil = (date: string | null, today = new Date()) => {
