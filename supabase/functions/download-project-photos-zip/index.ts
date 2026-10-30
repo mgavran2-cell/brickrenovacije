@@ -24,6 +24,6 @@ Deno.serve(async req => {
     }
     const bytes = await zip.generateAsync({ type:'uint8array', compression:'STORE' });
     const name = `${project.title.replace(/[^a-zA-Z0-9_-]/g,'_')}-fotografije-${new Date().toISOString().slice(0,10)}.zip`;
-    return new Response(bytes, { headers: { ...corsHeaders, 'Content-Type':'application/zip', 'Content-Disposition':`attachment; filename="${name}"`, 'Access-Control-Expose-Headers':'Content-Disposition' } });
+    return new Response(bytes, { headers: { ...corsHeaders, 'Content-Type':'application/octet-stream', 'Content-Disposition':`attachment; filename="${name}"`, 'Access-Control-Expose-Headers':'Content-Disposition' } });
   } catch { return json({ error: 'ZIP nije moguće pripremiti.' },500); }
 });
