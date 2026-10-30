@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/toast-notifications";
 import { supabase } from "@/integrations/supabase/client";
 import StatusBadge from "@/components/admin/StatusBadge";
 import { Breadcrumb, PillTabs, SampleNote } from "@/components/admin/AdminPage";
@@ -21,6 +21,7 @@ const TH = "text-left px-5 py-4 text-xs uppercase tracking-wider text-dash-subtl
 
 const Upiti = () => {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
   const { rows, setRows, isMock } = useAdminRequests();
   const [statusFilter, setStatusFilter] = useState(params.get("status") ?? "all");
   const [dateFilter, setDateFilter] = useState("all");
@@ -143,7 +144,7 @@ const Upiti = () => {
                 <Button variant="outline" onClick={() => update(selected, { status: "u_kontaktu" })}>Odgovoreno</Button>
                 <Button variant="outline" onClick={() => update(selected, { status: "sastanak" })}>Dogovori sastanak</Button>
                 <Button variant="outline" onClick={() => update(selected, { status: "odbijeno" })}>Odbij</Button>
-                <Button onClick={() => update(selected, { status: "pretvoreno" })}>Pretvori u projekt</Button>
+                <Button disabled={!!selected.mock} onClick={() => navigate(`/admin/upiti/${selected.id}/kreiraj-projekt`)}>Pretvori u projekt</Button>
               </div>
             </div>
           )}

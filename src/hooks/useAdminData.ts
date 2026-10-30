@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { mockProjects, mockRequests, mockContractors, type AdminProject, type AdminRequest, type AdminContractor } from "@/lib/adminMock";
+import { mockRequests, mockContractors, type AdminRequest, type AdminContractor } from "@/lib/adminMock";
 
 const PHASE: Record<string, string> = { procjena: "Procjena", ugovor: "Ugovor", priprema: "Priprema", izvodenje: "Izvođenje", active: "Izvođenje", predaja: "Predaja", zavrseno: "Završeno", completed: "Završeno" };
 
@@ -35,27 +35,16 @@ export const useAdminContractors = () => {
 };
 
 export const useAdminProjects = () => {
-  const [rows, setRows] = useState<AdminProject[]>([]);
-  const [isMock, setIsMock] = useState(false);
+  const [rows, setRows] = useState<import("@/lib/projects").Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   useEffect(() => {
-    (async () => {
-      const { data } = await supabase.from("projects").select("*").order("created_at", { ascending: false });
-      if (!data || !data.length) { setRows(mockProjects); setIsMock(true); setLoading(false); return; }
-      const ids = [...new Set(data.map((p) => p.user_id))];
-      const { data: profs } = await supabase.from("profiles").select("id, full_name, email").in("id", ids);
-      const byId = new Map((profs ?? []).map((p) => [p.id, p]));
-      setRows(data.map((p) => {
-        const prof = byId.get(p.user_id);
-        return {
-          id: p.id, title: p.title, client_name: prof?.full_name || prof?.email || "Klijent", location: p.location ?? "—", address: p.location ?? "—",
-          type: p.type ?? "—", sqm: null, total_price: null, paid: null, progress: p.progress, status: p.status,
-          current_phase: PHASE[p.status] ?? p.status, current_task: "—", start_date: p.start_date, end_date: null, work_hours: "—",
-          teams: [], client_email: prof?.email ?? "", client_phone: "",
-        };
-      }));
-      setIsMock(false); setLoading(false);
-    })();
+    let live = true;
+    supabase.from("projects").select("*").order("created_at", { ascending: false }).then(({ data, error }) => {
+      if (!live) return;
+      setRows(data ?? []); setError(error ? "Projekte nije moguće učitati." : ""); setLoading(false);
+    });
+    return () => { live = false; };
   }, []);
-  return { rows, isMock, loading };
+  return { rows, isMock: false, loading, error };
 };

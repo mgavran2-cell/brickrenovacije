@@ -1,162 +1,48 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { ImageIcon } from "lucide-react";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { FolderOpen, FileText, Pencil, Trash2 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 import { Breadcrumb } from "@/components/admin/AdminPage";
 import StatusBadge from "@/components/admin/StatusBadge";
+import EmptyState from "@/components/EmptyState";
+import PageSkeleton from "@/components/skeletons/PageSkeleton";
+import ConfirmDialog from "@/components/ConfirmDialog";
+import DestructiveConfirmDialog from "@/components/DestructiveConfirmDialog";
+import { ProjectImage, PhaseList } from "@/components/ProjectVisuals";
+import { toast } from "@/components/ui/toast-notifications";
+import { useProject } from "@/hooks/useProject";
+import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { useAdminProjects } from "@/hooks/useAdminData";
-import { eur, formatDate, timeAgo } from "@/lib/adminFormat";
-
-const Card = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="bg-dash-card rounded-2xl p-6 border border-dash-border">
-    <h3 className="text-xs uppercase tracking-widest text-dash-subtle mb-4">{title}</h3>
-    {children}
-  </div>
-);
-const Empty = ({ text }: { text: string }) => <p className="text-dash-subtle py-8 text-center border border-dashed border-dash-line rounded-2xl">{text}</p>;
-
-const PHASES = ["Procjena", "Ugovor", "Priprema", "Izvođenje", "Predaja"];
-const COSTS: { cat: string; items: [string, string, number][] }[] = [
-  { cat: "Materijali", items: [["Keramika 60x60, kupaonica", "24 m²", 38], ["Laminat hrast, AC5", "52 m²", 29], ["Sanitarije (WC, umivaonik, tuš)", "1 kpl", 2150]] },
-  { cat: "Rad", items: [["Rušenje i odvoz šute", "1 pauš.", 2400], ["Elektroinstalacije", "68 m²", 45], ["Polaganje keramike", "38 m²", 32]] },
-  { cat: "Dodaci", items: [["Koordinacija i nadzor", "1 pauš.", 1800]] },
-];
+import { projectPlace } from "@/lib/projects";
+import { eur, formatDate } from "@/lib/adminFormat";
 
 const ProjektDetalji = () => {
-  const { id } = useParams();
-  const { rows, loading } = useAdminProjects();
-  const p = rows.find((r) => r.id === id);
-  const [msgs, setMsgs] = useState<{ id: string; sender_name: string; text: string; created_at: string }[]>([]);
-  const [ponude, setPonude] = useState<{ id: string; code: string; title: string; amount: number; status: string }[]>([]);
-
-  useEffect(() => {
-    if (!id || id.startsWith("mock")) return;
-    supabase.from("ponude").select("id, code, title, amount, status").eq("project_id", id).then(({ data }) => setPonude(data ?? []));
-    supabase.from("poruke").select("id, sender_name, text, created_at").eq("conversation_id", id).order("created_at").then(({ data }) => setMsgs(data ?? []));
-  }, [id]);
-
-  if (loading) return <div className="p-10 text-dash-subtle">Učitavanje…</div>;
-  if (!p) return <div className="p-10"><Breadcrumb items={[{ label: "Pregled", to: "/admin" }, { label: "Projekti", to: "/admin/projekti" }]} /><Empty text="Projekt nije pronađen." /></div>;
-
-  const full = p.id === "mock-1";
-  const phaseIdx = Math.max(0, PHASES.indexOf(p.current_phase));
-  const subtotal = COSTS.flatMap((c) => c.items).reduce((s, [, q, u]) => s + (parseFloat(q) || 1) * u, 0);
-
-  return (
-    <div className="p-6 md:p-10 max-w-7xl">
-      <Breadcrumb items={[{ label: "Pregled", to: "/admin" }, { label: "Projekti", to: "/admin/projekti" }, { label: p.title }]} />
-      <div className="grid lg:grid-cols-3 gap-8 mb-10">
-        <div className="lg:col-span-2">
-          <div className="aspect-[16/9] rounded-2xl border-2 border-dashed border-dash-border bg-dash-soft flex flex-col items-center justify-center mb-6">
-            <ImageIcon className="text-dash-faint" size={40} /><p className="text-sm text-dash-subtle mt-2">Fotografija projekta</p>
-          </div>
-          <div className="flex items-center gap-3 mb-2"><StatusBadge status={p.status} /><span className="text-sm text-dash-subtle">{p.progress}% dovršeno</span></div>
-          <h1 className="text-4xl md:text-5xl font-serif font-normal">{p.title}</h1>
-          <p className="text-lg text-dash-muted mt-2">{p.address}, {p.location}</p>
-        </div>
-        <div className="space-y-6">
-          <Card title="Klijent">
-            <p className="font-serif text-2xl mb-1">{p.client_name}</p>
-            <p className="text-sm text-dash-muted mb-4">{p.location}</p>
-            {p.client_email && <a href={`mailto:${p.client_email}`} className="text-sm text-primary hover:underline block">{p.client_email}</a>}
-            {p.client_phone && <a href={`tel:${p.client_phone}`} className="text-sm text-primary hover:underline block">{p.client_phone}</a>}
-          </Card>
-          <Card title="Financije">
-            <div className="space-y-3">
-              <div className="flex justify-between"><span className="text-sm text-dash-muted">Ugovoreno</span><span className="font-serif text-lg">{eur(p.total_price)} €</span></div>
-              <div className="flex justify-between"><span className="text-sm text-dash-muted">Plaćeno</span><span className="font-serif text-lg text-primary">{eur(p.paid)} €</span></div>
-              <div className="flex justify-between pt-3 border-t border-dash-soft"><span className="text-sm text-dash-muted">Preostalo</span><span className="font-serif text-lg">{p.total_price != null ? eur(p.total_price - (p.paid ?? 0)) : "—"} €</span></div>
-            </div>
-          </Card>
-          <Card title="Tim na projektu">
-            {p.teams.length === 0 ? <p className="text-sm text-dash-subtle">Tim još nije dodijeljen.</p> : p.teams.map((t) => (
-              <div key={t.name} className="flex justify-between py-2 border-b border-dash-soft last:border-0"><span>{t.name}</span><span className="text-sm text-dash-muted">{t.role}</span></div>
-            ))}
-          </Card>
-        </div>
-      </div>
-
-      <Tabs defaultValue="pregled">
-        <TabsList className="bg-dash-card border border-dash-border flex-wrap h-auto">
-          {["Pregled", "Faze", "Troškovnik", "Ponude", "Dokumenti", "Poruke", "Fotografije"].map((t) => <TabsTrigger key={t} value={t.toLowerCase()}>{t}</TabsTrigger>)}
-        </TabsList>
-
-        <TabsContent value="pregled" className="mt-6 grid md:grid-cols-2 gap-6">
-          <Card title="Osnovno">
-            <dl className="grid grid-cols-2 gap-y-3 text-sm">
-              <dt className="text-dash-muted">Adresa</dt><dd>{p.address}</dd>
-              <dt className="text-dash-muted">Tip</dt><dd>{p.type}</dd>
-              <dt className="text-dash-muted">Kvadratura</dt><dd>{p.sqm ? `${p.sqm} m²` : "—"}</dd>
-              <dt className="text-dash-muted">Započeto</dt><dd>{formatDate(p.start_date)}</dd>
-              <dt className="text-dash-muted">Predaja</dt><dd>{formatDate(p.end_date)}</dd>
-            </dl>
-          </Card>
-          <Card title="Trenutno u izvođenju">
-            <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-primary" /><p className="font-medium">{p.current_task}</p></div>
-          </Card>
-          <div className="md:col-span-2"><Card title="Faze">
-            <div className="grid grid-cols-5 gap-2">
-              {PHASES.map((ph, i) => (
-                <div key={ph}>
-                  <div className={`h-1.5 rounded-full mb-2 ${i <= phaseIdx ? "bg-primary" : "bg-dash-soft"}`} />
-                  <p className={`text-sm ${i === phaseIdx ? "font-medium" : "text-dash-muted"}`}>{ph}</p>
-                </div>
-              ))}
-            </div>
-          </Card></div>
-        </TabsContent>
-
-        <TabsContent value="faze" className="mt-6 space-y-3">
-          {PHASES.map((ph, i) => (
-            <div key={ph} className="bg-dash-card rounded-2xl p-5 border border-dash-border flex justify-between items-center">
-              <p className="font-serif text-xl">{i + 1}. {ph}</p>
-              <span className="text-sm text-dash-muted">{i < phaseIdx ? "Završeno" : i === phaseIdx ? "U tijeku" : "Čeka"}</span>
-            </div>
-          ))}
-        </TabsContent>
-
-        <TabsContent value="troškovnik" className="mt-6">
-          {!full ? <Empty text="Troškovnik još nije unesen." /> : (
-            <div className="bg-dash-card rounded-2xl border border-dash-border overflow-x-auto">
-              <table className="w-full min-w-[600px] text-sm">
-                <thead><tr className="border-b border-dash-border">{["Opis", "Količina", "Jedinična cijena", "Ukupno"].map((h) => <th key={h} className="text-left px-5 py-3 text-xs uppercase tracking-wider text-dash-subtle font-medium">{h}</th>)}</tr></thead>
-                <tbody>
-                  {COSTS.map((c) => {
-                    const sum = c.items.reduce((s, [, q, u]) => s + (parseFloat(q) || 1) * u, 0);
-                    return [
-                      <tr key={c.cat}><td colSpan={4} className="px-5 pt-5 pb-2 font-serif text-lg">{c.cat}</td></tr>,
-                      ...c.items.map(([d, q, u]) => <tr key={d} className="border-b border-dash-soft"><td className="px-5 py-3">{d}</td><td className="px-5 py-3">{q}</td><td className="px-5 py-3">{eur(u)} €</td><td className="px-5 py-3">{eur((parseFloat(q) || 1) * u)} €</td></tr>),
-                      <tr key={c.cat + "s"}><td colSpan={3} className="px-5 py-3 text-right text-dash-muted">Ukupno {c.cat.toLowerCase()}</td><td className="px-5 py-3 font-medium">{eur(sum)} €</td></tr>,
-                    ];
-                  })}
-                  <tr className="border-t border-dash-border"><td colSpan={3} className="px-5 py-2 text-right text-dash-muted">Ukupno bez PDV-a</td><td className="px-5 py-2">{eur(subtotal)} €</td></tr>
-                  <tr><td colSpan={3} className="px-5 py-2 text-right text-dash-muted">PDV 25%</td><td className="px-5 py-2">{eur(subtotal * 0.25)} €</td></tr>
-                  <tr><td colSpan={3} className="px-5 py-4 text-right font-medium">Ukupno s PDV-om</td><td className="px-5 py-4 font-serif text-xl">{eur(subtotal * 1.25)} €</td></tr>
-                </tbody>
-              </table>
-            </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="ponude" className="mt-6">
-          {ponude.length === 0 ? <Empty text="Nema ponuda za ovaj projekt." /> : ponude.map((o) => (
-            <div key={o.id} className="bg-dash-card rounded-2xl p-5 border border-dash-border flex justify-between mb-3"><span>{o.code} · {o.title}</span><span className="font-serif">{eur(o.amount)} € · {o.status}</span></div>
-          ))}
-        </TabsContent>
-        <TabsContent value="dokumenti" className="mt-6"><Empty text="Dokumenti još nisu dodani." /></TabsContent>
-        <TabsContent value="poruke" className="mt-6">
-          {msgs.length === 0 ? <Empty text="Nema poruka s klijentom." /> : msgs.map((m) => (
-            <div key={m.id} className="bg-dash-card rounded-2xl p-5 border border-dash-border mb-3">
-              <div className="flex justify-between mb-1"><p className="font-medium">{m.sender_name}</p><p className="text-xs text-dash-subtle">{timeAgo(m.created_at)}</p></div>
-              <p className="text-sm text-dash-muted">{m.text}</p>
-            </div>
-          ))}
-        </TabsContent>
-        <TabsContent value="fotografije" className="mt-6"><Empty text="Fotografije s gradilišta još nisu dodane." /></TabsContent>
-      </Tabs>
-    </div>
-  );
+  const { id } = useParams(); const navigate = useNavigate();
+  const { session } = useAuth(); const { project: p, phases, loading, error } = useProject(id);
+  const [edit, setEdit] = useState(false); const [remove, setRemove] = useState(false); const [deleting, setDeleting] = useState(false); const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => { const uid = session?.user.id; if (uid) supabase.rpc("has_role", { _user_id: uid, _role: "admin" }).then(r => setIsAdmin(r.data === true)); }, [session?.user.id]);
+  const deleteProject = async () => {
+    if (!p || deleting) return; setDeleting(true);
+    const { data, error } = await supabase.from("projects").delete().eq("id", p.id).select("id");
+    setDeleting(false);
+    if (error || !data?.length) { toast.error("Projekt nije obrisan", "Pokušajte ponovno."); return; }
+    toast.success("Projekt obrisan"); navigate("/admin/projekti");
+  };
+  if (loading) return <PageSkeleton />;
+  if (!p || error) return <div className="p-6 md:p-10"><EmptyState icon={FolderOpen} title={error ? "Učitavanje nije uspjelo" : "Projekt ne postoji"} description={error || "Projekt nije pronađen."} actionLabel="Natrag na projekte" onAction={() => navigate("/admin/projekti")} /></div>;
+  return <div className="p-6 md:p-10 max-w-7xl">
+    <Breadcrumb items={[{ label: "Pregled", to: "/admin" }, { label: "Projekti", to: "/admin/projekti" }, { label: p.title }]} />
+    <div className="flex flex-wrap justify-between gap-4 mb-6"><div><StatusBadge status={p.is_draft ? "draft" : p.status} /><h1 className="text-4xl md:text-5xl font-serif font-normal mt-3 break-words">{p.title}</h1><p className="mt-2 text-dash-muted">{projectPlace(p)}</p></div><div className="flex flex-wrap gap-2 self-start"><Button variant="outline" onClick={() => setEdit(true)}><Pencil size={16} className="mr-2" />Uredi</Button>{isAdmin && <Button variant="destructive" disabled={deleting} onClick={() => setRemove(true)}><Trash2 size={16} className="mr-2" />Obriši projekt</Button>}</div></div>
+    {p.is_draft && p.source_request_id && <Button className="mb-6" asChild><Link to={`/admin/upiti/${p.source_request_id}/kreiraj-projekt`}>Nastavi draft</Link></Button>}
+    <div className="grid lg:grid-cols-3 gap-8 mb-10"><div className="lg:col-span-2"><ProjectImage url={p.hero_image_url} title={p.title} /><p className="text-sm text-dash-subtle mt-3">{p.progress_percent ?? 0}% dovršeno</p></div><div className="space-y-8"><section><h2 className="text-2xl font-serif mb-3">Klijent</h2><p className="font-serif text-xl mb-2">{p.client_name}</p>{p.client_email && <a className="text-primary block break-all" href={`mailto:${p.client_email}`}>{p.client_email}</a>}{p.client_phone && <a className="text-primary block" href={`tel:${p.client_phone}`}>{p.client_phone}</a>}</section><section><h2 className="text-2xl font-serif mb-3">Financije</h2><dl className="grid grid-cols-2 gap-3 text-sm"><dt>Ugovoreno</dt><dd>{eur(p.total_price)} €</dd><dt>Plaćeno</dt><dd>{eur(p.paid_amount)} €</dd><dt>Preostalo</dt><dd>{p.total_price == null ? "—" : eur(p.total_price - (p.paid_amount ?? 0))} €</dd></dl></section></div></div>
+    <Tabs defaultValue="pregled"><TabsList className="flex-wrap h-auto bg-dash-card">{["Pregled", "Faze", "Troškovnik", "Ponude", "Dokumenti", "Poruke", "Fotografije"].map(t => <TabsTrigger key={t} value={t}>{t}</TabsTrigger>)}</TabsList>
+      <TabsContent value="Pregled" className="mt-8"><h2 className="text-2xl font-serif mb-5">Osnovno</h2><dl className="grid sm:grid-cols-2 gap-4 mb-8">{[["Adresa", p.address], ["Tip", p.property_type], ["Površina", p.area_sqm == null ? "—" : `${p.area_sqm} m²`], ["Početak", formatDate(p.start_date)], ["Predaja", formatDate(p.end_date)]].map(([l, v]) => <div key={l}><dt className="text-sm text-dash-subtle">{l}</dt><dd className="break-words">{v || "—"}</dd></div>)}</dl><h2 className="text-2xl font-serif mb-4">Faze projekta</h2><PhaseList phases={phases} /></TabsContent>
+      <TabsContent value="Faze" className="mt-8"><PhaseList phases={phases} /></TabsContent>
+      {["Troškovnik", "Ponude", "Dokumenti", "Poruke", "Fotografije"].map(t => <TabsContent key={t} value={t} className="mt-8"><EmptyState icon={FileText} title={t} description="Dolazi u sljedećem krugu." /></TabsContent>)}
+    </Tabs>
+    <ConfirmDialog open={edit} onOpenChange={setEdit} title="Uređivanje projekta" description="Značajke uređivanja detalja projekta dolaze uskoro." confirmLabel="U redu" onConfirm={() => setEdit(false)} />
+    <DestructiveConfirmDialog open={remove} onOpenChange={setRemove} title="Trajno obrisati projekt?" description={`Brišu se ${phases.length} faza i povijest projekta ${p.address || p.title}. Dokumenti, poruke i fotografije još nisu dio ovog projekta. Ova radnja se ne može poništiti.`} requireText="OBRIŠI" confirmLabel="Obriši projekt" onConfirm={() => void deleteProject()} />
+  </div>;
 };
-
 export default ProjektDetalji;

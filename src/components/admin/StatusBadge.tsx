@@ -38,6 +38,9 @@ const GREEN = (label: string) =>
 
 // Sve varijante iz dizajn sustava (DS-5 Podaci) + postojeći statusi u sustavu.
 const MAP: Record<string, StatusStyle> = {
+  planirano: NEUTRAL("Planirano"),
+  u_tijeku: { ...PRIMARY, label: "U tijeku" },
+  draft: NEUTRAL("Draft"),
   // DS-5 varijante
   procjena: BLUE("Procjena", "bg-blue-50 text-blue-800"),
   ugovor: BLUE("Ugovor", "bg-blue-100 text-blue-800"),
