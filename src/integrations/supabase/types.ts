@@ -355,6 +355,107 @@ export type Database = {
           },
         ]
       }
+      project_photos: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          file_name: string
+          file_size_bytes: number | null
+          id: string
+          mime_type: string | null
+          phase_id: string | null
+          photo_type: string
+          project_id: string
+          storage_path: string
+          taken_at: string | null
+          title: string | null
+          uploaded_by: string | null
+          week_number: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          file_name: string
+          file_size_bytes?: number | null
+          id?: string
+          mime_type?: string | null
+          phase_id?: string | null
+          photo_type?: string
+          project_id: string
+          storage_path: string
+          taken_at?: string | null
+          title?: string | null
+          uploaded_by?: string | null
+          week_number?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          file_name?: string
+          file_size_bytes?: number | null
+          id?: string
+          mime_type?: string | null
+          phase_id?: string | null
+          photo_type?: string
+          project_id?: string
+          storage_path?: string
+          taken_at?: string | null
+          title?: string | null
+          uploaded_by?: string | null
+          week_number?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_photos_phase_id_fkey"
+            columns: ["phase_id"]
+            isOneToOne: false
+            referencedRelation: "project_phases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_photos_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_share_links: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          expires_at: string | null
+          id: string
+          project_id: string
+          token: string
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string
+          project_id: string
+          token?: string
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string
+          project_id?: string
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_share_links_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       project_tasks: {
         Row: {
           assigned_to_text: string | null
