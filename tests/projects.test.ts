@@ -1,6 +1,6 @@
 import { describe, it as test } from "node:test";
 import { strict as assert } from "node:assert";
-import { DEFAULT_PHASES, daysUntil, validateProject } from "./projects";
+import { DEFAULT_PHASES, daysUntil, validateProject } from "../src/lib/projects";
 describe("Project creation rules", () => {
   test("five default phases are ordered as requested", () => assert.deepEqual(DEFAULT_PHASES, ["Procjena", "Ugovor", "Priprema", "Izvođenje", "Predaja"]));
   test("manager is required", () => assert.notEqual(validateProject("Renovacija", "", "", "", "", [{name:"Procjena"}]), null));
