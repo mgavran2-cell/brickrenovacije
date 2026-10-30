@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Info } from "lucide-react";
+import { Hammer } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import EmptyState from "@/components/EmptyState";
+import PageSkeleton from "@/components/skeletons/PageSkeleton";
+import { daysUntil, projectPlace } from "@/lib/projects";
 import StatusBadge from "@/components/admin/StatusBadge";
 import { useAdminRequests, useAdminProjects } from "@/hooks/useAdminData";
 import { eur, greetingFor, initialsOf, timeAgo } from "@/lib/adminFormat";
@@ -23,7 +26,7 @@ const AdminHome = () => {
     supabase.from("projects").select("id", { count: "exact", head: true }).then(({ count }) => setNoRealProjects(count === 0));
   }, []);
   const { rows: requests } = useAdminRequests();
-  const { rows: projects } = useAdminProjects();
+  const { rows: projects, loading, error: projectError } = useAdminProjects();
 
   useEffect(() => {
     const uid = session?.user?.id;
@@ -48,39 +51,33 @@ const AdminHome = () => {
 
   const now = new Date();
   const formattedDate = now.toLocaleDateString("hr-HR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
-  const novi = requests.filter((r) => r.status === "novi");
+  const realRequests = requests.filter(r => !r.mock);
+  const novi = realRequests.filter((r) => r.status === "novi");
   const active = projects.filter((p) => ["izvodenje", "active"].includes(p.status));
-  const withEnd = projects.filter((p) => p.end_date && p.status !== "zavrseno").map((p) => ({ p, d: Math.ceil((new Date(p.end_date!).getTime() - Date.now()) / 86400000) })).filter((x) => x.d >= 0).sort((a, b) => a.d - b.d);
+  const withEnd = active.flatMap(p => { const d = daysUntil(p.end_date); return d == null ? [] : [{ p, d }]; }).sort((a, b) => a.d - b.d);
   const critical = withEnd[0];
+  const projectRevenue = projects.filter(p => !p.is_draft && new Date(p.created_at).getMonth() === now.getMonth() && new Date(p.created_at).getFullYear() === now.getFullYear()).reduce((sum,p) => sum + (p.total_price ?? 0), 0);
   const pct = revenue.prev ? Math.round(((revenue.now - revenue.prev) / revenue.prev) * 100) : null;
 
   const cards = [
     { label: "Novi upiti", value: String(novi.length), actionText: "Odgovorite danas", url: "/admin/upiti?status=novi", detail: novi.slice(0, 3).map((r) => r.name).join(", ") || "Nema novih upita" },
-    { label: "Ponude čekaju", value: String(ponude.length), actionText: "Potpisi", url: "/admin/ponude", detail: ponude.slice(0, 2).map((p) => `${p.title} ${eur(p.amount)} €`).join(" · ") || "Nema podataka" },
+    { label: "Ponude čekaju", value: "0", actionText: "Potpisi", url: "/admin/ponude", detail: ponude.slice(0, 2).map((p) => `${p.title} ${eur(p.amount)} €`).join(" · ") || "Nema podataka" },
     { label: "Dani do predaje", value: critical ? String(critical.d) : "—", actionText: "Projekt", url: critical ? `/admin/projekti/${critical.p.id}` : "/admin/projekti", detail: critical ? `${critical.p.title} · ${critical.p.client_name}` : "Nema podataka" },
-    { label: "Prihod ovaj mjesec", value: `${eur(revenue.now)} €`, actionText: "Analitika", url: "/admin/analitika", detail: pct == null ? "Nema podataka za prošli mjesec" : `${pct > 0 ? "+" : ""}${pct}% vs prošli mjesec` },
+    { label: "Prihod ovaj mjesec", value: `${eur(projectRevenue)} €`, actionText: "Analitika", url: "/admin/analitika", detail: pct == null ? "Nema podataka za prošli mjesec" : `${pct > 0 ? "+" : ""}${pct}% vs prošli mjesec` },
   ];
 
+  if (loading) return <PageSkeleton />;
   return (
     <div className="p-6 md:p-10 max-w-6xl">
       <p className="text-sm text-dash-subtle mb-2 first-letter:uppercase">{formattedDate}</p>
       <h1 className="text-4xl md:text-5xl font-serif font-normal mb-4">{greetingFor(now.getHours())}{firstName && `, ${firstName}`} <span>☕</span></h1>
       <p className="text-lg text-dash-muted max-w-3xl mb-6">
-        Danas imate {novi.length} novih upita, {ponude.length} ponude čekaju potpis i 0 sastanka.
+        Danas imate {novi.length} novih upita, 0 ponude čekaju potpis i 0 sastanka.
       </p>
       <div className="flex flex-wrap gap-3 mb-10">
         <Button variant="outline" size="lg" onClick={() => navigate("/admin/upiti")}>Otvori upite</Button>
         <Button size="lg" onClick={() => navigate("/admin/ponude")}>Nova ponuda</Button>
       </div>
-
-      {noRealProjects && (
-        <div className="bg-dash-active border border-dash-border rounded-xl px-5 py-4 mb-10 flex items-start gap-3">
-          <Info className="w-5 h-5 text-dash-subtle shrink-0 mt-0.5" />
-          <div className="text-sm text-dash-muted">
-            <strong className="font-medium">Prikaz s probnim podacima.</strong> Projekti i podaci "danas na gradilištima" su primjeri za demo. Čim kreirate prvi pravi projekt, zamijenit će se stvarnim podacima.
-          </div>
-        </div>
-      )}
 
       <h2 className="text-3xl font-serif font-normal mb-6">Hitne akcije</h2>
       <div className="grid sm:grid-cols-2 gap-5 mb-10">
@@ -101,25 +98,7 @@ const AdminHome = () => {
           <h2 className="text-3xl font-serif font-normal">Danas na gradilištima</h2>
           <Link to="/admin/projekti" className="text-sm text-primary font-serif hover:underline">Svi projekti</Link>
         </div>
-        {active.length === 0 ? <p className="text-dash-subtle">Danas nema aktivnih projekata na gradilištu.</p> : active.map((p) => (
-          <div key={p.id} className="py-5 border-b border-dash-soft last:border-0">
-            <div className="flex justify-between mb-2 gap-3">
-              <h3 className="text-xl font-serif font-normal">{p.client_name} · {p.location}</h3>
-              <span className="text-sm text-dash-subtle whitespace-nowrap">{p.work_hours}</span>
-            </div>
-            <p className="text-sm text-dash-muted mb-3">{p.title}, {p.address}</p>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-2 h-2 rounded-full bg-primary" />
-              <p className="font-medium">{p.current_task}</p>
-            </div>
-            <div className="flex items-center justify-between gap-3 flex-wrap">
-              <div className="flex gap-2 flex-wrap">
-                {p.teams.map((t) => <span key={t.name} className="bg-dash-active rounded-full px-3 py-1 text-xs">{t.name} · {t.workers} radnika</span>)}
-              </div>
-              <span className="text-sm text-dash-subtle">{p.progress}% dovršeno</span>
-            </div>
-          </div>
-        ))}
+        {projectError ? <EmptyState icon={Hammer} title="Učitavanje nije uspjelo" description={projectError} /> : active.length === 0 ? <EmptyState icon={Hammer} title="Danas nema aktivnih projekata" description="Kad projekt uđe u fazu izvođenja, pojavit će se ovdje." /> : active.slice(0,5).map(p => <div key={p.id} className="py-5 border-b border-dash-border"><Link to={`/admin/projekti/${p.id}`} className="font-serif text-xl hover:text-primary">{p.title}</Link><p className="text-sm text-dash-muted mt-2">{p.client_name} · {projectPlace(p)}</p><p className="text-sm text-dash-subtle mt-2">{p.progress_percent}% dovršeno · Predaja {p.end_date ? new Date(p.end_date).toLocaleDateString("hr-HR") : "—"}</p></div>)}
       </section>
 
       <section className="bg-dash-card rounded-2xl p-6 md:p-8 border border-dash-border mb-10">
@@ -127,7 +106,7 @@ const AdminHome = () => {
           <h2 className="text-3xl font-serif font-normal">Zadnji upiti</h2>
           <Link to="/admin/upiti" className="text-sm text-primary font-serif hover:underline">Svi upiti</Link>
         </div>
-        {requests.slice(0, 5).map((r) => (
+        {realRequests.slice(0, 5).map((r) => (
           <div key={r.id} className="py-5 border-b border-dash-soft last:border-0 grid md:grid-cols-[1fr_auto_auto] gap-4 md:gap-6 items-start">
             <div>
               <div className="flex items-center gap-3 mb-1"><h3 className="text-xl font-serif font-normal">{r.name}</h3><StatusBadge status={r.status} /></div>
