@@ -17,7 +17,7 @@ Deno.serve(async req => {
       if (!photo) return json({ error: 'Fotografija nije pronađena.' }, 404);
       const { data, error: downloadError } = await db.storage.from('project-photos').download(photo.storage_path);
       if (downloadError || !data) return json({ error: 'Preuzimanje nije uspjelo.' }, 500);
-      return new Response(data, { headers: { ...corsHeaders, 'Content-Type': data.type, 'Cache-Control': 'no-store' } });
+      return new Response(data, { headers: { ...corsHeaders, 'Content-Type': 'application/octet-stream', 'Cache-Control': 'no-store' } });
     }
     const [{ data: photos, error: pe }, { data: phases }] = await Promise.all([db.from('project_photos').select('id,project_id,phase_id,file_name,title,description,taken_at,created_at,week_number,storage_path,photo_type').eq('project_id', project.id).eq('photo_type','gallery').order('taken_at', { ascending: false }), db.from('project_phases').select('id,name,phase_order').eq('project_id',project.id).order('phase_order')]);
     if (pe) throw pe;

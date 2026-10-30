@@ -6,3 +6,7 @@
 - Production project screens use real projects and ordered project_phases, never sample fallback; useProject shares client_id ownership queries so client views stay consistent.
 - Convert enquiries with the staff-only create_project_from_request transaction; unique source_request_id prevents duplicates and is_draft keeps unfinished projects private. Link clients through trusted profiles email matching, not public enquiry ownership claims.
 - Store private project notes in staff-only project_internal_notes, not client-readable projects. Project creation emails accept only project IDs, authenticate staff and read stored recipients to prevent arbitrary email sends.
+
+- Project photo objects are private and client reads are scoped to assigned finalized projects; public gallery access is mediated by a token-validating Edge Function, never anonymous table/storage enumeration.
+- Store hero_image_url as a private storage path and resolve short-lived signed URLs through ProjectImage; photo_type separates hero images from gallery counts.
+- Photo metadata and share activity are recorded by database triggers; upload progress uses authenticated Storage requests and cleans orphan objects on metadata failures.
