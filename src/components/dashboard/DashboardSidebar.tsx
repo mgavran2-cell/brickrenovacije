@@ -28,11 +28,11 @@ const DashboardSidebar = () => {
     (async () => {
       const [prof, proj, msgs] = await Promise.all([
         supabase.from("profiles").select("full_name").eq("id", uid).maybeSingle(),
-        supabase.from("projects").select("location").eq("user_id", uid).order("created_at", { ascending: false }).limit(1),
+        supabase.from("projects").select("neighborhood, city").eq("client_id", uid).eq("is_draft", false).order("created_at", { ascending: false }).limit(1),
         supabase.from("poruke").select("id", { count: "exact", head: true }).eq("receiver_id", uid),
       ]);
       setFullName(prof.data?.full_name || session.user.user_metadata?.full_name || session.user.email || "");
-      setPlace(proj.data?.[0]?.location ?? null);
+      setPlace(proj.data?.[0]?.neighborhood || proj.data?.[0]?.city || null);
       setUnread(msgs.count ?? 0);
     })();
   }, [session?.user?.id]);
