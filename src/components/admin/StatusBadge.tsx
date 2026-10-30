@@ -40,6 +40,7 @@ const GREEN = (label: string) =>
 const MAP: Record<string, StatusStyle> = {
   planirano: NEUTRAL("Planirano"),
   u_tijeku: { ...PRIMARY, label: "U tijeku" },
+  blokirano: RED("Blokirano"),
   draft: NEUTRAL("Draft"),
   // DS-5 varijante
   procjena: BLUE("Procjena", "bg-blue-50 text-blue-800"),
