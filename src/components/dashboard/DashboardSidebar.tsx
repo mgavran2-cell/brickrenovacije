@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, FolderOpen, FileText, Receipt, MessageSquare, Settings, LogOut } from "lucide-react";
+import { Home, FolderOpen, FileText, FileSignature, Receipt, MessageSquare, Settings, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import Logo from "@/components/Logo";
+import { useClientPendingDocsCount } from "@/hooks/useClientDocuments";
 
 const navItems = [
   { label: "Pregled", icon: Home, path: "/dashboard" },
   { label: "Moj projekt", icon: FolderOpen, path: "/dashboard/moj-projekt" },
-  { label: "Ponude", icon: FileText, path: "/dashboard/ponude" },
+  { label: "Dokumenti", icon: FileText, path: "/dashboard/dokumenti", docs: true },
+  { label: "Ponude", icon: FileSignature, path: "/dashboard/ponude" },
   { label: "Računi", icon: Receipt, path: "/dashboard/racuni" },
   { label: "Poruke", icon: MessageSquare, path: "/dashboard/poruke", badge: true },
   { label: "Postavke", icon: Settings, path: "/dashboard/postavke" },
@@ -21,6 +23,7 @@ const DashboardSidebar = () => {
   const [fullName, setFullName] = useState("");
   const [place, setPlace] = useState<string | null>(null);
   const [unread, setUnread] = useState(0);
+  const pendingDocs = useClientPendingDocsCount();
 
   useEffect(() => {
     const uid = session?.user?.id;
@@ -54,7 +57,7 @@ const DashboardSidebar = () => {
 
       <nav className="space-y-1">
         {navItems.map((item) => {
-          const active = location.pathname === item.path;
+          const active = item.path === "/dashboard" ? location.pathname === item.path : location.pathname.startsWith(item.path);
           return (
             <Link
               key={item.path}
@@ -66,7 +69,10 @@ const DashboardSidebar = () => {
             >
               <item.icon className="w-4 h-4 shrink-0" />
               <span>{item.label}</span>
-              {item.badge && unread > 0 && (
+              {"docs" in item && pendingDocs > 0 && (
+                <span className="bg-primary text-primary-foreground text-xs rounded-full px-2 py-0.5 ml-auto" aria-label={`${pendingDocs} dokumenata čeka potpis`}>{pendingDocs}</span>
+              )}
+              {"badge" in item && item.badge && unread > 0 && (
                 <span className="bg-primary text-primary-foreground text-xs rounded-full px-2 py-0.5 ml-auto">{unread}</span>
               )}
             </Link>

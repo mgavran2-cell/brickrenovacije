@@ -47,6 +47,12 @@ const ProjektDetalji = () => {
       const removal = await supabase.storage.from("project-photos").remove(photos.data.map(photo => photo.storage_path));
       if (removal.error) { setDeleting(false); toast.error("Projekt nije obrisan", "Fotografije nisu uklonjene."); return; }
     }
+    const docs = await supabase.from("project_documents").select("storage_path").eq("project_id", p.id);
+    if (docs.error) { setDeleting(false); toast.error("Projekt nije obrisan", "Dokumente nije moguće provjeriti."); return; }
+    if (docs.data.length) {
+      const removal = await supabase.storage.from("project-documents").remove(docs.data.map(d => d.storage_path));
+      if (removal.error) { setDeleting(false); toast.error("Projekt nije obrisan", "Dokumenti nisu uklonjeni."); return; }
+    }
     const { data, error } = await supabase.from("projects").delete().eq("id", p.id).select("id");
     setDeleting(false);
     if (error || !data?.length) { toast.error("Projekt nije obrisan", "Pokušajte ponovno."); return; }

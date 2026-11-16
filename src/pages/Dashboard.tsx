@@ -6,6 +6,8 @@ import DashboardPonude from "@/pages/dashboard/Ponude";
 import DashboardRacuni from "@/pages/dashboard/Racuni";
 import DashboardPoruke from "@/pages/dashboard/Poruke";
 import DashboardPostavke from "@/pages/dashboard/Postavke";
+import KlijentDokumenti from "@/pages/dashboard/KlijentDokumenti";
+import DokumentPregled from "@/pages/dashboard/DokumentPregled";
 
 const Dashboard = () => (
   <div className="flex min-h-screen bg-dash-bg w-full font-dashboard">
@@ -14,6 +16,8 @@ const Dashboard = () => (
       <Routes>
         <Route index element={<DashboardHome />} />
         <Route path="moj-projekt" element={<MojProjekt />} />
+        <Route path="dokumenti" element={<KlijentDokumenti />} />
+        <Route path="dokumenti/:id" element={<DokumentPregled />} />
         <Route path="ponude" element={<DashboardPonude />} />
         <Route path="racuni" element={<DashboardRacuni />} />
         <Route path="poruke" element={<DashboardPoruke />} />
