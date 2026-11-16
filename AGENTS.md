@@ -10,3 +10,4 @@
 - Project photo objects are private and client reads are scoped to assigned finalized projects; public gallery access is mediated by a token-validating Edge Function, never anonymous table/storage enumeration.
 - Store hero_image_url as a private storage path and resolve short-lived signed URLs through ProjectImage; photo_type separates hero images from gallery counts.
 - Photo metadata and share activity are recorded by database triggers; upload progress uses authenticated Storage requests and cleans orphan objects on metadata failures.
+- Client document responses go only through security-definer RPCs (mark_document_viewed, respond_to_document); clients have no UPDATE on project_documents so they can't alter amounts or content.
