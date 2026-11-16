@@ -57,6 +57,13 @@ export const formatActivity = (a: ProjectActivity) => {
     case "phase_started": return `Faza ${m.name} je u tijeku`;
     case "phase_completed": return `Faza ${m.name} završena`;
     case "project_status_changed": return `Status projekta: ${m.from} → ${m.to}`;
+    case "document_uploaded": return `Dokument ${m.number ?? ""} „${m.title}” dodan`;
+    case "document_sent": return `Dokument ${m.number} poslan klijentu`;
+    case "document_reminder_sent": return `Podsjetnik za dokument ${m.number} poslan`;
+    case "document_viewed": return `Klijent je otvorio dokument ${m.number}`;
+    case "document_signed": return `Dokument ${m.number} potpisan (${m.name})`;
+    case "document_revision_requested": return `Klijent traži izmjene dokumenta ${m.number}`;
+    case "document_cancelled": return `Dokument ${m.number} otkazan`;
     default: return a.action;
   }
 };

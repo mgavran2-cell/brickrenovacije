@@ -285,6 +285,98 @@ export type Database = {
           },
         ]
       }
+      project_documents: {
+        Row: {
+          client_comment: string | null
+          created_at: string | null
+          created_by: string | null
+          currency: string | null
+          description: string | null
+          document_number: string
+          document_type: string
+          due_date: string | null
+          file_name: string
+          file_size_bytes: number | null
+          id: string
+          project_id: string
+          sent_at: string | null
+          signature_data: string | null
+          signed_at: string | null
+          signed_by_name: string | null
+          signed_by_user_id: string | null
+          signed_ip: string | null
+          status: string
+          storage_path: string
+          title: string
+          total_amount: number | null
+          updated_at: string | null
+          valid_until: string | null
+          viewed_at: string | null
+        }
+        Insert: {
+          client_comment?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          currency?: string | null
+          description?: string | null
+          document_number: string
+          document_type?: string
+          due_date?: string | null
+          file_name: string
+          file_size_bytes?: number | null
+          id?: string
+          project_id: string
+          sent_at?: string | null
+          signature_data?: string | null
+          signed_at?: string | null
+          signed_by_name?: string | null
+          signed_by_user_id?: string | null
+          signed_ip?: string | null
+          status?: string
+          storage_path: string
+          title: string
+          total_amount?: number | null
+          updated_at?: string | null
+          valid_until?: string | null
+          viewed_at?: string | null
+        }
+        Update: {
+          client_comment?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          currency?: string | null
+          description?: string | null
+          document_number?: string
+          document_type?: string
+          due_date?: string | null
+          file_name?: string
+          file_size_bytes?: number | null
+          id?: string
+          project_id?: string
+          sent_at?: string | null
+          signature_data?: string | null
+          signed_at?: string | null
+          signed_by_name?: string | null
+          signed_by_user_id?: string | null
+          signed_ip?: string | null
+          status?: string
+          storage_path?: string
+          title?: string
+          total_amount?: number | null
+          updated_at?: string | null
+          valid_until?: string | null
+          viewed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_documents_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       project_internal_notes: {
         Row: {
           internal_notes: string | null
@@ -777,12 +869,17 @@ export type Database = {
         }
         Returns: string
       }
+      generate_document_number: { Args: never; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      mark_document_viewed: {
+        Args: { _document_id: string }
+        Returns: undefined
       }
       project_managers: {
         Args: never
@@ -793,6 +890,15 @@ export type Database = {
       }
       recalc_project_progress: {
         Args: { _project_id: string }
+        Returns: undefined
+      }
+      respond_to_document: {
+        Args: {
+          _comment: string
+          _document_id: string
+          _response: string
+          _signer_name: string
+        }
         Returns: undefined
       }
     }

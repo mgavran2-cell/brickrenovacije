@@ -23,6 +23,7 @@ import { eur, formatDate, timeAgo } from "@/lib/adminFormat";
 import { cn } from "@/lib/utils";
 import PhotoGallery from "@/components/PhotoGallery";
 import PhotoUploadDialog from "@/components/PhotoUploadDialog";
+import ProjectDocuments from "@/components/admin/ProjectDocuments";
 
 const ProjektDetalji = () => {
   const { id } = useParams(); const navigate = useNavigate();
@@ -45,6 +46,12 @@ const ProjektDetalji = () => {
     if (photos.data.length) {
       const removal = await supabase.storage.from("project-photos").remove(photos.data.map(photo => photo.storage_path));
       if (removal.error) { setDeleting(false); toast.error("Projekt nije obrisan", "Fotografije nisu uklonjene."); return; }
+    }
+    const docs = await supabase.from("project_documents").select("storage_path").eq("project_id", p.id);
+    if (docs.error) { setDeleting(false); toast.error("Projekt nije obrisan", "Dokumente nije moguće provjeriti."); return; }
+    if (docs.data.length) {
+      const removal = await supabase.storage.from("project-documents").remove(docs.data.map(d => d.storage_path));
+      if (removal.error) { setDeleting(false); toast.error("Projekt nije obrisan", "Dokumenti nisu uklonjeni."); return; }
     }
     const { data, error } = await supabase.from("projects").delete().eq("id", p.id).select("id");
     setDeleting(false);
@@ -182,12 +189,13 @@ const ProjektDetalji = () => {
         )}
       </TabsContent>
       <TabsContent value="Fotografije" className="mt-8"><PhotoGallery projectId={p.id} phases={phases} canUpload canDelete={isAdmin} canShare={isAdmin} canDownloadZip /></TabsContent>
-      {["Troškovnik", "Ponude", "Dokumenti", "Poruke"].map(t => <TabsContent key={t} value={t} className="mt-8"><EmptyState icon={FileText} title={t} description="Dolazi u sljedećem krugu." /></TabsContent>)}
+      <TabsContent value="Dokumenti" className="mt-8"><ProjectDocuments projectId={p.id} projectIsDraft={p.is_draft} /></TabsContent>
+      {["Troškovnik", "Ponude", "Poruke"].map(t => <TabsContent key={t} value={t} className="mt-8"><EmptyState icon={FileText} title={t} description="Dolazi u sljedećem krugu." /></TabsContent>)}
     </Tabs>
     <PhotoUploadDialog open={heroUpload} onOpenChange={setHeroUpload} projectId={p.id} phases={phases} startDate={p.start_date} hero onSaved={() => void reload()} />
     <TaskSheet open={taskSheet.open} onOpenChange={open => setTaskSheet(s => ({ ...s, open }))} project={p} phases={phases} task={taskSheet.task} defaultPhaseId={taskSheet.phaseId} onSaved={() => void reload()} />
     <ConfirmDialog open={edit} onOpenChange={setEdit} title="Uređivanje projekta" description="Značajke uređivanja detalja projekta dolaze uskoro." confirmLabel="U redu" onConfirm={() => setEdit(false)} />
-    <DestructiveConfirmDialog open={remove} onOpenChange={setRemove} title="Trajno obrisati projekt?" description={`Brišu se ${phases.length} faza, ${tasks.length} zadataka i povijest projekta ${p.address || p.title}. Brišu se i zapisi fotografija te javni linkovi; dokumenti i poruke još nisu dio projekta. Ova radnja se ne može poništiti.`} requireText="OBRIŠI" confirmLabel="Obriši projekt" onConfirm={() => void deleteProject()} />
+    <DestructiveConfirmDialog open={remove} onOpenChange={setRemove} title="Trajno obrisati projekt?" description={`Brišu se ${phases.length} faza, ${tasks.length} zadataka i povijest projekta ${p.address || p.title}. Brišu se i zapisi fotografija te javni linkovi; brišu se i dokumenti projekta; poruke još nisu dio projekta. Ova radnja se ne može poništiti.`} requireText="OBRIŠI" confirmLabel="Obriši projekt" onConfirm={() => void deleteProject()} />
   </div>;
 };
 export default ProjektDetalji;
