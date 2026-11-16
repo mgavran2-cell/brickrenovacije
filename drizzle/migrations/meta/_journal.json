@@ -50,6 +50,13 @@
       "when": 1793365827572,
       "tag": "0006_project_photos_private_sharing",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1794838455293,
+      "tag": "0007_project_documents",
+      "breakpoints": true
     }
   ]
 }
