@@ -53,6 +53,11 @@ const MAP: Record<string, StatusStyle> = {
   odbijeno: RED("Odbijeno"),
   ceka_potpis: AMBER("Čeka potpis", "bg-amber-50 text-amber-800"),
   kasnjenje: RED("Kašnjenje"),
+  // Dokumenti
+  poslano: AMBER("Čeka potpis", "bg-amber-50 text-amber-800"),
+  pregledano: AMBER("Pregledano", "bg-amber-100 text-amber-900"),
+  potpisano: GREEN("Potpisano"),
+  otkazano: NEUTRAL("Otkazano"),
   // Postojeći statusi (admin, izvođači, upiti)
   novo: { ...PRIMARY, label: "Nova prijava" },
   u_kontaktu: BLUE("U kontaktu", "bg-blue-100 text-blue-800"),
